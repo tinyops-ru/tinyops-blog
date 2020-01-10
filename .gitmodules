@@ -1,0 +1,3 @@
+[submodule "themes/tinyblog"]
+	path = themes/tinyblog
+	url = https://github.com/lebe-dev/tinyblog-zola-theme
