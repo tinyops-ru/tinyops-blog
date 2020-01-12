@@ -12,16 +12,6 @@
         </url>
     
         <url>
-            <loc>https://b.tinyops.ru/categories/monitoring/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://b.tinyops.ru/categories/monitoring/page/1/</loc>
-            
-        </url>
-    
-        <url>
             <loc>https://b.tinyops.ru/categories/tutorial/</loc>
             
         </url>
@@ -37,34 +27,12 @@
         </url>
     
         <url>
-            <loc>https://b.tinyops.ru/page/2/</loc>
-            
-        </url>
-    
-        <url>
             <loc>https://b.tinyops.ru/tags/</loc>
             
         </url>
     
         <url>
-            <loc>https://b.tinyops.ru/tags/rust/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://b.tinyops.ru/tags/web/</loc>
-            
-        </url>
-    
-        <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://b.tinyops.ru/welcome/</loc>
-            
-                <lastmod>2018-08-31</lastmod>
             
         </url>
     
