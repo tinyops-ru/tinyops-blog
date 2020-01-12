@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://blog.tinyops.ru"
+base_url = "https://b.tinyops.ru"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -24,9 +24,9 @@ taxonomies = [
 
 [extra]
 # Put all your custom variables here
-description = "lelelele"
+description = ""
 website="tinyops.ru"
-twitter="mental_foreplay"
+twitter=""
 email = "eugene@tinyops.ru"
 
 # Yandex.Metrika
