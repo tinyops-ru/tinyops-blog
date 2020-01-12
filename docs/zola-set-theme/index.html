@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  <title> TinyOps Blog </title>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  <!-- fonts -->
+  <!-- preload  -->
+  <link rel="preload"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900"
+        as="style">
+  <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"
+        as="style">
+  <!-- load -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> TinyOps Blog
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Как подключить готовую тему к проекту на Zola
+  </h1>
+  
+<div class="frontmatter mb-1 font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-01-03">January 03, 2020</time>
+    </div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> слов 314</div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> 2 мин</div>
+
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/zola/">zola</a>
+    
+  </div>
+
+  <p>Прежде чем рассказать о том как подключить готовую тему стоит отметить что каждая тема в Zola это по сути такой же проект
+как и ваш сайт. Одно из незначительных отличий - наличие файла <code>theme.toml</code>, в котором описывается конфигурация темы.</p>
+<p>Меня порадовал такой подход, поэтому у меня не вызвало каких-либо проблем собрать 
+<a href="https://github.com/lebe-dev/tinyblog-zola-theme">свою тему</a>.</p>
+<h2 id="gde-naiti-gotovye-temy-dlia-zola">Где найти готовые темы для Zola</h2>
+<p>К сожалению, Zola еще молодой проект поэтому пока еще нет такого изобилия тем как у конкурентов.</p>
+<p>Каталог тем с preview - <a href="https://www.getzola.org/themes/">https://www.getzola.org/themes/</a></p>
+<h2 id="kak-ustanovit-temu-dlia-svoego-saita">Как установить тему для своего сайта</h2>
+<p>Дальнейшая инструкция расчитана на то что вы имеете опыт работы с <a href="https://git-scm.com/book/ru/v2/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D1%8B-Git">git</a>.</p>
+<ol>
+<li>
+<p>Выбираем тему из галереи
+Я буду рассказывать на примере моей темы - <a href="https://github.com/lebe-dev/tinyblog-zola-theme">TinyBlog</a>, 
+она есть в свободном доступе на github.</p>
+</li>
+<li>
+<p>Создадим подкаталог в котором будут хранится файлы темы которую выбрали:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">mkdir themes\tinyblog</span><span style="color:#c0c5ce;">
+</span></pre></li>
+<li>
+<p>Добавим модуль тему как git модуль:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">git submodule add https://github.com/lebe-dev/tinyblog-zola-theme themes/tinyblog</span><span style="color:#c0c5ce;">
+</span></pre></li>
+<li>
+<p>Подкачаем актуальную версию темы:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">git submodule update --init --recursive </span><span style="color:#c0c5ce;">
+</span></pre>
+<p>либо заходим в каталог тем и делаем pull:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">cd themes</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">git clone https://github.com/lebe-dev/tinyblog-zola-theme tinyblog</span><span style="color:#c0c5ce;">
+</span></pre></li>
+<li>
+<p>Настраиваем файл конфигурации сайта</p>
+<p>В файле конфигурации <code>config.toml</code> указываем тему:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">theme </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">tinyblog</span><span style="color:#c0c5ce;">&quot;</span><span style="background-color:#bf616a;color:#2b303b;"> </span><span style="color:#c0c5ce;">
+</span></pre></li>
+<li>
+<p>Открываем сайт в браузере и видим что тема применилась.</p>
+</li>
+</ol>
+<h2 id="esli-sait-perestal-sobirat-sia">Если сайт перестал собираться</h2>
+<p>Возможно тема требует каких-то специфичных настроек, про которые можно прочитать на github страничке темы.</p>
+<p>Либо проблема из разряда популярных, я описал <a href="/zola-issues/">пару решений</a>.</p>
+<h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>
+<p>По тэгу <a href="/tags/zola">zola</a> вы можете найти другие статьи из этого цикла.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+</footer>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>TinyOps Blog</title>
+        <link>https://b.tinyops.ru</link>
+        <description>О технологиях, подходах и решении проблем простым языком</description>
+        <generator>Zola</generator>
+        <language>en</language>
+        <atom:link href="https://b.tinyops.ru/tags/web/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>Fri, 31 Aug 2018 00:00:00 +0000</lastBuildDate>
+        
+            <item>
+                <title>Welcome to Ergo, a svbtle inspired theme</title>
+                <pubDate>Fri, 31 Aug 2018 00:00:00 +0000</pubDate>
+                <link>https://b.tinyops.ru/welcome/</link>
+                <guid>https://b.tinyops.ru/welcome/</guid>
+                <description>&lt;p&gt;This is a small example post of stuff you can do with the &lt;code&gt;ergo&lt;&#x2F;code&gt; theme.
+We&#x27;ll try to represent all possible markdown and shortcode combinations here
+so you can develop easily.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;here-s-some-lists&quot;&gt;Here&#x27;s some lists&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;let&#x27;s list some stuff&lt;&#x2F;li&gt;
+&lt;li&gt;unordered, of course.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;ol&gt;
+&lt;li&gt;We can also order lists
+&lt;ol&gt;
+&lt;li&gt;And nesting here works too&lt;&#x2F;li&gt;
+&lt;li&gt;We can do whatever we want!&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;And drop back to the original indentation.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h1 id=&quot;headers&quot;&gt;Headers&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;smaller&quot;&gt;Smaller&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;smaller-still&quot;&gt;Smaller still!&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;can-t-really-get-much-smaller-than-this&quot;&gt;Can&#x27;t really get much smaller than this&lt;&#x2F;h4&gt;
+&lt;h5 id=&quot;even-if-you-try&quot;&gt;Even if you try&lt;&#x2F;h5&gt;
+&lt;h6 id=&quot;it-won-t-do-anything&quot;&gt;It won&#x27;t do anything&lt;&#x2F;h6&gt;
+&lt;p&gt;We can also &lt;em&gt;italicize&lt;&#x2F;em&gt; stuff, or make it &lt;strong&gt;bold&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;code&quot;&gt;Code&lt;&#x2F;h1&gt;
+&lt;p&gt;Want some Rust code?  We got Rust code.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; `vst` uses macros, so we&amp;#39;ll need to specify that we&amp;#39;re using them!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;macro_use&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extern crate&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; vst;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; We&amp;#39;re implementing a trait `Plugin` that does all the VST-y stuff for us.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Plugin &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Whisper {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;get_info&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;) -&amp;gt; Info {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        Info {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+            name: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Whisper&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;()&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        }&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    }&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can also add a filename to our code blocks which is super useful when
+providing tutorials, etc.  Here&#x27;s some HTML we can insert into our
+markdown file right before the code block.  (Meta, right?)&lt;&#x2F;p&gt;
+&lt;div class=&#x27;filename&#x27;&gt;
+  &lt;div&gt;www&#x2F;index.html&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;filename&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;src&#x2F;lib.rs&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If we want, we can also &lt;code&gt;specify inline code&lt;&#x2F;code&gt; which is useful for &lt;code&gt;the small stuff&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;horizontal-rules&quot;&gt;Horizontal rules&lt;&#x2F;h2&gt;
+&lt;p&gt;We have them!&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;blockquotes&quot;&gt;BlockQuotes&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+  Language is a process of free creation; its laws and principles are fixed, but the manner in which the principles of generation are used is free and infinitely varied. Even the interpretation and use of words involves a process of free creation.&lt;br &#x2F;&gt;
+  -- Noam Chomsky
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;youtube&quot;&gt;Youtube&lt;&#x2F;h2&gt;
+&lt;p&gt;with &lt;code&gt;yt(id=&amp;quot;the_id_here&amp;quot;)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;div class=&quot;youtube &quot;&gt;
+    &lt;iframe src=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;ogEjvM-v_-s&quot;
+    webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder=&quot;0&quot;
+    &gt;
+  &lt;&#x2F;iframe&gt;
+&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;vimeo&quot;&gt;Vimeo&lt;&#x2F;h2&gt;
+&lt;p&gt;with &lt;code&gt;vm(id=&amp;quot;id_here&amp;quot;)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;div class=&quot;vimeo &quot;&gt;
+    &lt;iframe src=&quot;https:&#x2F;&#x2F;player.vimeo.com&#x2F;video&#x2F;115189988&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder=&quot;0&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;links&quot;&gt;Links&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;ergo.liquidthink.net&quot;&gt;Of Course&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;tables&quot;&gt;Tables&lt;&#x2F;h2&gt;
+&lt;p&gt;You can make tables in markdown, too!  Who would have thought.  Are these styled yet?&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;First Header&lt;&#x2F;th&gt;&lt;th&gt;Second Header&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Content Cell&lt;&#x2F;td&gt;&lt;td&gt;Content Cell&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Content Cell&lt;&#x2F;td&gt;&lt;td&gt;Content Cell&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;h2 id=&quot;foldable-text&quot;&gt;Foldable Text&lt;&#x2F;h2&gt;
+&lt;details&gt;
+    &lt;summary&gt;Title 1&lt;&#x2F;summary&gt;
+    &lt;p&gt;Content 1 Content 1 Content 1 Content 1 Content 1&lt;&#x2F;p&gt;
+&lt;&#x2F;details&gt;
+&lt;details&gt;
+    &lt;summary&gt;Title 2&lt;&#x2F;summary&gt;
+    &lt;p&gt;Content 2 Content 2 Content 2 Content 2 Content 2&lt;&#x2F;p&gt;
+&lt;&#x2F;details&gt;
+&lt;p&gt;We can do that like this:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;details&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;summary&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;Title 1&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;summary&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;Content 1 Content 1 Content 1 Content 1 Content 1&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;details&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;</description>
+            </item>
+        
+    </channel>
+</rss>

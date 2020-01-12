@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  <title> TinyOps Blog </title>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  <!-- fonts -->
+  <!-- preload  -->
+  <link rel="preload"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900"
+        as="style">
+  <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"
+        as="style">
+  <!-- load -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> TinyOps Blog
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Структура каталогов и файл конфигурации в Zola
+  </h1>
+  
+<div class="frontmatter mb-1 font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-01-02">January 02, 2020</time>
+    </div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> слов 201</div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> 2 мин</div>
+
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/zola/">zola</a>
+    
+  </div>
+
+  <p>После создания нового проекта в каталоге появится следующая структура:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">├── config.toml</span><span style="color:#c0c5ce;">
+├── content</span><span style="color:#c0c5ce;">
+├── sass</span><span style="color:#c0c5ce;">
+├── static</span><span style="color:#c0c5ce;">
+├── templates</span><span style="color:#c0c5ce;">
+└── themes</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Далее - подробнее о каждом из объектов.</p>
+<h3 id="fail-konfiguratsii">Файл конфигурации</h3>
+<p>Главный файл конфигурации проекта <code>config.toml</code> хранится в корневом каталоге.</p>
+<h3 id="katalog-content">Каталог content</h3>
+<p>Здесь хранятся посты или контент сайта. Zola поддерживает формат Markdown, 
+поэтому файлы должны оканчиваться расширением <code>.md</code>. Каждый подкаталог в директории <code>content</code> представляет собой секцию, 
+которая хранит в себе страницы (аналогично - <code>.md</code> файлы).</p>
+<h3 id="katalog-sass">Каталог sass</h3>
+<p>Содержит в себе Sass файлы. В процессе работы Zola комплирует их в css.</p>
+<p>Например, файл <code>sass/something/site.scss</code> в итоговом варианте будет лежать вот так - <code>public/something/site.css</code>.
+Структура подкаталогов сохраняется.</p>
+<h3 id="katalog-static">Каталог static</h3>
+<p>Содержит любые типы файлов и каталоги. Содержимое каталога <code>static</code> копируется 1 в 1 при сборке проекта.
+Zola поддерживает жесткие ссылки (hardlink), это полезно при публикации. Оригинальный файл не будет копироваться в каталог
+<code>public</code>, вместо этого будет создана ссылка.
+Эта опция включается в <code>config.toml</code> параметром <code>hard_link_static = true</code>. </p>
+<h3 id="katalog-templates">Каталог templates</h3>
+<p>Содержит в себе файлы шаблонов. Zola работает с шаблонизатором <a href="https://tera.netlify.com/">Tera</a> от компании Netlify.</p>
+<h3 id="katalog-themes">Каталог themes</h3>
+<p>Содержит темы которые может использовать текущий проект. Если вы не планируете использовать темы, то оставьте этот
+каталог пустым.</p>
+<h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>
+<p>По тэгу <a href="/tags/zola">zola</a> вы можете найти другие статьи из этого цикла.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+</footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+        <url>
+            <loc>https://b.tinyops.ru/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/monitoring/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/monitoring/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/tutorial/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/tutorial/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/page/2/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/rust/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/web/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/welcome/</loc>
+            
+                <lastmod>2018-08-31</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/zola-intro/</loc>
+            
+                <lastmod>2020-01-01</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/zola-issues/</loc>
+            
+                <lastmod>2020-01-10</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/zola-set-theme/</loc>
+            
+                <lastmod>2020-01-03</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/zola-structure/</loc>
+            
+                <lastmod>2020-01-02</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/zola-tags/</loc>
+            
+                <lastmod>2020-01-10</lastmod>
+            
+        </url>
+    
+</urlset>

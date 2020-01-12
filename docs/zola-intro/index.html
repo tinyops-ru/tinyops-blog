@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  <title> TinyOps Blog </title>
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  <!-- fonts -->
+  <!-- preload  -->
+  <link rel="preload"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900"
+        as="style">
+  <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"
+        as="style">
+  <!-- load -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> TinyOps Blog
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Генератор статических сайтов Zola
+  </h1>
+  
+<div class="frontmatter mb-1 font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-01-01">January 01, 2020</time>
+    </div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> слов 471</div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> 3 мин</div>
+
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/zola/">zola</a>
+    
+  </div>
+
+  <p>Я узнал о <a href="https://www.getzola.org/">Zola</a> из пятничной рассылки HackerNews. Так как в описании проекта значился Rust, 
+то я предположил что это должно быть как минимум очень быстрое решение.</p>
+<p><img src="/images/zola/zola-official-site.png" alt="alt text" title="Официальный сайт Zola" /></p>
+<p>В 2019-м я собрал 2 проекта на базе генератора <a href="https://gohugo.io/">Hugo</a> и не сказал бы что это был приятный опыт.
+Одна из главных бед Hugo это наследие языка Go. Вроде бы они и позиционируют себя как 
+<em>&quot;самый быстрый генератор статических сайтов в мире&quot;</em> (хотя на момент существования Zola это спорно), 
+но борьба с шаблонизатором Go изнуряет.</p>
+<p>Поэтому я решил попробовать Zola, да и язык Rust очень люблю. Официальный сайт гордо сообщает о преимуществах:</p>
+<ol>
+<li>
+<p><strong>У нас нет зависимостей</strong><br />
+Генератор поставляется в виде 1 файла, со встроенным процессором <a href="https://sass-lang.com/">Sass</a>, 
+подсветкой синтаксиса, списком содержанием и т.д.</p>
+</li>
+<li>
+<p><strong>Мы чертовски быстрые</strong><br />
+Средний по размеру сайт собирается меньше чем за 1 секунду, включая компиляцию Sass-файлов и подсветку синтаксиса</p>
+</li>
+<li>
+<p><strong>Масштабируемые</strong><br />
+Zola строит весь сайт в виде статических файлов, тем самым делая сайт готовым к очень высоким нагрузкам. Не нужно думать
+об администрировании серверов или баз данных </p>
+</li>
+<li>
+<p><strong>Простые в использовании</strong></p>
+</li>
+<li>
+<p><strong>Гибкие</strong><br />
+Zola решает множество популярных проблем, тем самым не мешая вам сосредоточиться на контенте который вы создаете для
+сайта, блога, базы знаний и т.д.</p>
+</li>
+<li>
+<p><strong>У нас дополненный Markdown</strong><br />
+Приложение поддерживает расширения для Markdown, позволяющие добавить еще больше возможностей в разметку. Например,
+вставлять видео с YouTube с пререндерингом или делать ссылки-якоря.</p>
+</li>
+</ol>
+<p>Круто! Я прежде всего купился на скорость, встроенный Sass-компилятор и простоту шаблонизатора.</p>
+<h2 id="kak-ustanovit-zola">Как установить Zola</h2>
+<p>Респект авторам за то что позаботились о всем том зоопарке операционных систем который есть на момент 2020 года. 
+Мне не нужно поднимать окружение разработчика Rust чтобы собрать исполняемый файл под мою ОС. 
+Поддерживаются самые популярные ОС (Windows, MacOS), различные редакции Linux и даже FreeBSD.</p>
+<p>Для Windows предпочитаю <a href="http://scoop.sh/">Scoop</a>, то и ставил через него:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">scoop install zola</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Вот и все :)</p>
+<h2 id="kak-sozdat-novyi-proekt">Как создать новый проект</h2>
+<p>Достаточно запустить zola с командой <code>init</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">zola init</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Zola спросит пару вопросов в интерактивном режиме и скелет проекта сайта будет готов.
+Чтобы задать имя каталога, то его можно указать последним аргументом:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">zola init awesome-blog</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="kak-zapustit-zola-v-rezhime-razrabotki">Как запустить Zola в режиме разработки</h2>
+<p>Режим разработки позволяет смотреть на итоговый результат в режиме реального времени. Любые изменения в каталоге проекта
+будут мгновенно отображаться в браузере.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">zola serve</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>По умолчанию приложение будет доступно в браузере по адресу <a href="http://127.0.0.1:1111">http://127.0.0.1:1111</a></p>
+<h2 id="kak-sobrat-production-ready-sborku">Как собрать production-ready сборку</h2>
+<p>Production-ready сборка это сборка которая скомпонована генератором с учетом всех возможных оптимизаций. Она готова
+для того чтобы загрузить на ваш сайт.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">zola build --base-url $DEPLOY_URL</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Где <code>$DEPLOY_URL</code> - адрес по которому будет крутиться сайт.</p>
+<h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>
+<p>По тэгу <a href="/tags/zola">zola</a> вы можете найти другие статьи из этого цикла.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+</footer>
+</body>
+</html>
