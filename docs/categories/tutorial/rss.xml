@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>TinyOps Blog</title>
+        <title>TinyOps :: Блог</title>
         <link>https://b.tinyops.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
