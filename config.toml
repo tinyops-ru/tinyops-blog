@@ -29,6 +29,12 @@ website="tinyops.ru"
 twitter=""
 email = "eugene@tinyops.ru"
 
+open_graph_url = "https://b.tinyops.ru"
+open_graph_type = "blog"
+open_graph_title = "Блог TinyOps"
+open_graph_description = "О технологиях, подходах и решении проблем простым языком"
+open_graph_image = ""
+
 # Yandex.Metrika
 yandex_metrika_verification_code = "578eb2cc5cb8a301"
 
