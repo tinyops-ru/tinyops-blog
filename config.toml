@@ -13,7 +13,7 @@ build_search_index = true
 
 theme = "tinyblog"
 
-title = "TinyOps Blog"
+title = "TinyOps :: Блог"
 description = "О технологиях, подходах и решении проблем простым языком"
 
 taxonomies = [
