@@ -7,6 +7,7 @@
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://b.tinyops.ru/categories/tutorial/rss.xml" rel="self" type="application/rss+xml"/>
+<<<<<<< HEAD
         <lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate>
         
             <item>
@@ -53,6 +54,31 @@ Microsoft выбрали верное направление. Десятки л�
 развивать это направление и делало ставку на графические интерфейсы, мол тыкать мышкой всегда понятней и удобней.
 Мировой опыт работы с Linux\Unix-системами доказал что это не так. &lt;&#x2F;p&gt;
 &lt;p&gt;Я верю что Сатья Наделла, действующий глава Microsoft, доведет интеграцию до уровня production ready.&lt;&#x2F;p&gt;
+=======
+        <lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
+        
+            <item>
+                <title>java.lang.Exception: No tests found matching Method в Intellij IDEA</title>
+                <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
+                <link>https://b.tinyops.ru/no-tests-found-idea/</link>
+                <guid>https://b.tinyops.ru/no-tests-found-idea/</guid>
+                <description>&lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
+Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
+со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;no-tests-found-matching-method&quot;&gt;No tests found matching Method&lt;&#x2F;h2&gt;
+&lt;p&gt;Этот Exception можно словить при запуске unit-тестов. Вы гоняли, гоняли тесты и вдруг стало писать эту ошибку.
+Опытным путем удалось выявить, что ноги проблемы растут из относительно свежей Gradle фичи - &lt;a href=&quot;https:&#x2F;&#x2F;docs.gradle.org&#x2F;current&#x2F;userguide&#x2F;build_cache.html&quot;&gt;Build cache&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
+&lt;p&gt;Убить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта. &lt;&#x2F;p&gt;
+>>>>>>> f2a53bc3364f112f0545b48325c36a3f74980d9e
 </description>
             </item>
         

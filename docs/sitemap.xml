@@ -27,9 +27,15 @@
         </url>
     
         <url>
+<<<<<<< HEAD
             <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
             
                 <lastmod>2020-02-07</lastmod>
+=======
+            <loc>https://b.tinyops.ru/no-tests-found-idea/</loc>
+            
+                <lastmod>2020-01-15</lastmod>
+>>>>>>> f2a53bc3364f112f0545b48325c36a3f74980d9e
             
         </url>
     
@@ -49,11 +55,16 @@
         </url>
     
         <url>
+<<<<<<< HEAD
             <loc>https://b.tinyops.ru/tags/linux/</loc>
+=======
+            <loc>https://b.tinyops.ru/tags/idea/</loc>
+>>>>>>> f2a53bc3364f112f0545b48325c36a3f74980d9e
             
         </url>
     
         <url>
+<<<<<<< HEAD
             <loc>https://b.tinyops.ru/tags/reshenie-problem/</loc>
             
         </url>
@@ -70,6 +81,9 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/windows/</loc>
+=======
+            <loc>https://b.tinyops.ru/tags/jetbrains/</loc>
+>>>>>>> f2a53bc3364f112f0545b48325c36a3f74980d9e
             
         </url>
     
