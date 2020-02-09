@@ -37,7 +37,16 @@ open_graph_title = "Блог TinyOps"
 open_graph_description = "О технологиях, подходах и решении проблем простым языком"
 open_graph_image = ""
 
+#----------------------------
+# YANDEX
+#----------------------------
+
 # Yandex.Metrika
 yandex_webmaster_verification_code = "578eb2cc5cb8a301"
 
 yandex_metrika_counter = "56992924"
+
+# Yandex Turbo Pages
+# https://yandex.ru/dev/turbo/
+yandex_turbo_pages = true
+yandex_turbo_pages_metrika_id = 56992924

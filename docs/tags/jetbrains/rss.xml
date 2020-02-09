@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom"
+
+     xmlns:yandex="http://news.yandex.ru"
+     xmlns:turbo="http://turbo.yandex.ru"
+
+     version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https://b.tinyops.ru</link>
+        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
-        <language>en</language>
-        <atom:link href="https://b.tinyops.ru/tags/jetbrains/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
+        <language>ru</language>
+        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <lastBuildDate>2020-01-15</lastBuildDate>
+
         
-            <item>
-                <title>java.lang.Exception: No tests found matching Method в IntelliJ Idea</title>
-                <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
-                <link>https://b.tinyops.ru/no-tests-found-idea/</link>
-                <guid>https://b.tinyops.ru/no-tests-found-idea/</guid>
-                <description>&lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
+        <turbo:analytics></turbo:analytics>
+        <turbo:adNetwork></turbo:adNetwork>
+        
+
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>java.lang.Exception: No tests found matching Method в IntelliJ Idea</title>
+            <pubDate>2020-01-15</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</guid>
+            <description>&lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
 Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
 со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;no-tests-found-matching-method&quot;&gt;No tests found matching Method&lt;&#x2F;h2&gt;
@@ -31,7 +46,37 @@
 &lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
 &lt;p&gt;Убить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта. &lt;&#x2F;p&gt;
 </description>
-            </item>
+            
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <metrics>
+                    <yandex schema_identifier="56992924">
+                        <breadcrumblist>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            
+
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/idea" text="Тэг idea"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/jetbrains" text="Тэг jetbrains"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea" text="java.lang.Exception: No tests found matching Method в IntelliJ Idea"/>
+                        </breadcrumblist>
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    <![CDATA[
+                            <!-- Содержимое 1 страницы -->
+                        ]]>
+                </turbo:content>
+            
+        </item>
+        
         
     </channel>
 </rss>
