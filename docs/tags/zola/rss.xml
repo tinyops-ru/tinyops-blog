@@ -15,8 +15,9 @@
         <lastBuildDate>2020-01-10</lastBuildDate>
 
         
-        <turbo:analytics></turbo:analytics>
-        <turbo:adNetwork></turbo:adNetwork>
+        <turbo:analytics type="Yandex"
+                         id="56992924"
+                         params="{}"></turbo:analytics>
         
 
         
