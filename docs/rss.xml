@@ -12,7 +12,7 @@
         <generator>Zola</generator>
         <language>ru</language>
         <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>2020-02-07</lastBuildDate>
+        <lastBuildDate>2020-02-09</lastBuildDate>
 
         
         <turbo:analytics type="Yandex"
@@ -20,6 +20,141 @@
                          params="{}"></turbo:analytics>
         
 
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Утилита для скриншотов от Яндекс</title>
+            <pubDate>2020-02-09</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/yandex-screenshot-tool</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/yandex-screenshot-tool</guid>
+            <description>Рассказ про очень удобную утилиту которая идет в комплекте с Яндекс.Диском</description>
+            
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <metrics>
+                    <yandex schema_identifier="56992924">
+                        <breadcrumblist>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/software" text="Категория software"/>
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/windows" text="Категория windows"/>
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/awesome" text="Категория awesome"/>
+                            
+
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/software" text="Тэг software"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/awesomeware" text="Тэг awesomeware"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/yandex-screenshot-tool" text="Утилита для скриншотов от Яндекс"/>
+                        </breadcrumblist>
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    &lt;p&gt;Этим постом я стартую рубрику про качественный софт (&lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;), 
+приложения которые существенно помогают в повседневности, быстры и написаны для людей.&lt;&#x2F;p&gt;
+&lt;p&gt;Есть прекрасная статья от Никиты Прокопова - &lt;a href=&quot;https:&#x2F;&#x2F;tonsky.me&#x2F;blog&#x2F;disenchantment&#x2F;ru&#x2F;&quot;&gt;Мое разочарование в софте&lt;&#x2F;a&gt;,
+цитата оттуда:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Компьютеры стали бытовым прибором, начать программировать легче, чем когда-либо, сложнейшие вещи делаются просто и даже тривиально, написаны горы готового кода. К сожалению, у этого есть и обратная сторона — программы становятся большими, медленными, неуправляемыми, непонимаемыми.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;За годы практики у меня накопился набор надежных утилит, которые я использую каждый день. Будет круто если о них узнает
+больше людей.&lt;&#x2F;p&gt;
+&lt;p&gt;Для каждого приложения, о котором буду писать, введем критерии оценки:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Удобство для пользователя&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Не нужно быть IT-специалистом чтобы пользоваться приложением, если приложение расчитано на широкий круг пользователей.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Высокая производительность&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Время ожидания для запуска в пределах 1 секунды.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Размер исполняемого файла&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+В пределах 10МБ - отлично.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Первой будет утилита для создания скриншотов от Яндекса. Выглядит она вот так:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;yst-1.png&quot; alt=&quot;alt text&quot; title=&quot;Скриншот из утилиты&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;chto-ponravilos&quot;&gt;Что понравилось&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Сделал скриншот - сохранил на Яндекс.Диск&lt;br &#x2F;&gt;
+Он доступен на всех устройствах где ты используешь сервис. С другими утилитами ты получаешь ссылку.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Полный инструментарий для скриншотов:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Создать снимок всего экрана&lt;&#x2F;li&gt;
+&lt;li&gt;Создать снимок активного окна&lt;&#x2F;li&gt;
+&lt;li&gt;Создать снимок выбранной области&lt;&#x2F;li&gt;
+&lt;li&gt;Расшарить скриншот в Интернет&lt;&#x2F;li&gt;
+&lt;li&gt;Добавить текст&lt;&#x2F;li&gt;
+&lt;li&gt;Добавить стрелки&lt;&#x2F;li&gt;
+&lt;li&gt;Замазать чувствительные данные&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Скорость запуска и работы&lt;br &#x2F;&gt;
+В пределах 1 секунды&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Настраиваемые горячие клавиши
+Я настроил PrintScreen на снимок области&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Горячая клавиша &lt;code&gt;Ctrl+S&lt;&#x2F;code&gt; сохраняет скриншот на яндекс диск и закрывает окно утилиты&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Скриншот открывается в отдельном окне&lt;br &#x2F;&gt;
+Вспоминаю как страдал когда пользовался Lightshot. Его особенность в том что инструменты добавлялись 
+к той области скриншот которой ты хочешь сделать. Это создавало проблему со скриншотами у краев экрана. 
+Часть инструментов LightShot пропадали за краями.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;nastroiki&quot;&gt;Настройки&lt;&#x2F;h2&gt;
+&lt;p&gt;Настройки к утилите живут на отдельной вкладке настроек Яндекс.Диска. Настроек немного, но их более чем достаточно:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;yst-2.png&quot; alt=&quot;alt text&quot; title=&quot;Вкладка настроек&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Я настроил для себя захват области на &lt;code&gt;PrintScreen&lt;&#x2F;code&gt;, остальное мне не нужно.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;otsenka-kachestva&quot;&gt;Оценка качества&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Удобство использования&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Интерфейс простой, но и не выглядит обрезанным. Набор дополнительных функций исчерпывающий, есть все функции необходимые
+для работы со скриншотами&lt;&#x2F;li&gt;
+&lt;li&gt;Полноценная поддержка горячих клавиш&lt;&#x2F;li&gt;
+&lt;li&gt;Интеграция с Яндекс.Диском&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Производительность&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Запуск и снятие скриншота в пределах 1 секунды&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Потребление ресурсов&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;5МБ на диске&lt;br &#x2F;&gt;
+Утилита поставляется вместе с Яндекс.Диском, в виде отдельного исполняемого файла&lt;&#x2F;li&gt;
+&lt;li&gt;23,8МБ в оперативной памяти&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;drugie-posty-na-etu-temu&quot;&gt;Другие посты на эту тему&lt;&#x2F;h2&gt;
+&lt;p&gt;Другие посты про удобный и быстрый софт вы можете посмотреть под тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+
+                </turbo:content>
+            
+        </item>
         
         <item
             

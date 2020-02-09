@@ -12,6 +12,26 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/awesome/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/software/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/software/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/tutorial/</loc>
             
         </url>
@@ -23,6 +43,16 @@
     
         <url>
             <loc>https://b.tinyops.ru/categories/tutorial/page/2/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/windows/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
             
         </url>
     
@@ -56,6 +86,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/awesomeware/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/idea/</loc>
             
         </url>
@@ -76,6 +111,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/software/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/ssh/</loc>
             
         </url>
@@ -92,6 +132,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/yandex-screenshot-tool/</loc>
+            
+                <lastmod>2020-02-09</lastmod>
             
         </url>
     
