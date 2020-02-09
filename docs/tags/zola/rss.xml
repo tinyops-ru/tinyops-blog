@@ -30,7 +30,30 @@
             <pubDate>2020-01-10</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</guid>
-            <description>&lt;p&gt;Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:&lt;&#x2F;p&gt;
+            <description>Пост про то как решать популярные проблемы при создании сайтов с Zola</description>
+            
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <metrics>
+                    <yandex schema_identifier="56992924">
+                        <breadcrumblist>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            
+
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-issues" text="Как решать проблемы с Zola"/>
+                        </breadcrumblist>
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    &lt;p&gt;Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;span style=&quot;color:#c0c5ce;&quot;&gt;Change detected @ 2020-01-11 18:37:14&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 -&amp;gt; Content changed C:\pro\tinyops-blog\content&#x2F;zola-issues.md&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
@@ -80,7 +103,21 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 &lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
-</description>
+
+                </turbo:content>
+            
+        </item>
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Как отобразить список тэгов в Zola</title>
+            <pubDate>2020-01-10</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
+            <description>Как настроить тэги в генераторе статических сайтов Zola</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -97,29 +134,13 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-issues" text="Как решать проблемы с Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
-                </turbo:content>
-            
-        </item>
-        
-        <item
-            
-                turbo="true"
-            
-            >
-            <title>Как отобразить список тэгов в Zola</title>
-            <pubDate>2020-01-10</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
-            <description>&lt;p&gt;В определенный момент мне захотелось чтобы на каждой странице отображался список тэгов,
+                    &lt;p&gt;В определенный момент мне захотелось чтобы на каждой странице отображался список тэгов,
 так как это упрощает навигацию по контенту.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;zola&#x2F;zola-tags.png&quot; alt=&quot;alt text&quot; title=&quot;Отображение тэгов к статье&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;У Zola есть красивый сайт с документацией, но покрытие примерами довольно слабое.
@@ -168,7 +189,21 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 &lt;p&gt;Пример отображения тэгов вы можете увидеть сразу под заголовком данной статьи.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
-</description>
+
+                </turbo:content>
+            
+        </item>
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Как подключить готовую тему к проекту на Zola</title>
+            <pubDate>2020-01-03</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
+            <description>Подключаем к нашему сайту готовую тему для Zola</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -185,29 +220,13 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
-                </turbo:content>
-            
-        </item>
-        
-        <item
-            
-                turbo="true"
-            
-            >
-            <title>Как подключить готовую тему к проекту на Zola</title>
-            <pubDate>2020-01-03</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
-            <description>&lt;p&gt;Прежде чем рассказать о том как подключить готовую тему стоит отметить что каждая тема в Zola это по сути такой же проект
+                    &lt;p&gt;Прежде чем рассказать о том как подключить готовую тему стоит отметить что каждая тема в Zola это по сути такой же проект
 как и ваш сайт. Одно из незначительных отличий - наличие файла &lt;code&gt;theme.toml&lt;&#x2F;code&gt;, в котором описывается конфигурация темы.&lt;&#x2F;p&gt;
 &lt;p&gt;Меня порадовал такой подход, поэтому у меня не вызвало каких-либо проблем собрать 
 &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme&quot;&gt;свою тему&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
@@ -257,7 +276,21 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 &lt;p&gt;Либо проблема из разряда популярных, я описал &lt;a href=&quot;&#x2F;zola-issues&#x2F;&quot;&gt;пару решений&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
-</description>
+
+                </turbo:content>
+            
+        </item>
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Структура каталогов в Zola</title>
+            <pubDate>2020-01-02</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
+            <description>Как устроена структура каталогов в генераторе статических сайтов Zola</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -274,29 +307,13 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-structure" text="Структура каталогов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
-                </turbo:content>
-            
-        </item>
-        
-        <item
-            
-                turbo="true"
-            
-            >
-            <title>Структура каталогов в Zola</title>
-            <pubDate>2020-01-02</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
-            <description>&lt;p&gt;После создания нового проекта в каталоге появится следующая структура:&lt;&#x2F;p&gt;
+                    &lt;p&gt;После создания нового проекта в каталоге появится следующая структура:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;span style=&quot;color:#c0c5ce;&quot;&gt;├── config.toml&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 ├── content&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
@@ -328,7 +345,21 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
 каталог пустым.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
-</description>
+
+                </turbo:content>
+            
+        </item>
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Генератор статических сайтов Zola</title>
+            <pubDate>2020-01-01</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
+            <description>Вводный пост про генератор статических сайтов Zola</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -345,29 +376,13 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-structure" text="Структура каталогов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-intro" text="Генератор статических сайтов Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
-                </turbo:content>
-            
-        </item>
-        
-        <item
-            
-                turbo="true"
-            
-            >
-            <title>Генератор статических сайтов Zola</title>
-            <pubDate>2020-01-01</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
-            <description>&lt;p&gt;Я узнал о &lt;a href=&quot;https:&#x2F;&#x2F;www.getzola.org&#x2F;&quot;&gt;Zola&lt;&#x2F;a&gt; из пятничной рассылки HackerNews. Так как в описании проекта значился Rust, 
+                    &lt;p&gt;Я узнал о &lt;a href=&quot;https:&#x2F;&#x2F;www.getzola.org&#x2F;&quot;&gt;Zola&lt;&#x2F;a&gt; из пятничной рассылки HackerNews. Так как в описании проекта значился Rust, 
 то я предположил что это должно быть как минимум очень быстрое решение.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;zola&#x2F;zola-official-site.png&quot; alt=&quot;alt text&quot; title=&quot;Официальный сайт Zola&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;В 2019-м я собрал 2 проекта на базе генератора &lt;a href=&quot;https:&#x2F;&#x2F;gohugo.io&#x2F;&quot;&gt;Hugo&lt;&#x2F;a&gt; и не сказал бы что это был приятный опыт.
@@ -439,32 +454,7 @@ Zola решает множество популярных проблем, тем
 &lt;p&gt;Где &lt;code&gt;$DEPLOY_URL&lt;&#x2F;code&gt; - адрес по которому будет крутиться сайт.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
-</description>
-            
-                <turbo:source></turbo:source>
-                <turbo:topic></turbo:topic>
-                <metrics>
-                    <yandex schema_identifier="56992924">
-                        <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
 
-                            
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
-                            
-
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
-                            
-
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-intro" text="Генератор статических сайтов Zola"/>
-                        </breadcrumblist>
-                    </yandex>
-                </metrics>
-                <yandex:related></yandex:related>
-                <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
                 </turbo:content>
             
         </item>

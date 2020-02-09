@@ -30,23 +30,7 @@
             <pubDate>2020-01-15</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</guid>
-            <description>&lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
-Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
-со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;no-tests-found-matching-method&quot;&gt;No tests found matching Method&lt;&#x2F;h2&gt;
-&lt;p&gt;Этот Exception можно словить при запуске unit-тестов. Вы гоняли, гоняли тесты и вдруг стало писать эту ошибку.
-Опытным путем удалось выявить, что ноги проблемы растут из относительно свежей Gradle фичи - &lt;a href=&quot;https:&#x2F;&#x2F;docs.gradle.org&#x2F;current&#x2F;userguide&#x2F;build_cache.html&quot;&gt;Build cache&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
-&lt;p&gt;Убить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта. &lt;&#x2F;p&gt;
-</description>
+            <description>Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -71,9 +55,23 @@
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    <![CDATA[
-                            <!-- Содержимое 1 страницы -->
-                        ]]>
+                    &lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
+Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
+со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;no-tests-found-matching-method&quot;&gt;No tests found matching Method&lt;&#x2F;h2&gt;
+&lt;p&gt;Этот Exception можно словить при запуске unit-тестов. Вы гоняли, гоняли тесты и вдруг стало писать эту ошибку.
+Опытным путем удалось выявить, что ноги проблемы растут из относительно свежей Gradle фичи - &lt;a href=&quot;https:&#x2F;&#x2F;docs.gradle.org&#x2F;current&#x2F;userguide&#x2F;build_cache.html&quot;&gt;Build cache&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
+&lt;p&gt;Убить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта. &lt;&#x2F;p&gt;
+
                 </turbo:content>
             
         </item>
