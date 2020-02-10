@@ -37,6 +37,8 @@ open_graph_title = "Блог TinyOps"
 open_graph_description = "О технологиях, подходах и решении проблем простым языком"
 open_graph_image = ""
 
+favicon_type = "image/vnd.microsoft.icon"
+
 #----------------------------
 # YANDEX
 #----------------------------
