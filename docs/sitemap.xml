@@ -57,6 +57,13 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/everything/</loc>
+            
+                <lastmod>2020-03-24</lastmod>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
             
                 <lastmod>2020-02-07</lastmod>
@@ -102,6 +109,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/linux/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/poisk/</loc>
             
         </url>
     
