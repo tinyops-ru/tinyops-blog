@@ -67,13 +67,6 @@
         </url>
     
         <url>
-            <loc>https://b.tinyops.ru/docker-and-php/</loc>
-            
-                <lastmod>2020-04-04</lastmod>
-            
-        </url>
-    
-        <url>
             <loc>https://b.tinyops.ru/everything/</loc>
             
                 <lastmod>2020-03-24</lastmod>
@@ -101,6 +94,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/page/2/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
+            
+                <lastmod>2020-04-04</lastmod>
             
         </url>
     

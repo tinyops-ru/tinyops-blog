@@ -28,8 +28,8 @@
             >
             <title>Как развернуть php приложение в Docker</title>
             <pubDate>2020-04-04</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/docker-and-php</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/docker-and-php</guid>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker</guid>
             <description>Как развернуть php приложение в Docker</description>
             
                 <turbo:source></turbo:source>
@@ -47,55 +47,53 @@
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/docker" text="Тэг docker"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/docker-and-php" text="Как развернуть php приложение в Docker"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker" text="Как развернуть php приложение в Docker"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
                 <yandex:related></yandex:related>
                 <turbo:content>
-                    &lt;p&gt;По ходу работы мне потребовалось мигрировать тройку php-приложений на новый сервер. На старом сервере был CentOS 6, зоопарк и набор
-недокументированных хаков. Т.к. я из мира JVM-языков, то мир php для меня чужой. Раз на новом сервере был CentOS 7, 
-то попутно возникла идея запаковать весь legacy зоопарк в Docker-образы.&lt;&#x2F;p&gt;
-&lt;p&gt;Такое оборачивание дает дополнительное преимущества:&lt;&#x2F;p&gt;
-&lt;ul&gt;
-&lt;li&gt;легко переключать версии приложения&lt;&#x2F;li&gt;
-&lt;li&gt;если кто-то хакнул приложение, то можно без привлечения внешних security-средств (например, tripwire) легко сдампить текущее состояние в файл, откатить
-до нехакнутого варианта. А дальше уже звать разработчиков и пусть роются в дампе :))&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;p&gt;За основу я взял образ с php 5.6 + Apache. Приложения требовали &lt;code&gt;ImageMagick&lt;&#x2F;code&gt;, &lt;code&gt;gd&lt;&#x2F;code&gt; и &lt;code&gt;zip&lt;&#x2F;code&gt;. Также требовалось установить
-часовой пояс сервера.&lt;&#x2F;p&gt;
-&lt;p&gt;Файлы приложения я сложил в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+                    &lt;p&gt;По ходу работы мне потребовалось мигрировать тройку php-приложений на новый сервер. На старом сервере был CentOS 6, зоопарк софта и набор
+недокументированных хаков. Т.к. я из мира JVM-языков, то мир php для меня чужой. 
+Чтобы минимизировать себе психологический урон в будущем, я решил собрать docker образ для каждого из приложений. &lt;&#x2F;p&gt;
+&lt;p&gt;Такое оборачивание дает дополнительное преимущество - если кто-то хакнул приложение, 
+то можно без привлечения внешних security-средств (например, tripwire) легко сдампить текущее состояние в файл, откатить
+до нехакнутого варианта. А дальше уже звать разработчиков и пусть роются в дампе :))&lt;&#x2F;p&gt;
+&lt;p&gt;За основу я взял образ с php 5.6 + Apache. Приложения требовали &lt;code&gt;ImageMagick&lt;&#x2F;code&gt;, &lt;code&gt;gd&lt;&#x2F;code&gt; и &lt;code&gt;zip&lt;&#x2F;code&gt;, 
+поэтому добавил их через скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt;. Также требовалось установить
+часовой пояс сервера, сделал это классическим &lt;code&gt;echo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Перед сборкой скопировал файлы приложения в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Файл сценария сборки - &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#a3be8c;&quot;&gt;FROM php:5.6-apache&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;FROM php:5.6-apache&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-                      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;libmagickwand-dev --no-install-recommends \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-                   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pecl install imagick \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;docker-php-ext-enable imagick&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+                      libmagickwand-dev --no-install-recommends \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+                   &amp;amp;&amp;amp; pecl install imagick \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        &amp;amp;&amp;amp; docker-php-ext-enable imagick&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;libfreetype6-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;libjpeg62-turbo-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;libpng-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;docker-php-ext-configure gd --with-freetype --with-jpeg \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;docker-php-ext-install -j$(nproc) gd \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;docker-php-ext-install -j$(nproc) zip&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libfreetype6-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libjpeg62-turbo-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libpng-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN echo &amp;quot;date.timezone = Europe&#x2F;Moscow&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN echo &amp;quot;date.timezone = Europe&#x2F;Moscow&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN a2enmod rewrite&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN service apache2 restart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN a2enmod rewrite&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN service apache2 restart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN chown -R www-data.www-data &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN chmod -R ug=rwx &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chown -R www-data.www-data &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chmod -R ug=rwx &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN mkdir &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;EXPOSE 80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN mkdir &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+EXPOSE 80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Собираем:&lt;&#x2F;p&gt;
