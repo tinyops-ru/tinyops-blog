@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Как развернуть php приложение в Docker | TinyOps :: Блог</title>
+
+
+  
+<meta name="description" content="Как развернуть php приложение в Docker">
+
+
+  <link rel="canonical" href="https:&#x2F;&#x2F;b.tinyops.ru">
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Как развернуть php приложение в Docker"/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  <!-- fonts -->
+  <!-- preload  -->
+  <link rel="preload"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900"
+        as="style">
+  <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"
+        as="style">
+  <!-- load -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Montserrat:200,300,300i,400,500,500i,600,700,800,900">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> TinyOps :: Блог
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Как развернуть php приложение в Docker
+  </h1>
+  
+<div class="frontmatter mb-1 font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-04-04">April 04, 2020</time>
+    </div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> слов 427</div>
+
+    <span class="text-secondary">-</span>
+
+    <div class="d-inline-block"> 3 мин</div>
+
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/docker/">docker</a>
+    
+  </div>
+
+  <p>По ходу работы мне потребовалось мигрировать тройку php-приложений на новый сервер. На старом сервере был CentOS 6, зоопарк софта и набор
+недокументированных хаков. Т.к. я из мира JVM-языков, то мир php для меня чужой. 
+Чтобы минимизировать себе психологический урон в будущем, я решил собрать docker образ для каждого из приложений. </p>
+<p>Такое оборачивание дает дополнительное преимущество - если кто-то хакнул приложение, 
+то можно без привлечения внешних security-средств (например, tripwire) легко сдампить текущее состояние в файл, откатить
+до нехакнутого варианта. А дальше уже звать разработчиков и пусть роются в дампе :))</p>
+<p>За основу я взял образ с php 5.6 + Apache. Приложения требовали <code>ImageMagick</code>, <code>gd</code> и <code>zip</code>, 
+поэтому добавил их через скрипт <code>docker-php-ext-install</code>. Также требовалось установить
+часовой пояс сервера, сделал это классическим <code>echo</code>.</p>
+<p>Перед сборкой скопировал файлы приложения в подкаталог <code>app</code>. </p>
+<p>Файл сценария сборки - <code>Dockerfile</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">FROM php:5.6-apache</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN apt-get update &amp;&amp; apt-get install -y \</span><span style="color:#c0c5ce;">
+                      libmagickwand-dev --no-install-recommends \</span><span style="color:#c0c5ce;">
+                   &amp;&amp; pecl install imagick \</span><span style="color:#c0c5ce;">
+        &amp;&amp; docker-php-ext-enable imagick</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN apt-get update &amp;&amp; apt-get install -y \</span><span style="color:#c0c5ce;">
+        libfreetype6-dev \</span><span style="color:#c0c5ce;">
+        libjpeg62-turbo-dev \</span><span style="color:#c0c5ce;">
+        libpng-dev \</span><span style="color:#c0c5ce;">
+    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \</span><span style="color:#c0c5ce;">
+    &amp;&amp; docker-php-ext-install -j$(nproc) gd \</span><span style="color:#c0c5ce;">
+    &amp;&amp; docker-php-ext-install -j$(nproc) zip</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN echo &quot;date.timezone = Europe/Moscow&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN a2enmod rewrite</span><span style="color:#c0c5ce;">
+RUN service apache2 restart</span><span style="color:#c0c5ce;">
+COPY app/ /var/www/html</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN chown -R www-data.www-data /var/www</span><span style="color:#c0c5ce;">
+RUN chmod -R ug=rwx /var/www</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+RUN mkdir /tmp/webmodule</span><span style="color:#c0c5ce;">
+RUN chmod a=rwx /tmp/webmodule</span><span style="color:#c0c5ce;">
+EXPOSE 80</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Собираем:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">docker build -t my-repo/my-app:1.0.0 .</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="kak-dobavliat-rasshireniia-dlia-php">Как добавлять расширения для php</h2>
+<p>Авторы PHP любезно предоставили скрипт <code>docker-php-ext-install</code> внутри базового контейнера. В примере выше видно как это
+использовать.</p>
+<h2 id="kak-ispol-zovat-svoi-php-ini">Как использовать свой php.ini</h2>
+<p>Добавляем в <code>Dockerfile</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#a3be8c;">COPY php.ini /usr/local/etc/php/</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="kak-reshit-problemu-s-pravami-dostupa">Как решить проблему с правами доступа</h2>
+<p>В <code>Dockerfile</code> есть пара команд, которые дают полные права для пользователя <code>www-data</code>, 
+а также задают ID пользователя и группы для него равные <code>1001</code>.
+На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
+которую использую как volume:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">...</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data</span><span style="color:#c0c5ce;">
+...</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="kak-ispol-zovat">Как использовать</h2>
+<p>С помощью docker compose можно завести вот так:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">version</span><span style="color:#c0c5ce;">: &#39;</span><span style="color:#a3be8c;">2</span><span style="color:#c0c5ce;">&#39;</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">services</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+  </span><span style="color:#bf616a;">phpfpm</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+    </span><span style="color:#bf616a;">image</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">my-repo/my-app:1.0.0</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#c0c5ce;">
+    </span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data</span><span style="color:#c0c5ce;">
+    </span><span style="color:#bf616a;">ports</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+      - &quot;</span><span style="color:#a3be8c;">9123:80</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#c0c5ce;">
+    </span><span style="color:#bf616a;">environment</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
+      - </span><span style="color:#a3be8c;">APACHE_RUN_USER=#1001</span><span style="color:#c0c5ce;">
+      - </span><span style="color:#a3be8c;">APACHE_RUN_GROUP=#1001</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Чтобы данные которые загружают юзеры сохранялись делаем volume.</p>
+<p>Стартуем:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">docker-compose up -d</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Приложение будет доступно на порту <code>9123</code>.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5"></footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>
