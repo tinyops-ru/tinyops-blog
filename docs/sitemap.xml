@@ -22,6 +22,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/ops/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/ops/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/software/</loc>
             
         </url>
@@ -53,6 +63,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/docker-and-php/</loc>
+            
+                <lastmod>2020-04-04</lastmod>
             
         </url>
     
@@ -94,6 +111,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/awesomeware/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/docker/</loc>
             
         </url>
     
