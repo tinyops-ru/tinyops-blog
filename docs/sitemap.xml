@@ -81,6 +81,13 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/nginx-websocket-proxy/</loc>
+            
+                <lastmod>2020-04-09</lastmod>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/no-tests-found-idea/</loc>
             
                 <lastmod>2020-01-15</lastmod>
@@ -94,6 +101,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/page/2/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/page/3/</loc>
             
         </url>
     
@@ -135,6 +147,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/nginx/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/poisk/</loc>
             
         </url>
@@ -156,6 +173,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/troubleshooting/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/web-sockets/</loc>
             
         </url>
     
