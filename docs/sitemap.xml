@@ -42,6 +42,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/tutorial/</loc>
             
         </url>
@@ -177,6 +187,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/vagrant/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/virtualbox/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/web-sockets/</loc>
             
         </url>
@@ -188,6 +208,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/virtualbox-inaccessible-vm/</loc>
+            
+                <lastmod>2020-05-02</lastmod>
             
         </url>
     
