@@ -30,7 +30,7 @@
             <pubDate>2020-01-10</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</guid>
-            <description>Пост про то как решать популярные проблемы при создании сайтов с Zola</description>
+            <description>Пост про то как решать популярные проблемы при создании сайтов с Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -117,7 +117,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-10</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
-            <description>Как настроить тэги в генераторе статических сайтов Zola</description>
+            <description>Как настроить тэги в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -203,7 +203,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-03</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
-            <description>Подключаем к нашему сайту готовую тему для Zola</description>
+            <description>Подключаем к нашему сайту готовую тему для Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -290,7 +290,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-02</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
-            <description>Как устроена структура каталогов в генераторе статических сайтов Zola</description>
+            <description>Как устроена структура каталогов в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -359,7 +359,7 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
             <pubDate>2020-01-01</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
-            <description>Вводный пост про генератор статических сайтов Zola</description>
+            <description>Вводный пост про генератор статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>

@@ -30,7 +30,7 @@
             <pubDate>2020-04-09</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</guid>
-            <description>Как настроить проксирование Web-сокетов с помощью Nginx</description>
+            <description>Как настроить проксирование Web-сокетов с помощью Nginx.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -89,7 +89,7 @@ HTTP запросов в Web-сокеты используется
             <pubDate>2020-02-07</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</guid>
-            <description>Пост про то как исправить глюки в консоли Windows 10 при подключении через SSH</description>
+            <description>Пост про то как исправить глюки в консоли Windows 10 при подключении через SSH.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -173,7 +173,7 @@ Microsoft выбрали верное направление. Десятки л�
             <pubDate>2020-01-15</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</guid>
-            <description>Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method</description>
+            <description>Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -228,7 +228,7 @@ Microsoft выбрали верное направление. Десятки л�
             <pubDate>2020-01-10</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</guid>
-            <description>Пост про то как решать популярные проблемы при создании сайтов с Zola</description>
+            <description>Пост про то как решать популярные проблемы при создании сайтов с Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -315,7 +315,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-10</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
-            <description>Как настроить тэги в генераторе статических сайтов Zola</description>
+            <description>Как настроить тэги в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -401,7 +401,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-03</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
-            <description>Подключаем к нашему сайту готовую тему для Zola</description>
+            <description>Подключаем к нашему сайту готовую тему для Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -488,7 +488,7 @@ The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:
             <pubDate>2020-01-02</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
-            <description>Как устроена структура каталогов в генераторе статических сайтов Zola</description>
+            <description>Как устроена структура каталогов в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -557,7 +557,7 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
             <pubDate>2020-01-01</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
-            <description>Вводный пост про генератор статических сайтов Zola</description>
+            <description>Вводный пост про генератор статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>

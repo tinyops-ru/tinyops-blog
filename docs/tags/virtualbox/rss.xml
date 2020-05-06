@@ -30,7 +30,7 @@
             <pubDate>2020-05-02</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/virtualbox-inaccessible-vm</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/virtualbox-inaccessible-vm</guid>
-            <description>Как починить проблему inaccessible vm</description>
+            <description>Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
