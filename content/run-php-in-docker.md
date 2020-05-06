@@ -1,6 +1,6 @@
 +++
 title = "Как развернуть php приложение в Docker"
-description = "Как развернуть php приложение в Docker"
+description = "Как развернуть php приложение в Docker."
 date = 2020-04-04
 
 [taxonomies]

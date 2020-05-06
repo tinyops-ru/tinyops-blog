@@ -1,6 +1,6 @@
 +++
 title = "Как починить проблему Inaccessible VM для VirtualBox и Vagrant"
-description = "Как починить проблему inaccessible vm"
+description = "Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm."
 date = 2020-05-02
 
 [taxonomies]
