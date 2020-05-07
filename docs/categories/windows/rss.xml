@@ -26,11 +26,11 @@
                 turbo="true"
             
             >
-            <title>Утилита для быстрого поиска Everything</title>
+            <title>Утилита для быстрого поиска файлов Everything</title>
             <pubDate>2020-03-24</pubDate>
             <link>https:&#x2F;&#x2F;b.tinyops.ru/everything</link>
             <guid>https:&#x2F;&#x2F;b.tinyops.ru/everything</guid>
-            <description>Рассказ про очень быструю утилиту для замены поиска в Windows.</description>
+            <description>Рассказ про очень быструю утилиту для поиска файлов в Windows. Альтернатива стандартному механизму поиска.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -52,10 +52,10 @@
                             
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/awesomeware" text="Тэг awesomeware"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/поиск" text="Тэг поиск"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/search" text="Тэг search"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/everything" text="Утилита для быстрого поиска Everything"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/everything" text="Утилита для быстрого поиска файлов Everything"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -70,15 +70,15 @@
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;everything-1.png&quot; alt=&quot;alt text&quot; title=&quot;Как выглядит главное окно программы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Автор любезно предоставил &lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;faq&#x2F;#%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_everything&quot;&gt;исчерпывающий FAQ&lt;&#x2F;a&gt; по архитектуре, особенностях работы и решении популярных проблем. &lt;&#x2F;p&gt;
-&lt;h2 id=&quot;chem-polezna-utilita&quot;&gt;Чем полезна утилита&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;chem-polezna-utilita&quot;&gt;Чем полезна утилита&lt;&#x2F;h3&gt;
 &lt;p&gt;Поиск по именам файлов.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;kak-nastroit&quot;&gt;Как настроить&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;kak-nastroit&quot;&gt;Как настроить&lt;&#x2F;h3&gt;
 &lt;p&gt;Настройка для утилиты минимальна, она отлично работает с настройками по умолчанию. Я лишь добавил горячую клавишу
 чтобы открывать и скрывать окно утилиты. &lt;&#x2F;p&gt;
 &lt;p&gt;В настройках указал комбинацию горячих клавиш - &lt;code&gt;Ctrl+F3&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;everything-2.png&quot; alt=&quot;alt text&quot; title=&quot;Главная горячая комбинация&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;По первому нажатию окно утилиты появляется, по следующему - исчезает.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;otsenka-kachestva&quot;&gt;Оценка качества&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;otsenka-kachestva&quot;&gt;Оценка качества&lt;&#x2F;h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Удобство использования&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
@@ -103,8 +103,8 @@
 &lt;&#x2F;ul&gt;
 &lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;h2 id=&quot;nedostatki&quot;&gt;Недостатки&lt;&#x2F;h2&gt;
-&lt;p&gt;В процессе написания статьи обнаружил недостаток. Приложение хранит свой индекс в оперативной памяти.
+&lt;h3 id=&quot;nedostatki&quot;&gt;Недостатки&lt;&#x2F;h3&gt;
+&lt;p&gt;В процессе написания статьи обнаружил недостаток. Приложение хранит свой поисковый индекс в оперативной памяти.
 В моем случае для ранения 3,5 миллиона записей она использует &lt;code&gt;173МБ&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Много ли системных ресурсов требуется Everything?&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
@@ -112,9 +112,10 @@
 В свежеустановленной Windows 10 (около 120 тыс. файлов) будет занято порядка 14 МБ ОЗУ и менее 9 МБ на диске.
 В системе с миллионом файлов будет занято примерно 75 МБ ОЗУ и 45 МБ на диске.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;h2 id=&quot;gde-skachat&quot;&gt;Где скачать&lt;&#x2F;h2&gt;
-&lt;p&gt;С официального сайта - &lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;drugie-posty-na-etu-temu&quot;&gt;Другие посты на эту тему&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;gde-skachat&quot;&gt;Где скачать&lt;&#x2F;h3&gt;
+&lt;p&gt;Everything абсолютно бесплатная утилита и доступна для скачивания на официальном сайте - 
+&lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;drugie-posty-na-etu-temu&quot;&gt;Другие посты на эту тему&lt;&#x2F;h3&gt;
 &lt;p&gt;Другие посты про удобный и быстрый софт вы можете посмотреть под тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 
                 </turbo:content>
