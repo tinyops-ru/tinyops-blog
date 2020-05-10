@@ -1,7 +1,7 @@
 +++
-title = "Как починить проблему Inaccessible VM для VirtualBox и Vagrant"
-description = "Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm."
-date = 2020-05-02
+title = "Как починить ошибку Inaccessible VM в VirtualBox и Vagrant"
+description = "Как вывести виртуальную машину Vagrant из состояния ошибки 'inaccessible vm'."
+date = 2020-05-10
 
 [taxonomies]
 tags = ["virtualbox", "vagrant"]
@@ -14,10 +14,10 @@ categories = ["troubleshooting"]
 > can not cleanly recover from. Please open VirtualBox and clear out your 
 > inaccessible virtual machines or find a way to fix them.
 
-Virtual Box маркирует виртуальную машину как inaccessible если не может её запустить и 
+Virtual Box маркирует виртуальную машину как `inaccessible` если не может её запустить и 
 не может сформулировать пользователю в чем же дело.
 
-Умники в интернетах конечно же предлагаю пересоздать машину с нуля, на подобие умников на форумах Microsoft. 
+Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)
 
 Для начала посмотрим список виртуальных машин:
@@ -31,7 +31,7 @@ $ VBoxManage list vms
 "supervisor-jolokia_default_1572425247238_89749" {ee47977e-11f2-47b4-a2af-756cfff524f2}
 ```
 
-Запоминаем уникальный ID проблемной виртуалки - `4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8`. 
+Запоминаем уникальный ID проблемной виртуальной машины - `4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8`. 
 
 Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:
 
@@ -53,7 +53,7 @@ vagrant up
 
 ### Что делать если у меня несколько проблемных машин?
 
-Бывают ситуации когда машин со статусом inaccessible может быть более чем одна. Можно перерегистрировать все, либо
+Бывают ситуации когда машин со статусом `inaccessible` может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.
 
 **Решение для Vagrant:**
