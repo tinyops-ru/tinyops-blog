@@ -6,7 +6,7 @@
 
      version="2.0">
     <channel>
-        <title>TinyOps :: Блог</title>
+        <title>Блог TinyOps</title>
         <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
