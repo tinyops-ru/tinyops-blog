@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://blog.cronbox.ru/sitemap.xml
+Sitemap: https://b.tinyops.ru/sitemap.xml

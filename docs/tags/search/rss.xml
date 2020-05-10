@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
+        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-03-24</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Утилита для быстрого поиска файлов Everything</title>
             <pubDate>2020-03-24</pubDate>
-            <link>https:&#x2F;&#x2F;blog.cronbox.ru/everything</link>
-            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/everything</guid>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/everything</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/everything</guid>
             <description>Рассказ про очень быструю утилиту для поиска файлов в Windows. Альтернатива стандартному механизму поиска.</description>
             
                 <turbo:source></turbo:source>
@@ -37,25 +37,25 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/software" text="Категория software"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/software" text="Категория software"/>
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/windows" text="Категория windows"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/windows" text="Категория windows"/>
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/awesome" text="Категория awesome"/>
-                            
-
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/software" text="Тэг software"/>
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/awesomeware" text="Тэг awesomeware"/>
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/search" text="Тэг search"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/awesome" text="Категория awesome"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/everything" text="Утилита для быстрого поиска файлов Everything"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/software" text="Тэг software"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/awesomeware" text="Тэг awesomeware"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/search" text="Тэг search"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/everything" text="Утилита для быстрого поиска файлов Everything"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>

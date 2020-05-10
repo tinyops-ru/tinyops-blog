@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
+        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-02-07</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Как исправить глюки в консоли Windows 10 при подключении через SSH</title>
             <pubDate>2020-02-07</pubDate>
-            <link>https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10</link>
-            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10</guid>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</guid>
             <description>Пост про то как исправить глюки в консоли Windows 10 при подключении через SSH.</description>
             
                 <turbo:source></turbo:source>
@@ -37,25 +37,25 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/windows" text="Тэг windows"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/windows" text="Тэг windows"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/linux" text="Тэг linux"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/linux" text="Тэг linux"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/ssh" text="Тэг ssh"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/ssh" text="Тэг ssh"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/решение проблем" text="Тэг решение проблем"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/решение проблем" text="Тэг решение проблем"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/troubleshooting" text="Тэг troubleshooting"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/troubleshooting" text="Тэг troubleshooting"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10" text="Как исправить глюки в консоли Windows 10 при подключении через SSH"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10" text="Как исправить глюки в консоли Windows 10 при подключении через SSH"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
