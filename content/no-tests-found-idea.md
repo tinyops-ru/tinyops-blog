@@ -1,6 +1,6 @@
 +++
-title = "java.lang.Exception: No tests found matching Method в IntelliJ Idea"
-description = "Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method."
+title = "Как исправить ошибку No tests found matching Method в IntelliJ IDEA"
+description = "Как исправить популярную проблему в JetBrains IntelliJ IDEA - No tests found matching Method."
 date = 2020-01-15
 
 [taxonomies]
