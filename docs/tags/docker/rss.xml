@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
+        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-04-04</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Как развернуть php приложение в Docker</title>
             <pubDate>2020-04-04</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/run-php-in-docker</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/run-php-in-docker</guid>
             <description>Как развернуть php приложение в Docker.</description>
             
                 <turbo:source></turbo:source>
@@ -37,17 +37,17 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/ops" text="Категория ops"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/ops" text="Категория ops"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/docker" text="Тэг docker"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/docker" text="Тэг docker"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/run-php-in-docker" text="Как развернуть php приложение в Docker"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/run-php-in-docker" text="Как развернуть php приложение в Docker"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>

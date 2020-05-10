@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
+        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-01-10</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Как решать проблемы с Zola</title>
             <pubDate>2020-01-10</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues</guid>
             <description>Пост про то как решать популярные проблемы при создании сайтов с Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -37,17 +37,17 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-issues" text="Как решать проблемы с Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues" text="Как решать проблемы с Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -115,8 +115,8 @@ The requested port is not available
             >
             <title>Как отобразить список тэгов в Zola</title>
             <pubDate>2020-01-10</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags</guid>
             <description>Как настроить тэги в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -124,17 +124,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -201,8 +201,8 @@ The requested port is not available
             >
             <title>Как подключить готовую тему к проекту на Zola</title>
             <pubDate>2020-01-03</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme</guid>
             <description>Подключаем к нашему сайту готовую тему для Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -210,17 +210,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -288,8 +288,8 @@ The requested port is not available
             >
             <title>Структура каталогов в Zola</title>
             <pubDate>2020-01-02</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure</guid>
             <description>Как устроена структура каталогов в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -297,17 +297,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-structure" text="Структура каталогов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure" text="Структура каталогов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -357,8 +357,8 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
             >
             <title>Генератор статических сайтов Zola</title>
             <pubDate>2020-01-01</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro</guid>
             <description>Вводный пост про генератор статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -366,17 +366,17 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-intro" text="Генератор статических сайтов Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro" text="Генератор статических сайтов Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>

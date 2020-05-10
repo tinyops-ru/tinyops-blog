@@ -7,11 +7,11 @@
 
   <!-- SEO -->
   
-<title>java.lang.Exception: No tests found matching Method в IntelliJ Idea | TinyOps :: Блог</title>
+<title>Как исправить ошибку - No tests found matching Method в IntelliJ IDEA | TinyOps :: Блог</title>
 
 
   
-<meta name="Description" content="Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method.">
+<meta name="Description" content="Как исправить популярную проблему в JetBrains IntelliJ IDEA - No tests found matching Method.">
 
 
   
@@ -23,7 +23,7 @@
   
 
   
-<meta property="og:description" content="Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method."/>
+<meta property="og:description" content="Как исправить популярную проблему в JetBrains IntelliJ IDEA - No tests found matching Method."/>
 
 
   
@@ -53,7 +53,7 @@
         rel="stylesheet">
 
   <!-- theme -->
-  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;blog.cronbox.ru/tinyblog.css">
 
   
 </head>
@@ -63,7 +63,7 @@
 <nav id="overlord" class="overlord">
   
 <div id="logo" class="p-4">
-    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+    <a href="https:&#x2F;&#x2F;blog.cronbox.ru" title="Вернуться на главную страницу">
         <i class="logo__icon fas fa-chevron-left mr-1"></i> TinyOps :: Блог
     </a>
 </div>
@@ -73,7 +73,7 @@
 <section class="container">
   
   <h1 class="page-title mt-0">
-    java.lang.Exception: No tests found matching Method в IntelliJ Idea
+    Как исправить ошибку - No tests found matching Method в IntelliJ IDEA
   </h1>
   
 <div class="frontmatter font-weight-bold">
@@ -93,11 +93,11 @@
     
   </div>
 
-  <p>Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
+  <p>Даже на момент написания статьи в связке JetBrains IDEA + Gradle хватает проблем с окривевшими кэшами. 
 Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
-со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.</p>
-<h2 id="no-tests-found-matching-method">No tests found matching Method</h2>
-<p>Этот Exception можно словить при запуске unit-тестов. Вы гоняли, гоняли тесты и вдруг стало писать эту ошибку.
+со всея-IDE от JetBrains знают что скорей всего пришел момент проверки актуальности кэшей (инвалидации) Gradle, либо их очистки.</p>
+<h3 id="oshibka-no-tests-found-matching-method">Ошибка - No tests found matching Method</h3>
+<p>Это исключение можно словить при запуске unit-тестов. Вы запускали тесты и вдруг стало писать эту ошибку.
 Опытным путем удалось выявить, что ноги проблемы растут из относительно свежей Gradle фичи - <a href="https://docs.gradle.org/current/userguide/build_cache.html">Build cache</a>.</p>
 <blockquote>
 <p>Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.</p>
@@ -106,9 +106,11 @@
 <pre style="background-color:#2b303b;">
 <span style="color:#c0c5ce;">org.gradle.caching=</span><span style="color:#a3be8c;">true
 </span></pre>
-<p>На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.</p>
+<p>На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
+Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог <code>out</code> и перестает
+видеть изменения в тестах.</p>
 <h2 id="reshenie">Решение</h2>
-<p>Убить каталоги <code>build</code> и <code>out</code> в корне проекта. </p>
+<p>Удалить каталоги <code>build</code> и <code>out</code> в корне проекта.</p>
 
   
 </section>

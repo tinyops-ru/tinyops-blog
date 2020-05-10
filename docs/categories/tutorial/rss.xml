@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
+        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-04-09</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Настройка Nginx для проксирования Web-сокетов</title>
             <pubDate>2020-04-09</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy</guid>
             <description>Как настроить проксирование Web-сокетов с помощью Nginx.</description>
             
                 <turbo:source></turbo:source>
@@ -37,19 +37,19 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/nginx" text="Тэг nginx"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/nginx" text="Тэг nginx"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/web-sockets" text="Тэг web-sockets"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/web-sockets" text="Тэг web-sockets"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy" text="Настройка Nginx для проксирования Web-сокетов"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy" text="Настройка Nginx для проксирования Web-сокетов"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -87,8 +87,8 @@ HTTP запросов в Web-сокеты используется
             >
             <title>Как исправить глюки в консоли Windows 10 при подключении через SSH</title>
             <pubDate>2020-02-07</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10</guid>
             <description>Пост про то как исправить глюки в консоли Windows 10 при подключении через SSH.</description>
             
                 <turbo:source></turbo:source>
@@ -96,25 +96,25 @@ HTTP запросов в Web-сокеты используется
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/windows" text="Тэг windows"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/windows" text="Тэг windows"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/linux" text="Тэг linux"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/linux" text="Тэг linux"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/ssh" text="Тэг ssh"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/ssh" text="Тэг ssh"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/решение проблем" text="Тэг решение проблем"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/решение проблем" text="Тэг решение проблем"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/troubleshooting" text="Тэг troubleshooting"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/troubleshooting" text="Тэг troubleshooting"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/fix-console-glitches-windows-10" text="Как исправить глюки в консоли Windows 10 при подключении через SSH"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/fix-console-glitches-windows-10" text="Как исправить глюки в консоли Windows 10 при подключении через SSH"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -169,65 +169,10 @@ Microsoft выбрали верное направление. Десятки л�
                 turbo="true"
             
             >
-            <title>java.lang.Exception: No tests found matching Method в IntelliJ Idea</title>
-            <pubDate>2020-01-15</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea</guid>
-            <description>Как исправить популярную проблему в JetBrains IntelliJ Idea - No tests found matching Method.</description>
-            
-                <turbo:source></turbo:source>
-                <turbo:topic></turbo:topic>
-                <metrics>
-                    <yandex schema_identifier="56992924">
-                        <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
-
-                            
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
-                            
-
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/idea" text="Тэг idea"/>
-                            
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/jetbrains" text="Тэг jetbrains"/>
-                            
-
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/no-tests-found-idea" text="java.lang.Exception: No tests found matching Method в IntelliJ Idea"/>
-                        </breadcrumblist>
-                    </yandex>
-                </metrics>
-                <yandex:related></yandex:related>
-                <turbo:content>
-                    &lt;p&gt;Даже на момент 15 января 2020 года в связке JetBrains Idea + Gradle хватает проблем с окривевшими кэшами. 
-Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
-со всея-IDE от JetBrains знают что скорей всего пришел момент инвалидации кэшей, либо чистки кэшей Gradle.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;no-tests-found-matching-method&quot;&gt;No tests found matching Method&lt;&#x2F;h2&gt;
-&lt;p&gt;Этот Exception можно словить при запуске unit-тестов. Вы гоняли, гоняли тесты и вдруг стало писать эту ошибку.
-Опытным путем удалось выявить, что ноги проблемы растут из относительно свежей Gradle фичи - &lt;a href=&quot;https:&#x2F;&#x2F;docs.gradle.org&#x2F;current&#x2F;userguide&#x2F;build_cache.html&quot;&gt;Build cache&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
-&lt;p&gt;Убить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта. &lt;&#x2F;p&gt;
-
-                </turbo:content>
-            
-        </item>
-        
-        <item
-            
-                turbo="true"
-            
-            >
             <title>Как решать проблемы с Zola</title>
             <pubDate>2020-01-10</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-issues</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues</guid>
             <description>Пост про то как решать популярные проблемы при создании сайтов с Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -235,17 +180,17 @@ Microsoft выбрали верное направление. Десятки л�
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-issues" text="Как решать проблемы с Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-issues" text="Как решать проблемы с Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -313,8 +258,8 @@ The requested port is not available
             >
             <title>Как отобразить список тэгов в Zola</title>
             <pubDate>2020-01-10</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-tags</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags</guid>
             <description>Как настроить тэги в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -322,17 +267,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-tags" text="Как отобразить список тэгов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -399,8 +344,8 @@ The requested port is not available
             >
             <title>Как подключить готовую тему к проекту на Zola</title>
             <pubDate>2020-01-03</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme</guid>
             <description>Подключаем к нашему сайту готовую тему для Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -408,17 +353,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-set-theme" text="Как подключить готовую тему к проекту на Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -486,8 +431,8 @@ The requested port is not available
             >
             <title>Структура каталогов в Zola</title>
             <pubDate>2020-01-02</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-structure</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure</guid>
             <description>Как устроена структура каталогов в генераторе статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -495,17 +440,17 @@ The requested port is not available
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-structure" text="Структура каталогов в Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-structure" text="Структура каталогов в Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -555,8 +500,8 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
             >
             <title>Генератор статических сайтов Zola</title>
             <pubDate>2020-01-01</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/zola-intro</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro</guid>
             <description>Вводный пост про генератор статических сайтов Zola.</description>
             
                 <turbo:source></turbo:source>
@@ -564,17 +509,17 @@ Zola поддерживает жесткие ссылки (hardlink), это п�
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zola" text="Тэг zola"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/zola" text="Тэг zola"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/zola-intro" text="Генератор статических сайтов Zola"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/zola-intro" text="Генератор статических сайтов Zola"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>

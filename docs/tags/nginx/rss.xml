@@ -7,11 +7,11 @@
      version="2.0">
     <channel>
         <title>TinyOps :: Блог</title>
-        <link>https:&#x2F;&#x2F;b.tinyops.ru</link>
+        <link>https:&#x2F;&#x2F;blog.cronbox.ru</link>
         <description>О технологиях, подходах и решении проблем простым языком</description>
         <generator>Zola</generator>
         <language>ru</language>
-        <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
+        <atom:link href="https:&#x2F;&#x2F;blog.cronbox.ru/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>2020-04-09</lastBuildDate>
 
         
@@ -28,8 +28,8 @@
             >
             <title>Настройка Nginx для проксирования Web-сокетов</title>
             <pubDate>2020-04-09</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy</guid>
+            <link>https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy</link>
+            <guid>https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy</guid>
             <description>Как настроить проксирование Web-сокетов с помощью Nginx.</description>
             
                 <turbo:source></turbo:source>
@@ -37,19 +37,19 @@
                 <metrics>
                     <yandex schema_identifier="56992924">
                         <breadcrumblist>
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/" text="Главная"/>
 
                             
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/categories/tutorial" text="Категория tutorial"/>
                             
 
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/nginx" text="Тэг nginx"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/nginx" text="Тэг nginx"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/web-sockets" text="Тэг web-sockets"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/tags/web-sockets" text="Тэг web-sockets"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/nginx-websocket-proxy" text="Настройка Nginx для проксирования Web-сокетов"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;blog.cronbox.ru/nginx-websocket-proxy" text="Настройка Nginx для проксирования Web-сокетов"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
