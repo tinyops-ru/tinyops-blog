@@ -15,7 +15,7 @@ generate_rss = true
 
 theme = "tinyblog"
 
-title = "TinyOps :: Блог"
+title = "Блог TinyOps"
 description = "О технологиях, подходах и решении проблем простым языком"
 
 taxonomies = [
