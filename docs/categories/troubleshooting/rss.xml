@@ -12,7 +12,7 @@
         <generator>Zola</generator>
         <language>ru</language>
         <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>2020-05-02</lastBuildDate>
+        <lastBuildDate>2020-05-10</lastBuildDate>
 
         
         <turbo:analytics type="Yandex"
@@ -26,11 +26,11 @@
                 turbo="true"
             
             >
-            <title>Как починить проблему Inaccessible VM для VirtualBox и Vagrant</title>
-            <pubDate>2020-05-02</pubDate>
-            <link>https:&#x2F;&#x2F;b.tinyops.ru/virtualbox-inaccessible-vm</link>
-            <guid>https:&#x2F;&#x2F;b.tinyops.ru/virtualbox-inaccessible-vm</guid>
-            <description>Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm.</description>
+            <title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
+            <pubDate>2020-05-10</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/how-to-fix-error-inaccessible-vm</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/how-to-fix-error-inaccessible-vm</guid>
+            <description>Как вывести виртуальную машину Vagrant из состояния ошибки &#x27;inaccessible vm&#x27;.</description>
             
                 <turbo:source></turbo:source>
                 <turbo:topic></turbo:topic>
@@ -49,7 +49,7 @@
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/vagrant" text="Тэг vagrant"/>
                             
 
-                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/virtualbox-inaccessible-vm" text="Как починить проблему Inaccessible VM для VirtualBox и Vagrant"/>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/how-to-fix-error-inaccessible-vm" text="Как починить ошибку Inaccessible VM в VirtualBox и Vagrant"/>
                         </breadcrumblist>
                     </yandex>
                 </metrics>
@@ -61,40 +61,40 @@
 can not cleanly recover from. Please open VirtualBox and clear out your 
 inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;Virtual Box маркирует виртуальную машину как inaccessible если не может её запустить и 
+&lt;p&gt;Virtual Box маркирует виртуальную машину как &lt;code&gt;inaccessible&lt;&#x2F;code&gt; если не может её запустить и 
 не может сформулировать пользователю в чем же дело.&lt;&#x2F;p&gt;
-&lt;p&gt;Умники в интернетах конечно же предлагаю пересоздать машину с нуля, на подобие умников на форумах Microsoft. 
+&lt;p&gt;Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)&lt;&#x2F;p&gt;
 &lt;p&gt;Для начала посмотрим список виртуальных машин:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; VBoxManage list vms&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;prometheus_default_1562491030033_47028&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;bamboo-agent-centos7_default_1568705322865_68355&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; VBoxManage list vms
+
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;prometheus_default_1562491030033_47028&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;bamboo-agent-centos7_default_1568705322865_68355&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Запоминаем уникальный ID проблемной виртуалки - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Запоминаем уникальный ID проблемной виртуальной машины - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;И снова регистрируем:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Теперь можно поднять машину как и планировали первоначально:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;vagrant&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; up&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;vagrant&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; up
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin&quot;&gt;Что делать если у меня несколько проблемных машин?&lt;&#x2F;h3&gt;
-&lt;p&gt;Бывают ситуации когда машин со статусом inaccessible может быть более чем одна. Можно перерегистрировать все, либо
+&lt;p&gt;Бывают ситуации когда машин со статусом &lt;code&gt;inaccessible&lt;&#x2F;code&gt; может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Решение для Vagrant:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в каталог с Vagrantfile и читаем UUID:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На этом все.&lt;&#x2F;p&gt;
 

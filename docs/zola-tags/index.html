@@ -113,9 +113,9 @@
 <li>
 <p>В файле-конфигурации темы <code>theme.toml</code> нужно подключить taxonomies:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">taxonomies </span><span style="color:#c0c5ce;">= [</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">    {</span><span style="color:#bf616a;">name </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">tags</span><span style="color:#c0c5ce;">&quot;, </span><span style="color:#bf616a;">rss </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">true</span><span style="color:#c0c5ce;">}</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">]</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">taxonomies </span><span style="color:#c0c5ce;">= [
+</span><span style="color:#c0c5ce;">    {</span><span style="color:#bf616a;">name </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">tags</span><span style="color:#c0c5ce;">&quot;, </span><span style="color:#bf616a;">rss </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">true</span><span style="color:#c0c5ce;">}
+</span><span style="color:#c0c5ce;">]
 </span></pre></li>
 <li>
 <p>В шаблоне <code>page.html</code> добавить HTML-код<br />
@@ -125,16 +125,16 @@
 Затем использовать цикл for чтобы пробежаться по списку.</p>
 <p>Например, вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">{% </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">tagName </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">page</span><span style="color:#c0c5ce;">.</span><span style="color:#bf616a;">taxonomies</span><span style="color:#c0c5ce;">[&#39;</span><span style="color:#a3be8c;">tags</span><span style="color:#c0c5ce;">&#39;] %}</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">a </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">btn btn-tiny btn-light</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">href</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">/tags/{{tagName}}/</span><span style="color:#c0c5ce;">&quot;&gt;{{</span><span style="color:#bf616a;">tagName</span><span style="color:#c0c5ce;">}}&lt;/</span><span style="color:#bf616a;">a</span><span style="color:#c0c5ce;">&gt;</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">{% </span><span style="color:#b48ead;">endfor </span><span style="color:#c0c5ce;">%}</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">{% </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">tagName </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">page</span><span style="color:#c0c5ce;">.</span><span style="color:#bf616a;">taxonomies</span><span style="color:#c0c5ce;">[&#39;</span><span style="color:#a3be8c;">tags</span><span style="color:#c0c5ce;">&#39;] %}
+</span><span style="color:#c0c5ce;">    &lt;</span><span style="color:#bf616a;">a </span><span style="color:#d08770;">class</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">btn btn-tiny btn-light</span><span style="color:#c0c5ce;">&quot; </span><span style="color:#d08770;">href</span><span style="color:#c0c5ce;">=&quot;</span><span style="color:#a3be8c;">/tags/{{tagName}}/</span><span style="color:#c0c5ce;">&quot;&gt;{{</span><span style="color:#bf616a;">tagName</span><span style="color:#c0c5ce;">}}&lt;/</span><span style="color:#bf616a;">a</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">{% </span><span style="color:#b48ead;">endfor </span><span style="color:#c0c5ce;">%}
 </span></pre></li>
 <li>
 <p>Настроить тэги для поста<br />
 Во frontmatter-части файла с постом нужно добавить описание тэгов. Например, вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[taxonomies]</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">tags </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">zola</span><span style="color:#c0c5ce;">&quot;]</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">[taxonomies]
+</span><span style="color:#bf616a;">tags </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">zola</span><span style="color:#c0c5ce;">&quot;]
 </span></pre></li>
 </ol>
 <p>Пример отображения тэгов вы можете увидеть сразу под заголовком данной статьи.</p>

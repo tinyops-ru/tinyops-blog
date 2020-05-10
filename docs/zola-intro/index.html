@@ -135,30 +135,30 @@ Zola решает множество популярных проблем, тем
 Поддерживаются самые популярные ОС (Windows, MacOS), различные редакции Linux и даже FreeBSD.</p>
 <p>Для Windows предпочитаю <a href="http://scoop.sh/">Scoop</a>, то и ставил через него:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">scoop install zola</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">scoop install zola
 </span></pre>
 <p>Вот и все :)</p>
 <h2 id="kak-sozdat-novyi-proekt">Как создать новый проект</h2>
 <p>Достаточно запустить zola с командой <code>init</code>:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">zola init</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">zola init
 </span></pre>
 <p>Zola спросит пару вопросов в интерактивном режиме и скелет проекта сайта будет готов.
 Чтобы задать имя каталога, то его можно указать последним аргументом:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">zola init awesome-blog</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">zola init awesome-blog
 </span></pre><h2 id="kak-zapustit-zola-v-rezhime-razrabotki">Как запустить Zola в режиме разработки</h2>
 <p>Режим разработки позволяет смотреть на итоговый результат в режиме реального времени. Любые изменения в каталоге проекта
 будут мгновенно отображаться в браузере.</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">zola serve</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">zola serve
 </span></pre>
 <p>По умолчанию приложение будет доступно в браузере по адресу <a href="http://127.0.0.1:1111">http://127.0.0.1:1111</a></p>
 <h2 id="kak-sobrat-production-ready-sborku">Как собрать production-ready сборку</h2>
 <p>Production-ready сборка это сборка которая скомпонована генератором с учетом всех возможных оптимизаций. Она готова
 для того чтобы загрузить на ваш сайт.</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">zola build --base-url $DEPLOY_URL</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">zola build --base-url $DEPLOY_URL
 </span></pre>
 <p>Где <code>$DEPLOY_URL</code> - адрес по которому будет крутиться сайт.</p>
 <h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>

@@ -103,77 +103,77 @@
 <p>Перед сборкой скопировал файлы приложения в подкаталог <code>app</code>. </p>
 <p>Файл сценария сборки - <code>Dockerfile</code>:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">FROM php:5.6-apache</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN apt-get update &amp;&amp; apt-get install -y \</span><span style="color:#c0c5ce;">
-                      libmagickwand-dev --no-install-recommends \</span><span style="color:#c0c5ce;">
-                   &amp;&amp; pecl install imagick \</span><span style="color:#c0c5ce;">
-        &amp;&amp; docker-php-ext-enable imagick</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN apt-get update &amp;&amp; apt-get install -y \</span><span style="color:#c0c5ce;">
-        libfreetype6-dev \</span><span style="color:#c0c5ce;">
-        libjpeg62-turbo-dev \</span><span style="color:#c0c5ce;">
-        libpng-dev \</span><span style="color:#c0c5ce;">
-    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \</span><span style="color:#c0c5ce;">
-    &amp;&amp; docker-php-ext-install -j$(nproc) gd \</span><span style="color:#c0c5ce;">
-    &amp;&amp; docker-php-ext-install -j$(nproc) zip</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN echo &quot;date.timezone = Europe/Moscow&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN a2enmod rewrite</span><span style="color:#c0c5ce;">
-RUN service apache2 restart</span><span style="color:#c0c5ce;">
-COPY app/ /var/www/html</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN chown -R www-data.www-data /var/www</span><span style="color:#c0c5ce;">
-RUN chmod -R ug=rwx /var/www</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-RUN mkdir /tmp/webmodule</span><span style="color:#c0c5ce;">
-RUN chmod a=rwx /tmp/webmodule</span><span style="color:#c0c5ce;">
-EXPOSE 80</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">FROM php:5.6-apache
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+                      libmagickwand-dev --no-install-recommends \
+                   &amp;&amp; pecl install imagick \
+        &amp;&amp; docker-php-ext-enable imagick
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+    &amp;&amp; docker-php-ext-install -j$(nproc) gd \
+    &amp;&amp; docker-php-ext-install -j$(nproc) zip
+
+RUN echo &quot;date.timezone = Europe/Moscow&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini
+
+RUN a2enmod rewrite
+RUN service apache2 restart
+COPY app/ /var/www/html
+
+RUN usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data
+
+RUN chown -R www-data.www-data /var/www
+RUN chmod -R ug=rwx /var/www
+
+RUN mkdir /tmp/webmodule
+RUN chmod a=rwx /tmp/webmodule
+EXPOSE 80
+
 </span></pre>
 <p>Собираем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">docker build -t my-repo/my-app:1.0.0 .</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">docker build -t my-repo/my-app:1.0.0 .
 </span></pre><h2 id="kak-dobavliat-rasshireniia-dlia-php">Как добавлять расширения для php</h2>
 <p>Авторы PHP любезно предоставили скрипт <code>docker-php-ext-install</code> внутри базового контейнера. В примере выше видно как это
 использовать.</p>
 <h2 id="kak-ispol-zovat-svoi-php-ini">Как использовать свой php.ini</h2>
 <p>Добавляем в <code>Dockerfile</code>:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#a3be8c;">COPY php.ini /usr/local/etc/php/</span><span style="color:#c0c5ce;">
+<span style="color:#a3be8c;">COPY php.ini /usr/local/etc/php/
 </span></pre><h2 id="kak-reshit-problemu-s-pravami-dostupa">Как решить проблему с правами доступа</h2>
 <p>В <code>Dockerfile</code> есть пара команд, которые дают полные права для пользователя <code>www-data</code>, 
 а также задают ID пользователя и группы для него равные <code>1001</code>.
 На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
 которую использую как volume:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">...</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data</span><span style="color:#c0c5ce;">
-...</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">...
+</span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:
+      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data
+</span><span style="color:#c0c5ce;">...
 </span></pre><h2 id="kak-ispol-zovat">Как использовать</h2>
 <p>С помощью docker compose можно завести вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">version</span><span style="color:#c0c5ce;">: &#39;</span><span style="color:#a3be8c;">2</span><span style="color:#c0c5ce;">&#39;</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">services</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-  </span><span style="color:#bf616a;">phpfpm</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-    </span><span style="color:#bf616a;">image</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">my-repo/my-app:1.0.0</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#c0c5ce;">
-    </span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data</span><span style="color:#c0c5ce;">
-    </span><span style="color:#bf616a;">ports</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-      - &quot;</span><span style="color:#a3be8c;">9123:80</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#c0c5ce;">
-    </span><span style="color:#bf616a;">environment</span><span style="color:#c0c5ce;">:</span><span style="color:#c0c5ce;">
-      - </span><span style="color:#a3be8c;">APACHE_RUN_USER=#1001</span><span style="color:#c0c5ce;">
-      - </span><span style="color:#a3be8c;">APACHE_RUN_GROUP=#1001</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">version</span><span style="color:#c0c5ce;">: &#39;</span><span style="color:#a3be8c;">2</span><span style="color:#c0c5ce;">&#39;
+
+</span><span style="color:#bf616a;">services</span><span style="color:#c0c5ce;">:
+  </span><span style="color:#bf616a;">phpfpm</span><span style="color:#c0c5ce;">:
+    </span><span style="color:#bf616a;">image</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">my-repo/my-app:1.0.0</span><span style="color:#c0c5ce;">&quot;
+    </span><span style="color:#bf616a;">volumes</span><span style="color:#c0c5ce;">:
+      - </span><span style="color:#bf616a;">./storage:/var/www/html/data
+    ports</span><span style="color:#c0c5ce;">:
+      - &quot;</span><span style="color:#a3be8c;">9123:80</span><span style="color:#c0c5ce;">&quot;
+    </span><span style="color:#bf616a;">environment</span><span style="color:#c0c5ce;">:
+      - </span><span style="color:#a3be8c;">APACHE_RUN_USER=#1001
+      </span><span style="color:#c0c5ce;">- </span><span style="color:#a3be8c;">APACHE_RUN_GROUP=#1001
 </span></pre>
 <p>Чтобы данные которые загружают юзеры сохранялись делаем volume.</p>
 <p>Стартуем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">docker-compose up -d</span><span style="color:#c0c5ce;">
+<span style="color:#c0c5ce;">docker-compose up -d
 </span></pre>
 <p>Приложение будет доступно на порту <code>9123</code>.</p>
 

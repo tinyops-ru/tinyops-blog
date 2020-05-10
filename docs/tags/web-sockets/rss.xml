@@ -61,12 +61,12 @@ HTTP запросов в Web-сокеты используется
 Передаются два заголовка: Connection и Upgrade.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, ваше приложение слушает tcp-порт &lt;code&gt;12345&lt;&#x2F;code&gt; и поддерживает Web-сокеты, вот как это настраивается:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    proxy_pass http:&#x2F;&#x2F;localhost:12345;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    proxy_http_version 1.1;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    proxy_set_header Upgrade $http_upgrade;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {
+    proxy_pass http:&#x2F;&#x2F;localhost:12345;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
+}
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
 &lt;p&gt;Как-то раз на production сервере мы поймали проблему - Web-сокеты обрывались каждые 2 минуты. 
 По умолчанию nginx закрывает проксируемые соединения после 60 секунд неактивности. Эта величина регулируется параметром

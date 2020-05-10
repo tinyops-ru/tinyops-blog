@@ -7,11 +7,11 @@
 
   <!-- SEO -->
   
-<title>Как починить проблему Inaccessible VM для VirtualBox и Vagrant | TinyOps :: Блог</title>
+<title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant | TinyOps :: Блог</title>
 
 
   
-<meta name="Description" content="Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm.">
+<meta name="Description" content="Как вывести виртуальную машину Vagrant из состояния ошибки &#x27;inaccessible vm&#x27;.">
 
 
   
@@ -23,7 +23,7 @@
   
 
   
-<meta property="og:description" content="Как реанимировать виртуальную машину Vagrant после ошибки inaccessible vm."/>
+<meta property="og:description" content="Как вывести виртуальную машину Vagrant из состояния ошибки &#x27;inaccessible vm&#x27;."/>
 
 
   
@@ -73,12 +73,12 @@
 <section class="container">
   
   <h1 class="page-title mt-0">
-    Как починить проблему Inaccessible VM для VirtualBox и Vagrant
+    Как починить ошибку Inaccessible VM в VirtualBox и Vagrant
   </h1>
   
 <div class="frontmatter font-weight-bold">
     <div class="d-inline-block">
-        <time class="article_time" datetime="2020-05-02">May 02, 2020</time>.
+        <time class="article_time" datetime="2020-05-10">May 10, 2020</time>.
     </div>
 
     <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
@@ -99,40 +99,40 @@
 can not cleanly recover from. Please open VirtualBox and clear out your 
 inaccessible virtual machines or find a way to fix them.</p>
 </blockquote>
-<p>Virtual Box маркирует виртуальную машину как inaccessible если не может её запустить и 
+<p>Virtual Box маркирует виртуальную машину как <code>inaccessible</code> если не может её запустить и 
 не может сформулировать пользователю в чем же дело.</p>
-<p>Умники в интернетах конечно же предлагаю пересоздать машину с нуля, на подобие умников на форумах Microsoft. 
+<p>Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)</p>
 <p>Для начала посмотрим список виртуальных машин:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> VBoxManage list vms</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-&quot;</span><span style="color:#a3be8c;">prometheus_default_1562491030033_47028</span><span style="color:#c0c5ce;">&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}</span><span style="color:#c0c5ce;">
-&quot;</span><span style="color:#a3be8c;">bamboo-agent-centos7_default_1568705322865_68355</span><span style="color:#c0c5ce;">&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}</span><span style="color:#c0c5ce;">
-&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span style="color:#c0c5ce;">&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}</span><span style="color:#c0c5ce;">
-&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span style="color:#c0c5ce;">&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> VBoxManage list vms
+
+&quot;</span><span style="color:#a3be8c;">prometheus_default_1562491030033_47028</span><span style="color:#c0c5ce;">&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
+&quot;</span><span style="color:#a3be8c;">bamboo-agent-centos7_default_1568705322865_68355</span><span style="color:#c0c5ce;">&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
+&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span style="color:#c0c5ce;">&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
+&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span style="color:#c0c5ce;">&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
 </span></pre>
-<p>Запоминаем уникальный ID проблемной виртуалки - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>. </p>
+<p>Запоминаем уникальный ID проблемной виртуальной машины - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>. </p>
 <p>Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 </span></pre>
 <p>И снова регистрируем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 </span></pre>
 <p>Теперь можно поднять машину как и планировали первоначально:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">vagrant</span><span style="color:#c0c5ce;"> up</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">vagrant</span><span style="color:#c0c5ce;"> up
 </span></pre><h3 id="chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin">Что делать если у меня несколько проблемных машин?</h3>
-<p>Бывают ситуации когда машин со статусом inaccessible может быть более чем одна. Можно перерегистрировать все, либо
+<p>Бывают ситуации когда машин со статусом <code>inaccessible</code> может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.</p>
 <p><strong>Решение для Vagrant:</strong></p>
 <p>Заходим в каталог с Vagrantfile и читаем UUID:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> cat .vagrant/machines/default/virtualbox/id</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> cat .vagrant/machines/default/virtualbox/id
+
+</span><span style="color:#bf616a;">4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 </span></pre>
 <p>На этом все.</p>
 
