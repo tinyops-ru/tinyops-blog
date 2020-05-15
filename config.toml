@@ -25,11 +25,18 @@ taxonomies = [
 ]
 
 [extra]
-# Put all your custom variables here
+enable_about_blog_page = false
+
 description = ""
+
 website="tinyops.ru"
+website_button_hint = "Перейти на сайт"
+
 twitter=""
+twitter_button_hint = "Перейти в мой Twitter"
+
 email = "eugene@tinyops.ru"
+email_button_hint = "Написать мне на почту"
 
 open_graph_url = "https://b.tinyops.ru"
 open_graph_type = "blog"
