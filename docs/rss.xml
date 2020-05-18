@@ -50,9 +50,9 @@
                             
                                 <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/upgrade" text="Тэг upgrade"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/CentOS7" text="Тэг CentOS7"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/centos7" text="Тэг centos7"/>
                             
-                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/RHEL" text="Тэг RHEL"/>
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/rhel" text="Тэг rhel"/>
                             
 
                             <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5" text="Как обновить Zabbix сервер до 5-й версии для CentOS 7"/>
