@@ -4,7 +4,7 @@ description = "Подробное руководство по обновлени
 date = 2020-05-18
 
 [taxonomies]
-tags = ["zabbix", "upgrade", "CentOS7", "RHEL"]
+tags = ["zabbix", "upgrade", "centos7", "rhel"]
 categories = ["tutorial", "centos"]
 +++
 
