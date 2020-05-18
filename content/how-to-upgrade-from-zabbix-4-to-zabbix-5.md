@@ -1,7 +1,7 @@
 +++
 title = "Как обновить Zabbix сервер до версии 5 для CentOS 7"
 description = "Подробное руководство по обновлению Zabbix сервера до 5-й версии для CentOS 7."
-date = 2020-05-15
+date = 2020-05-18
 
 [taxonomies]
 tags = ["zabbix", "upgrade"]
@@ -24,6 +24,7 @@ categories = ["tutorial"]
 
 - ОС - CentOS 7.x.
 - PHP 5.6.
+- MariaDB 10
 - Web-сервер - Nginx.
 
 #### План обновления
@@ -45,7 +46,7 @@ categories = ["tutorial"]
 mysqldump zabbix_server | gzip > zabbix_server.sql.gz
 ```
 
-**1. 2. Резервная Zabbix Frontend**
+**1. 2. Резервная копия Zabbix Frontend**
 
 На текущем сервере frontend расположен в `/var/www/zabbix/html`, поэтому копируем эту папку куда-нибудь.
 
@@ -95,10 +96,26 @@ php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_
   listen = /var/run/php5-fpm.sock
   ```
 
-Запускаем сервис:
+Включаем автозапуск сервиса и стартуем:
 
 ```shell script
-systemctl start php-fpm
+systemctl enable php-fpm && systemctl start php-fpm
 ```
 
 #### 3. Обновляем Zabbix сервер
+
+```shell script
+service zabbix-server stop
+
+yum localinstall http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent
+
+chown -R zabbix: /etc/zabbix
+```
+
+Очищаем содержимое `/var/www/zabbix/html`, затем копируем самый свежий 
+frontend из `/usr/share/zabbix` в `/var/www/zabbix/html`.
+
+Смотрим лог сервера, там побегут строчки `database upgrade...`.
+
+Заходим в интерфейс `http://zabbix/`.
