@@ -64,7 +64,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        <i class="logo__icon fas fa-chevron-left mr-1"></i> Блог TinyOps
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -105,34 +105,34 @@ inaccessible virtual machines or find a way to fix them.</p>
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)</p>
 <p>Для начала посмотрим список виртуальных машин:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> VBoxManage list vms
-
-&quot;</span><span style="color:#a3be8c;">prometheus_default_1562491030033_47028</span><span style="color:#c0c5ce;">&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
-&quot;</span><span style="color:#a3be8c;">bamboo-agent-centos7_default_1568705322865_68355</span><span style="color:#c0c5ce;">&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
-&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span style="color:#c0c5ce;">&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
-&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span style="color:#c0c5ce;">&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> VBoxManage list vms</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+&quot;</span><span style="color:#a3be8c;">prometheus_default_1562491030033_47028</span><span style="color:#c0c5ce;">&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}</span><span style="color:#c0c5ce;">
+&quot;</span><span style="color:#a3be8c;">bamboo-agent-centos7_default_1568705322865_68355</span><span style="color:#c0c5ce;">&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}</span><span style="color:#c0c5ce;">
+&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span style="color:#c0c5ce;">&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}</span><span style="color:#c0c5ce;">
+&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span style="color:#c0c5ce;">&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>Запоминаем уникальный ID проблемной виртуальной машины - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>. </p>
 <p>Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>И снова регистрируем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+<span style="color:#bf616a;">VBoxManage</span><span style="color:#c0c5ce;"> registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>Теперь можно поднять машину как и планировали первоначально:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">vagrant</span><span style="color:#c0c5ce;"> up
+<span style="color:#bf616a;">vagrant</span><span style="color:#c0c5ce;"> up</span><span style="color:#c0c5ce;">
 </span></pre><h3 id="chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin">Что делать если у меня несколько проблемных машин?</h3>
 <p>Бывают ситуации когда машин со статусом <code>inaccessible</code> может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.</p>
 <p><strong>Решение для Vagrant:</strong></p>
 <p>Заходим в каталог с Vagrantfile и читаем UUID:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> cat .vagrant/machines/default/virtualbox/id
-
-</span><span style="color:#bf616a;">4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+<span style="color:#bf616a;">$</span><span style="color:#c0c5ce;"> cat .vagrant/machines/default/virtualbox/id</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>На этом все.</p>
 

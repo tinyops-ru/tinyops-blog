@@ -66,7 +66,7 @@
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
 Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог &lt;code&gt;out&lt;&#x2F;code&gt; и перестает

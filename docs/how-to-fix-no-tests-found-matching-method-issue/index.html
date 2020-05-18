@@ -64,7 +64,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        <i class="logo__icon fas fa-chevron-left mr-1"></i> Блог TinyOps
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -104,7 +104,7 @@
 </blockquote>
 <p>Эта фича включается через файл конфигурации <code>gradle.properties</code>, вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">org.gradle.caching=</span><span style="color:#a3be8c;">true
+<span style="color:#c0c5ce;">org.gradle.caching=</span><span style="color:#a3be8c;">true</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
 Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог <code>out</code> и перестает

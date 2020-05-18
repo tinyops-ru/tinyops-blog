@@ -79,14 +79,14 @@
         <url>
             <loc>https://b.tinyops.ru/everything/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-03-24</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-02-07</lastmod>
             
         </url>
     
@@ -100,14 +100,21 @@
         <url>
             <loc>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-15</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5/</loc>
+            
+                <lastmod>2020-05-18</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/nginx-websocket-proxy/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-04-09</lastmod>
             
         </url>
     
@@ -129,7 +136,7 @@
         <url>
             <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-04-04</lastmod>
             
         </url>
     
@@ -194,6 +201,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/upgrade/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/vagrant/</loc>
             
         </url>
@@ -214,6 +226,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/zabbix/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
             
         </url>
@@ -221,42 +238,42 @@
         <url>
             <loc>https://b.tinyops.ru/yandex-screenshot-tool/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-02-09</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/zola-intro/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-01</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/zola-issues/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-10</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/zola-set-theme/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-03</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/zola-structure/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-02</lastmod>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/zola-tags/</loc>
             
-                <lastmod>2020-05-10</lastmod>
+                <lastmod>2020-01-10</lastmod>
             
         </url>
     

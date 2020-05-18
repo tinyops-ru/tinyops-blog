@@ -12,7 +12,7 @@
         <generator>Zola</generator>
         <language>ru</language>
         <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>2020-05-10</lastBuildDate>
+        <lastBuildDate>2020-05-18</lastBuildDate>
 
         
         <turbo:analytics type="Yandex"
@@ -20,6 +20,133 @@
                          params="{}"></turbo:analytics>
         
 
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Как обновить Zabbix сервер до 5-й версии для CentOS 7</title>
+            <pubDate>2020-05-18</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5</guid>
+            <description>Подробное руководство по обновлению Zabbix сервера до 5-й версии для CentOS 7.</description>
+            
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <metrics>
+                    <yandex schema_identifier="56992924">
+                        <breadcrumblist>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/tutorial" text="Категория tutorial"/>
+                            
+
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/zabbix" text="Тэг zabbix"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/upgrade" text="Тэг upgrade"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5" text="Как обновить Zabbix сервер до 5-й версии для CentOS 7"/>
+                        </breadcrumblist>
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    &lt;p&gt;На днях вышла новая мажорная версия Zabbix сервера. На Opennet в комментариях к новости развернулся холивар, какой
+мониторинг лучше. Для своих задач я предпочитаю Zabbix, поэтому будем обновлять именно его.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;vazhnye-izmeneniia-mezhdu-versiiami&quot;&gt;Важные изменения между версиями&lt;&#x2F;h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Web-интерфейс требует PHP 7.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Zabbix Proxy больше не поддерживает CentOS 6.&lt;br &#x2F;&gt;
+В официальном &lt;a href=&quot;http:&#x2F;&#x2F;repo.zabbix.com&#x2F;zabbix&#x2F;5.0&#x2F;rhel&#x2F;6&#x2F;x86_64&#x2F;&quot;&gt;репозитории&lt;&#x2F;a&gt; нет пакетов для его установки. &lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h4 id=&quot;tekhnicheskie-parametry-servera&quot;&gt;Технические параметры сервера&lt;&#x2F;h4&gt;
+&lt;p&gt;Информация о сервере, который мы будем обновлять:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;ОС - CentOS 7.x.&lt;&#x2F;li&gt;
+&lt;li&gt;PHP 5.6.&lt;&#x2F;li&gt;
+&lt;li&gt;MariaDB 10&lt;&#x2F;li&gt;
+&lt;li&gt;Web-сервер - Nginx.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;plan-obnovleniia&quot;&gt;План обновления&lt;&#x2F;h4&gt;
+&lt;p&gt;Краткий план этапов, которые мы пройдем в процессе обновления:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Создаем резервные копии.&lt;&#x2F;li&gt;
+&lt;li&gt;Обновляем PHP с 5.6 до 7.2.&lt;&#x2F;li&gt;
+&lt;li&gt;Обновляем Zabbix сервер.&lt;&#x2F;li&gt;
+&lt;li&gt;Обновляем Zabbix Frontend.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h4 id=&quot;1-sozdaem-rezervnye-kopii&quot;&gt;1. Создаем резервные копии&lt;&#x2F;h4&gt;
+&lt;p&gt;Перед любым обновлением приложения следует сделать резервную копию текущей версии. 
+К счастью, для Zabbix это просто, т. к. архивировать нужно только базу и файлы интерфейса.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Резервная копия базы&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Снимаем дамп базы:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mysqldump zabbix_server | gzip &amp;gt; zabbix_server.sql.gz&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Резервная копия Zabbix Frontend&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На текущем сервере frontend расположен в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, поэтому копируем эту папку куда-нибудь.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;2-obnovliaem-php-s-5-6-do-7-2&quot;&gt;2. Обновляем PHP с 5.6 до 7.2&lt;&#x2F;h4&gt;
+&lt;p&gt;К сожалению, в мире RHEL-дистрибутивов одной командой PHP не обновить.&lt;&#x2F;p&gt;
+&lt;p&gt;Версии пакетов в официальных репозиториях CentOS и в EPEL меняются очень неторопливо, поэтому приходится ходить на &amp;quot;сторону&amp;quot;.
+Для CentOS 7 есть два неофициальных репозитория, из которых все берут новые версии PHP:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;rpms.remirepo.net&#x2F;&quot;&gt;Remi&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;webtatic.com&#x2F;projects&#x2F;yum-repository&#x2F;&quot;&gt;Webtatic&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Так как на моем сервере крутится только Zabbix, то список пакетов для обновления можно подсмотреть из установленных: &lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum list installed | grep php&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В моем случае был уже подключен репозиторий Webtatic, поэтому ориентируемся на его наименование пакетов. 
+Все пакеты с PHP 7.2 начинаются с префикса &lt;code&gt;php72w&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Берем список тех пакетов которые у нас установлены и копируем в текстовый редактор, затем меняем префикс на &lt;code&gt;php72w&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+php72w-devel.x86_64 php72w-embedded.x86_64 php72w-fpm.x86_64 php72w-gd.x86_64 php72w-ldap.x86_64 \ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+php72w-mbstring.x86_64 php72w-mcrypt.x86_64 php72w-mysqlnd.x86_64 php72w-opcache.x86_64 php72w-pdo.x86_64 \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_64&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Часть пакетов yum не найдет, но это можно игнорировать. В качестве средства для запуска php 
+мы будем использовать &lt;code&gt;php-fpm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Настраиваем php-fpm&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Редактируем конфигурацию &lt;code&gt;&#x2F;etc&#x2F;php-fpm.d&#x2F;www.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Меняем пользователя с &lt;code&gt;apache&lt;&#x2F;code&gt; на &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Меняем тип подключения на файл:&lt;br &#x2F;&gt;
+Было:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = 127.0.0.1:9000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;Стало:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = &#x2F;var&#x2F;run&#x2F;php5-fpm.sock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Включаем автозапуск сервиса и стартуем:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl enable php-fpm &amp;amp;&amp;amp; systemctl start php-fpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h4 id=&quot;3-obnovliaem-zabbix-server&quot;&gt;3. Обновляем Zabbix сервер&lt;&#x2F;h4&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;service zabbix-server stop&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+yum localinstall http:&#x2F;&#x2F;repo.zabbix.com&#x2F;zabbix&#x2F;5.0&#x2F;rhel&#x2F;7&#x2F;x86_64&#x2F;zabbix-release-5.0-1.el7.noarch.rpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+chown -R zabbix: &#x2F;etc&#x2F;zabbix&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Очищаем содержимое &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, затем копируем самый свежий 
+frontend из &lt;code&gt;&#x2F;usr&#x2F;share&#x2F;zabbix&lt;&#x2F;code&gt; в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Смотрим лог сервера, там побегут строчки &lt;code&gt;database upgrade...&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Заходим в интерфейс &lt;code&gt;http:&#x2F;&#x2F;zabbix&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+
+                </turbo:content>
+            
+        </item>
         
         <item
             
@@ -67,34 +194,34 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)&lt;&#x2F;p&gt;
 &lt;p&gt;Для начала посмотрим список виртуальных машин:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; VBoxManage list vms
-
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;prometheus_default_1562491030033_47028&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;bamboo-agent-centos7_default_1568705322865_68355&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; VBoxManage list vms&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;prometheus_default_1562491030033_47028&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;bamboo-agent-centos7_default_1568705322865_68355&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Запоминаем уникальный ID проблемной виртуальной машины - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;И снова регистрируем:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Теперь можно поднять машину как и планировали первоначально:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;vagrant&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; up
+&lt;span style=&quot;color:#bf616a;&quot;&gt;vagrant&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; up&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin&quot;&gt;Что делать если у меня несколько проблемных машин?&lt;&#x2F;h3&gt;
 &lt;p&gt;Бывают ситуации когда машин со статусом &lt;code&gt;inaccessible&lt;&#x2F;code&gt; может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Решение для Vagrant:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в каталог с Vagrantfile и читаем UUID:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id
-
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На этом все.&lt;&#x2F;p&gt;
 
@@ -142,12 +269,12 @@ HTTP запросов в Web-сокеты используется
 Передаются два заголовка: Connection и Upgrade.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, ваше приложение слушает tcp-порт &lt;code&gt;12345&lt;&#x2F;code&gt; и поддерживает Web-сокеты, вот как это настраивается:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {
-    proxy_pass http:&#x2F;&#x2F;localhost:12345;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
-}
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    proxy_pass http:&#x2F;&#x2F;localhost:12345;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    proxy_http_version 1.1;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    proxy_set_header Upgrade $http_upgrade;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
 &lt;p&gt;Как-то раз на production сервере мы поймали проблему - Web-сокеты обрывались каждые 2 минуты. 
 По умолчанию nginx закрывает проксируемые соединения после 60 секунд неактивности. Эта величина регулируется параметром
@@ -205,77 +332,77 @@ HTTP запросов в Web-сокеты используется
 &lt;p&gt;Перед сборкой скопировал файлы приложения в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Файл сценария сборки - &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;FROM php:5.6-apache
-
-RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \
-                      libmagickwand-dev --no-install-recommends \
-                   &amp;amp;&amp;amp; pecl install imagick \
-        &amp;amp;&amp;amp; docker-php-ext-enable imagick
-
-RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \
-    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip
-
-RUN echo &amp;quot;date.timezone = Europe&#x2F;Moscow&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
-
-RUN a2enmod rewrite
-RUN service apache2 restart
-COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html
-
-RUN usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data
-
-RUN chown -R www-data.www-data &#x2F;var&#x2F;www
-RUN chmod -R ug=rwx &#x2F;var&#x2F;www
-
-RUN mkdir &#x2F;tmp&#x2F;webmodule
-RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule
-EXPOSE 80
-
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;FROM php:5.6-apache&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+                      libmagickwand-dev --no-install-recommends \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+                   &amp;amp;&amp;amp; pecl install imagick \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        &amp;amp;&amp;amp; docker-php-ext-enable imagick&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libfreetype6-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libjpeg62-turbo-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+        libpng-dev \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN echo &amp;quot;date.timezone = Europe&#x2F;Moscow&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN a2enmod rewrite&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN service apache2 restart&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chown -R www-data.www-data &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chmod -R ug=rwx &#x2F;var&#x2F;www&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN mkdir &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+EXPOSE 80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Собираем:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-dobavliat-rasshireniia-dlia-php&quot;&gt;Как добавлять расширения для php&lt;&#x2F;h2&gt;
 &lt;p&gt;Авторы PHP любезно предоставили скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt; внутри базового контейнера. В примере выше видно как это
 использовать.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-ispol-zovat-svoi-php-ini&quot;&gt;Как использовать свой php.ini&lt;&#x2F;h2&gt;
 &lt;p&gt;Добавляем в &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
+&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-reshit-problemu-s-pravami-dostupa&quot;&gt;Как решить проблему с правами доступа&lt;&#x2F;h2&gt;
 &lt;p&gt;В &lt;code&gt;Dockerfile&lt;&#x2F;code&gt; есть пара команд, которые дают полные права для пользователя &lt;code&gt;www-data&lt;&#x2F;code&gt;, 
 а также задают ID пользователя и группы для него равные &lt;code&gt;1001&lt;&#x2F;code&gt;.
 На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
 которую использую как volume:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+...&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
 &lt;p&gt;С помощью docker compose можно завести вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;
-
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;phpfpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-repo&#x2F;my-app:1.0.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-    ports&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;9123:80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_USER=#1001
-      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_GROUP=#1001
+&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;phpfpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-repo&#x2F;my-app:1.0.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;9123:80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_USER=#1001&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_GROUP=#1001&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Чтобы данные которые загружают юзеры сохранялись делаем volume.&lt;&#x2F;p&gt;
 &lt;p&gt;Стартуем:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker-compose up -d
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker-compose up -d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Приложение будет доступно на порту &lt;code&gt;9123&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 
@@ -648,7 +775,7 @@ Microsoft выбрали верное направление. Десятки л�
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
 Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог &lt;code&gt;out&lt;&#x2F;code&gt; и перестает
@@ -694,13 +821,13 @@ Microsoft выбрали верное направление. Десятки л�
                 <turbo:content>
                     &lt;p&gt;Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Change detected @ 2020-01-11 18:37:14
--&amp;gt; Content changed C:\pro\tinyops-blog\content&#x2F;zola-issues.md
-Failed to build the site
-Error: Failed to render page &amp;#39;d:\tinyops-blog\content&#x2F;zola-issues.md&amp;#39;
-Reason: Failed to render &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;
-Reason: Variable `page.taxonomies[&amp;#39;tags&amp;#39;]` not found in context while rendering &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
-Done in 31ms.
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Change detected @ 2020-01-11 18:37:14&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+-&amp;gt; Content changed C:\pro\tinyops-blog\content&#x2F;zola-issues.md&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+Failed to build the site&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+Error: Failed to render page &amp;#39;d:\tinyops-blog\content&#x2F;zola-issues.md&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+Reason: Failed to render &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+Reason: Variable `page.taxonomies[&amp;#39;tags&amp;#39;]` not found in context while rendering &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+Done in 31ms.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В контексте ошибки выше:&lt;&#x2F;p&gt;
 &lt;ol&gt;
@@ -711,21 +838,21 @@ Done in 31ms.
 &lt;p&gt;Смотрим начало &lt;code&gt;content&#x2F;zola-issues.md&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;span style=&quot;background-color:#bf616a;color:#2b303b;&quot;&gt;+++&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Как решать проблемы с Zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Как решать проблемы с Zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;date &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2020-01-10&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-+++
++++&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;и видим что секция &lt;code&gt;[taxonomies]&lt;&#x2F;code&gt; отсутствует. Если взялся использовать тэги и категории, то будь
 добр их определить. Исправляем:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;categories &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tutorial&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;categories &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tutorial&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;oshibka-the-requested-port-is-not-available&quot;&gt;Ошибка - The requested port is not available&lt;&#x2F;h2&gt;
 &lt;p&gt;Как это выглядит в консоли:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;d:\tinyops-blog&amp;gt;zola serve
-The requested port is not available
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;d:\tinyops-blog&amp;gt;zola serve&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+The requested port is not available&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Ошибка сообщает что Zola не может стартануть с выбранным tcp-портом (по умолчанию &lt;code&gt;1111&lt;&#x2F;code&gt;). &lt;&#x2F;p&gt;
 &lt;p&gt;Решения для Windows:&lt;&#x2F;p&gt;
@@ -737,7 +864,7 @@ The requested port is not available
 &lt;li&gt;
 &lt;p&gt;Указать другой порт при запуске:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve --port 12345
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve --port 12345&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
@@ -801,9 +928,9 @@ The requested port is not available
 &lt;li&gt;
 &lt;p&gt;В файле-конфигурации темы &lt;code&gt;theme.toml&lt;&#x2F;code&gt; нужно подключить taxonomies:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;name &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rss &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]
+&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;name &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rss &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;В шаблоне &lt;code&gt;page.html&lt;&#x2F;code&gt; добавить HTML-код&lt;br &#x2F;&gt;
@@ -813,16 +940,16 @@ The requested port is not available
 Затем использовать цикл for чтобы пробежаться по списку.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;page&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;] %}
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;btn btn-tiny btn-light&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;href&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;tags&#x2F;{{tagName}}&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&amp;gt;{{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endfor &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;%}
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;page&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;] %}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;btn btn-tiny btn-light&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;href&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;tags&#x2F;{{tagName}}&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&amp;gt;{{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endfor &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;%}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Настроить тэги для поста&lt;br &#x2F;&gt;
 Во frontmatter-части файла с постом нужно добавить описание тэгов. Например, вот так:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;p&gt;Пример отображения тэгов вы можете увидеть сразу под заголовком данной статьи.&lt;&#x2F;p&gt;
@@ -883,22 +1010,22 @@ The requested port is not available
 &lt;li&gt;
 &lt;p&gt;Создадим подкаталог в котором будут хранится файлы темы которую выбрали:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mkdir themes\tinyblog
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mkdir themes\tinyblog&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Добавим модуль тему как git модуль:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme themes&#x2F;tinyblog
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme themes&#x2F;tinyblog&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Подкачаем актуальную версию темы:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule update --init --recursive 
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule update --init --recursive &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;либо заходим в каталог тем и делаем pull:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;cd themes
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme tinyblog
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;cd themes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme tinyblog&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Настраиваем файл конфигурации сайта&lt;&#x2F;p&gt;
@@ -954,12 +1081,12 @@ The requested port is not available
                 <turbo:content>
                     &lt;p&gt;После создания нового проекта в каталоге появится следующая структура:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;├── config.toml
-├── content
-├── sass
-├── static
-├── templates
-└── themes
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;├── config.toml&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+├── content&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+├── sass&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+├── static&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+├── templates&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+└── themes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Далее - подробнее о каждом из объектов.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;fail-konfiguratsii&quot;&gt;Файл конфигурации&lt;&#x2F;h3&gt;
@@ -1065,30 +1192,30 @@ Zola решает множество популярных проблем, тем
 Поддерживаются самые популярные ОС (Windows, MacOS), различные редакции Linux и даже FreeBSD.&lt;&#x2F;p&gt;
 &lt;p&gt;Для Windows предпочитаю &lt;a href=&quot;http:&#x2F;&#x2F;scoop.sh&#x2F;&quot;&gt;Scoop&lt;&#x2F;a&gt;, то и ставил через него:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;scoop install zola
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;scoop install zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Вот и все :)&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-sozdat-novyi-proekt&quot;&gt;Как создать новый проект&lt;&#x2F;h2&gt;
 &lt;p&gt;Достаточно запустить zola с командой &lt;code&gt;init&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Zola спросит пару вопросов в интерактивном режиме и скелет проекта сайта будет готов.
 Чтобы задать имя каталога, то его можно указать последним аргументом:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init awesome-blog
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init awesome-blog&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-zapustit-zola-v-rezhime-razrabotki&quot;&gt;Как запустить Zola в режиме разработки&lt;&#x2F;h2&gt;
 &lt;p&gt;Режим разработки позволяет смотреть на итоговый результат в режиме реального времени. Любые изменения в каталоге проекта
 будут мгновенно отображаться в браузере.&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;По умолчанию приложение будет доступно в браузере по адресу &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:1111&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:1111&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-sobrat-production-ready-sborku&quot;&gt;Как собрать production-ready сборку&lt;&#x2F;h2&gt;
 &lt;p&gt;Production-ready сборка это сборка которая скомпонована генератором с учетом всех возможных оптимизаций. Она готова
 для того чтобы загрузить на ваш сайт.&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola build --base-url $DEPLOY_URL
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola build --base-url $DEPLOY_URL&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Где &lt;code&gt;$DEPLOY_URL&lt;&#x2F;code&gt; - адрес по которому будет крутиться сайт.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
