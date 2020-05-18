@@ -22,6 +22,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/centos/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/ops/</loc>
             
         </url>
@@ -151,6 +161,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/centos7/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/docker/</loc>
             
         </url>
@@ -177,6 +192,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/reshenie-problem/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/rhel/</loc>
             
         </url>
     
