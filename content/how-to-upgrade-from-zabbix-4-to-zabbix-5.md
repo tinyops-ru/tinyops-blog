@@ -4,8 +4,8 @@ description = "Подробное руководство по обновлени
 date = 2020-05-18
 
 [taxonomies]
-tags = ["zabbix", "upgrade"]
-categories = ["tutorial"]
+tags = ["zabbix", "upgrade", "CentOS7", "RHEL"]
+categories = ["tutorial", "centos"]
 +++
 
 На днях вышла новая мажорная версия Zabbix сервера. На Opennet в комментариях к новости развернулся холивар, какой
