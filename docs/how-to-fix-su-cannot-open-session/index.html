@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7 | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Подробное описание и ход расследования по исправлению ошибки &quot;su: cannot open session: Permission denied&quot;.">
+
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Подробное описание и ход расследования по исправлению ошибки &quot;su: cannot open session: Permission denied&quot;."/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Как исправить ошибку su: cannot open session: Permission denied для CentOS 7
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-05-21">May 21, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/linux/">linux</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/kernel/">kernel</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/centos7/">centos7</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/pam/">pam</a>
+    
+  </div>
+
+  <p>При попытке войти из <code>root</code> под пользователем <code>zero</code> получаем ошибку:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules]#</span><span style="color:#c0c5ce;"> su - zero</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Last</span><span style="color:#c0c5ce;"> login: Thu May 21 12:24:16 MSK 2020 on pts/0</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">su:</span><span style="color:#c0c5ce;"> cannot open session: Permission denied</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>При этом если попытаться запустить какую-нибудь команду <code>id</code> через <code>sudo</code> от имени <code>zero</code> получаем уже другую ошибку:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules]#</span><span style="color:#c0c5ce;"> sudo</span><span style="color:#bf616a;"> -u</span><span style="color:#c0c5ce;"> zero id</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">sudo:</span><span style="color:#c0c5ce;"> pam_open_session: Permission denied</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">sudo:</span><span style="color:#c0c5ce;"> policy plugin failed session initialization</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Проверяем не заблокирован ли пользователь:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules]#</span><span style="color:#c0c5ce;"> passwd</span><span style="color:#bf616a;"> -S</span><span style="color:#c0c5ce;"> zero</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">zero</span><span style="color:#c0c5ce;"> PS 2019-09-12 0 99999 7</span><span style="color:#bf616a;"> -1</span><span style="color:#c0c5ce;"> (Password set, SHA512 crypt.)</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Все окей. Проверяем не истёк ли пароль:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules]#</span><span style="color:#c0c5ce;"> chage</span><span style="color:#bf616a;"> -l</span><span style="color:#c0c5ce;"> zero</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Last</span><span style="color:#c0c5ce;"> password change                                    : Sep 12, 2019</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Password</span><span style="color:#c0c5ce;"> expires                                        : never</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Password</span><span style="color:#c0c5ce;"> inactive                                       : never</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Account</span><span style="color:#c0c5ce;"> expires                                         : never</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Minimum</span><span style="color:#c0c5ce;"> number of days between password change          : 0</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Maximum</span><span style="color:#c0c5ce;"> number of days between password change          : 99999</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Number</span><span style="color:#c0c5ce;"> of days of warning before password expires       : 7</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Здесь тоже все в порядке, пароль не истёк. Смотрим лог аутентификации <code>/var/log/secure</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules]#</span><span style="color:#c0c5ce;"> tail /var/log/secure</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">May</span><span style="color:#c0c5ce;"> 21 15:22:46 hercules sudo: root : TTY=pts/0 ; </span><span style="color:#bf616a;">PWD</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">/root </span><span style="color:#c0c5ce;">; </span><span style="color:#bf616a;">USER</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">zero </span><span style="color:#c0c5ce;">; </span><span style="color:#bf616a;">COMMAND</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">/bin/id</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">May</span><span style="color:#c0c5ce;"> 21 15:22:46 hercules sudo: pam_limits(sudo:session)</span><span style="color:#96b5b4;">:</span><span style="color:#c0c5ce;"> Could not set limit for &#39;</span><span style="color:#a3be8c;">nofile</span><span style="color:#c0c5ce;">&#39;: Operation not permitted</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">May</span><span style="color:#c0c5ce;"> 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; </span><span style="color:#bf616a;">TTY</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">pts/0 </span><span style="color:#c0c5ce;">; </span><span style="color:#bf616a;">PWD</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">/root </span><span style="color:#c0c5ce;">; </span><span style="color:#bf616a;">USER</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">zero </span><span style="color:#c0c5ce;">; </span><span style="color:#bf616a;">COMMAND</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">/bin/id</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Видим что есть проблема с настройкой <code>nofile</code> для модуля <code>pam_limits</code>. </p>
+<p>Смотрим конфиг <code>/etc/security/limits.conf</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">...</span><span style="color:#c0c5ce;">
+zero         soft   nofile 1500000</span><span style="color:#c0c5ce;">
+zero         hard   nofile 1500000</span><span style="color:#c0c5ce;">
+...</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Для пользователя <code>zero</code> установлен лимит на максимально количество открытых файлов — <code>1500000</code>. Допустимый диапазон 
+значений для <code>nofile</code>: <code>1-999999</code>.</p>
+<p>Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и <code>su</code> начинает работать.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">[root@hercules ~</span><span style="color:#c0c5ce;">]# su - zero</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">Last</span><span style="color:#c0c5ce;"> login: Thu May 21 15:29:14 MSK 2020 on pts/0</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">[zero@hercules ~</span><span style="color:#c0c5ce;">]$</span><span style="color:#c0c5ce;">
+</span></pre>
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5"></footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>

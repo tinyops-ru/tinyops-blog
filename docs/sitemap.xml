@@ -32,6 +32,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/linux/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/ops/</loc>
             
         </url>
@@ -115,6 +125,13 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
+            
+                <lastmod>2020-05-21</lastmod>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5/</loc>
             
                 <lastmod>2020-05-18</lastmod>
@@ -181,12 +198,22 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/kernel/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/linux/</loc>
             
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/nginx/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/pam/</loc>
             
         </url>
     
