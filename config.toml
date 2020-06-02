@@ -27,6 +27,8 @@ taxonomies = [
 [extra]
 enable_about_blog_page = false
 
+keywords = "блог про технологии, решение linux проблем"
+
 description = ""
 
 website="tinyops.ru"
