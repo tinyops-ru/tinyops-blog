@@ -111,3 +111,4 @@ $ sysctl -w fs.file-max=100000
 ## Полезные ссылки
 
 - [https://www.kernel.org/doc/Documentation/sysctl/fs.txt](https://www.kernel.org/doc/Documentation/sysctl/fs.txt) - описание параметров ядра.
+- [Статья про то как исправить ошибку «su: cannot open session: Permission denied»](/how-to-fix-su-cannot-open-session/).
