@@ -74,3 +74,7 @@ zero         hard   nofile 1500000
 Last login: Thu May 21 15:29:14 MSK 2020 on pts/0
 [zero@hercules ~]$
 ```
+
+### Полезные ссылки
+
+- [Подробная статья про ошибку «Too many open files» в Linux](/too-many-open-files/)
