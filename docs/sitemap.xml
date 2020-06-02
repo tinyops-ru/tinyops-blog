@@ -127,7 +127,7 @@
         <url>
             <loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
             
-                <lastmod>2020-05-21</lastmod>
+                <lastmod>2020-05-22</lastmod>
             
         </url>
     
@@ -279,6 +279,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/too-many-open-files/</loc>
+            
+                <lastmod>2020-06-02</lastmod>
             
         </url>
     

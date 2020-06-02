@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Ошибка «Too many open files» в Linux | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Всё что необходимо знать об ошибке «Too many open files».">
+
+
+  
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Всё что необходимо знать об ошибке «Too many open files»."/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Ошибка «Too many open files» в Linux
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-06-02">June 02, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 3 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/linux/">linux</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/pam/">pam</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/kernel/">kernel</a>
+    
+  </div>
+
+  <p>Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
+открытых файлов. Простыми словами — процессу было разрешено открыть максимум 100 файлов, а он попытался открыть 101-й.</p>
+<p>Далее — разберёмся как работает это ограничение в операционных системах Linux. Все пути будут указаны для CentOS\RHEL-образных систем.</p>
+<h2 id="ogranicheniia-iadra-linux">Ограничения ядра Linux</h2>
+<p>Прежде всего ограничение на количество открытых файлов устанавливает ядро операционной системы. Посмотреть его можно
+вот так:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">[root@dracula ~]# sysctl fs.file-max</span><span style="color:#c0c5ce;">
+fs.file-max = 3000000</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
+прочитать файл <code>/proc/sys/fs/file-nr</code>:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">$ cat /proc/sys/fs/file-nr</span><span style="color:#c0c5ce;">
+1154    133     3000000</span><span style="color:#c0c5ce;">
+</span></pre>
+<ul>
+<li><code>1154</code> — текущее значение открытых файлов.</li>
+<li><code>133</code> — сколько из открытых файлов не используются.</li>
+<li><code>3000000</code> — сколько разрешено открывать файлов.</li>
+</ul>
+<h2 id="pam">PAM</h2>
+<p>PAM (Pluggable Authentication Modules for Linux) — это набор динамически-подключаемых библиотек 
+для аутентификации пользователей.</p>
+<p>Конфигурация для PAM хранится в следующих каталогах и файлах:</p>
+<ul>
+<li><code>/etc/security/limits.conf</code></li>
+<li><code>/etc/security/limits.d</code></li>
+<li><code>/etc/pam.d</code></li>
+</ul>
+<p>Формат записи такой:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">nginx           soft   nofile 50000</span><span style="color:#c0c5ce;">
+nginx           hard   nofile 50000</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Существует два вида ограничений: <code>soft</code> (мягкий) и <code>hard</code> (жесткий). Soft-ограничения носят рекомендательный характер, 
+в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (<code>nofile</code>) по hard-ограничению
+не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.</p>
+<h2 id="protsess-iadro-i-pam">Процесс, ядро и PAM</h2>
+<p>Все что описано выше показано на схеме:</p>
+<p><img src="/images/linux/too-many-open-files.png" alt="alt text" title="Ядро, PAM и процесс" /></p>
+<p>Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
+Далее — если процесс поддерживает PAM, то делается вызов через библиотеку, не исчерпались ли лимиты.</p>
+<p>Если процесс не поддерживает PAM, то какие бы лимиты ему не установили 
+в конфигурационных файлах PAM, он будет их игнорировать.</p>
+<h2 id="oshibka-too-many-open-files">Ошибка «Too many open files»</h2>
+<p>Например, мы получили такую ошибку для <code>nginx</code>. Nginx поддерживает PAM, поэтому на него влияют настройки 
+в <code>/etc/security/limits.conf</code> и упомянутых выше файлах.</p>
+<p>Смотрим сколько пользователю <code>nginx</code> разрешено:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">$ sudo -u nginx bash -c &#39;ulimit -n&#39;</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+1024</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Видимо что всего лишь <code>1024</code>, для нагруженного сервера это может быть недостаточным. Добавляем в <code>/etc/security/limits.conf</code> строчки:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">nginx           soft   nofile 10000</span><span style="color:#c0c5ce;">
+nginx           hard   nofile 10000</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Тем самым разрешая лимит до 10000 файлов.</p>
+<p>В старых ядрах Linux значение fs.file-max может быть равно 10000. Если требуется дать nginx больше 10000 файлов, 
+то необходимо добавить в <code>/etc/sysctl.conf</code> значение с запасом:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">fs.file-max = 100000</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
+применить его «на лету», делаем вот так:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">$ sysctl -w fs.file-max=100000</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>В отличие от первого способа, эта настройка будет актуальна до первой перезагрузки операционной системы.</p>
+<p>После изменения настроек в конфигурации ядра и PAM необходимо перезапустить процесс <code>nginx</code>.</p>
+<h2 id="poleznye-ssylki">Полезные ссылки</h2>
+<ul>
+<li><a href="https://www.kernel.org/doc/Documentation/sysctl/fs.txt">https://www.kernel.org/doc/Documentation/sysctl/fs.txt</a> - описание параметров ядра.</li>
+</ul>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5"></footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>

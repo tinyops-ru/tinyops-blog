@@ -15,6 +15,10 @@
 
 
   
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
   <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
   
 
@@ -78,7 +82,7 @@
   
 <div class="frontmatter font-weight-bold">
     <div class="d-inline-block">
-        <time class="article_time" datetime="2020-05-21">May 21, 2020</time>.
+        <time class="article_time" datetime="2020-05-22">May 22, 2020</time>.
     </div>
 
     <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
@@ -141,7 +145,7 @@ zero         hard   nofile 1500000</span><span style="color:#c0c5ce;">
 ...</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>Для пользователя <code>zero</code> установлен лимит на максимально количество открытых файлов — <code>1500000</code>. Допустимый диапазон 
-значений для <code>nofile</code>: <code>1-999999</code>.</p>
+значений для <code>nofile</code>: <code>1-1048576</code>.</p>
 <p>Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и <code>su</code> начинает работать.</p>
 <pre style="background-color:#2b303b;">
 <span style="color:#bf616a;">[root@hercules ~</span><span style="color:#c0c5ce;">]# su - zero</span><span style="color:#c0c5ce;">
