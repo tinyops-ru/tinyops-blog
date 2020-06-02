@@ -121,8 +121,8 @@ fs.file-max = 3000000</span><span style="color:#c0c5ce;">
 <li><code>3000000</code> — сколько разрешено открывать файлов.</li>
 </ul>
 <h2 id="pam">PAM</h2>
-<p>PAM (Pluggable Authentication Modules for Linux) — это набор динамически-подключаемых библиотек 
-для аутентификации пользователей.</p>
+<p><a href="http://www.linux-pam.org/Linux-PAM-html/sag-introduction.html">PAM</a> (Pluggable Authentication Modules for Linux) — 
+это набор динамически-подключаемых библиотек для аутентификации пользователей.</p>
 <p>Конфигурация для PAM хранится в следующих каталогах и файлах:</p>
 <ul>
 <li><code>/etc/security/limits.conf</code></li>
@@ -141,9 +141,8 @@ nginx           hard   nofile 50000</span><span style="color:#c0c5ce;">
 <p>Все что описано выше показано на схеме:</p>
 <p><img src="/images/linux/too-many-open-files.png" alt="alt text" title="Ядро, PAM и процесс" /></p>
 <p>Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
-Далее — если процесс поддерживает PAM, то делается вызов через библиотеку, не исчерпались ли лимиты.</p>
-<p>Если процесс не поддерживает PAM, то какие бы лимиты ему не установили 
-в конфигурационных файлах PAM, он будет их игнорировать.</p>
+Далее — если процесс поддерживает PAM, делается вызов через библиотеку, не исчерпались ли лимиты.</p>
+<p>Если процесс не поддерживает PAM, какие бы лимиты ему не установили в конфигурационных файлах, он будет их игнорировать.</p>
 <h2 id="oshibka-too-many-open-files">Ошибка «Too many open files»</h2>
 <p>Например, мы получили такую ошибку для <code>nginx</code>. Nginx поддерживает PAM, поэтому на него влияют настройки 
 в <code>/etc/security/limits.conf</code> и упомянутых выше файлах.</p>
@@ -159,7 +158,7 @@ nginx           hard   nofile 50000</span><span style="color:#c0c5ce;">
 nginx           hard   nofile 10000</span><span style="color:#c0c5ce;">
 </span></pre>
 <p>Тем самым разрешая лимит до 10000 файлов.</p>
-<p>В старых ядрах Linux значение fs.file-max может быть равно 10000. Если требуется дать nginx больше 10000 файлов, 
+<p>В старых ядрах Linux значение <code>fs.file-max</code> может быть равно 10000. Если требуется дать <code>nginx</code> больше 10000 файлов, 
 то необходимо добавить в <code>/etc/sysctl.conf</code> значение с запасом:</p>
 <pre style="background-color:#2b303b;">
 <span style="color:#c0c5ce;">fs.file-max = 100000</span><span style="color:#c0c5ce;">
@@ -174,6 +173,7 @@ nginx           hard   nofile 10000</span><span style="color:#c0c5ce;">
 <h2 id="poleznye-ssylki">Полезные ссылки</h2>
 <ul>
 <li><a href="https://www.kernel.org/doc/Documentation/sysctl/fs.txt">https://www.kernel.org/doc/Documentation/sysctl/fs.txt</a> - описание параметров ядра.</li>
+<li><a href="/how-to-fix-su-cannot-open-session/">Статья про то как исправить ошибку «su: cannot open session: Permission denied»</a>.</li>
 </ul>
 
   

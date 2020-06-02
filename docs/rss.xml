@@ -81,8 +81,8 @@ fs.file-max = 3000000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;
 &lt;li&gt;&lt;code&gt;3000000&lt;&#x2F;code&gt; — сколько разрешено открывать файлов.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;pam&quot;&gt;PAM&lt;&#x2F;h2&gt;
-&lt;p&gt;PAM (Pluggable Authentication Modules for Linux) — это набор динамически-подключаемых библиотек 
-для аутентификации пользователей.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;www.linux-pam.org&#x2F;Linux-PAM-html&#x2F;sag-introduction.html&quot;&gt;PAM&lt;&#x2F;a&gt; (Pluggable Authentication Modules for Linux) — 
+это набор динамически-подключаемых библиотек для аутентификации пользователей.&lt;&#x2F;p&gt;
 &lt;p&gt;Конфигурация для PAM хранится в следующих каталогах и файлах:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
@@ -101,9 +101,8 @@ nginx           hard   nofile 50000&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 &lt;p&gt;Все что описано выше показано на схеме:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;too-many-open-files.png&quot; alt=&quot;alt text&quot; title=&quot;Ядро, PAM и процесс&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
-Далее — если процесс поддерживает PAM, то делается вызов через библиотеку, не исчерпались ли лимиты.&lt;&#x2F;p&gt;
-&lt;p&gt;Если процесс не поддерживает PAM, то какие бы лимиты ему не установили 
-в конфигурационных файлах PAM, он будет их игнорировать.&lt;&#x2F;p&gt;
+Далее — если процесс поддерживает PAM, делается вызов через библиотеку, не исчерпались ли лимиты.&lt;&#x2F;p&gt;
+&lt;p&gt;Если процесс не поддерживает PAM, какие бы лимиты ему не установили в конфигурационных файлах, он будет их игнорировать.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;oshibka-too-many-open-files&quot;&gt;Ошибка «Too many open files»&lt;&#x2F;h2&gt;
 &lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки 
 в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; и упомянутых выше файлах.&lt;&#x2F;p&gt;
@@ -119,7 +118,7 @@ nginx           hard   nofile 50000&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 nginx           hard   nofile 10000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Тем самым разрешая лимит до 10000 файлов.&lt;&#x2F;p&gt;
-&lt;p&gt;В старых ядрах Linux значение fs.file-max может быть равно 10000. Если требуется дать nginx больше 10000 файлов, 
+&lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов, 
 то необходимо добавить в &lt;code&gt;&#x2F;etc&#x2F;sysctl.conf&lt;&#x2F;code&gt; значение с запасом:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;span style=&quot;color:#c0c5ce;&quot;&gt;fs.file-max = 100000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
@@ -134,6 +133,7 @@ nginx           hard   nofile 10000&lt;&#x2F;span&gt;&lt;span style=&quot;color:
 &lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.kernel.org&#x2F;doc&#x2F;Documentation&#x2F;sysctl&#x2F;fs.txt&quot;&gt;https:&#x2F;&#x2F;www.kernel.org&#x2F;doc&#x2F;Documentation&#x2F;sysctl&#x2F;fs.txt&lt;&#x2F;a&gt; - описание параметров ядра.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;how-to-fix-su-cannot-open-session&#x2F;&quot;&gt;Статья про то как исправить ошибку «su: cannot open session: Permission denied»&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 
                 </turbo:content>
@@ -232,7 +232,11 @@ zero         hard   nofile 1500000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#
 &lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]# su - zero&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[zero@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+
                 </turbo:content>
             
         </item>

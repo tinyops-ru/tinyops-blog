@@ -113,7 +113,11 @@ zero         hard   nofile 1500000&lt;&#x2F;span&gt;&lt;span style=&quot;color:#
 &lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]# su - zero&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[zero@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+
                 </turbo:content>
             
         </item>
