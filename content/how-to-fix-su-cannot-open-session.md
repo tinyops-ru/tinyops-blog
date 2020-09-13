@@ -2,6 +2,7 @@
 title = "Как исправить ошибку su: cannot open session: Permission denied для CentOS 7"
 description = "Подробное описание и ход расследования по исправлению ошибки \"su: cannot open session: Permission denied\"."
 date = 2020-05-22
+updated = 2020-05-22
 
 [taxonomies]
 tags = ["linux", "kernel", "centos7", "pam"]

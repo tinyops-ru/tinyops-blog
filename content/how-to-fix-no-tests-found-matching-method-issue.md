@@ -2,6 +2,7 @@
 title = "Как исправить ошибку - No tests found matching Method в IntelliJ IDEA"
 description = "Как исправить популярную проблему в JetBrains IntelliJ IDEA - No tests found matching Method."
 date = 2020-01-15
+updated = 2020-01-15
 
 [taxonomies]
 tags = ["idea", "jetbrains"]

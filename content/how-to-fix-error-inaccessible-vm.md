@@ -2,6 +2,7 @@
 title = "Как починить ошибку Inaccessible VM в VirtualBox и Vagrant"
 description = "Как вывести виртуальную машину Vagrant из состояния ошибки 'inaccessible vm'."
 date = 2020-05-10
+updated = 2020-05-10
 
 [taxonomies]
 tags = ["virtualbox", "vagrant"]

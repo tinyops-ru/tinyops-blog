@@ -2,6 +2,7 @@
 title = "Как исправить глюки в консоли Windows 10 при подключении через SSH"
 description = "Пост про то как исправить глюки в консоли Windows 10 при подключении через SSH."
 date = 2020-02-07
+updated = 2020-02-07
 
 [taxonomies]
 tags = ["windows", "linux", "ssh", "решение проблем", "troubleshooting"]

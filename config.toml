@@ -20,7 +20,7 @@ description = "О технологиях, подходах и решении п�
 
 taxonomies = [
  {name = "tags", rss = true},
- {name = "categories", paginate_by = 5, rss = true},  # 5 items per page for a term
+ {name = "categories", paginate_by = 10, rss = true},  # 5 items per page for a term
  {name = "authors"} # Basic definition: no RSS or pagination
 ]
 
@@ -32,13 +32,16 @@ keywords = "блог про технологии, решение linux проб�
 description = ""
 
 website="tinyops.ru"
+website_button_title = "Сайт"
 website_button_hint = "Перейти на сайт"
 
 twitter=""
-twitter_button_hint = "Перейти в мой Twitter"
+twitter_button_title = "Twitter"
+twitter_button_hint = "Перейти в Twitter"
 
 email = "eugene@tinyops.ru"
-email_button_hint = "Написать мне на почту"
+email_button_title = "Написать на почту"
+email_button_hint = "Написать на почту"
 
 open_graph_url = "https://b.tinyops.ru"
 open_graph_type = "blog"

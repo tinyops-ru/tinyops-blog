@@ -2,6 +2,7 @@
 title = "Как обновить Zabbix сервер до 5-й версии для CentOS 7"
 description = "Подробное руководство по обновлению Zabbix сервера до 5-й версии для CentOS 7."
 date = 2020-05-18
+updated = 2020-05-18
 
 [taxonomies]
 tags = ["zabbix", "upgrade", "centos7", "rhel"]

@@ -2,6 +2,7 @@
 title = "Как отобразить список тэгов в Zola"
 description = "Как настроить тэги в генераторе статических сайтов Zola."
 date = 2020-01-10
+updated = 2020-01-10
 
 [taxonomies]
 tags = ["zola"]

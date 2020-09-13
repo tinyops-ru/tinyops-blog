@@ -2,6 +2,7 @@
 title = "Как подключить готовую тему к проекту на Zola"
 description = "Подключаем к нашему сайту готовую тему для Zola."
 date = 2020-01-03
+updated = 2020-01-03
 
 [taxonomies]
 tags = ["zola"]

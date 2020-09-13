@@ -2,6 +2,7 @@
 title = "Как решать проблемы с Zola"
 description = "Пост про то как решать популярные проблемы при создании сайтов с Zola."
 date = 2020-01-10
+updated = 2020-01-10
 
 [taxonomies]
 tags = ["zola"]

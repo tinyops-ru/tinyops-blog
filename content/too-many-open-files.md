@@ -2,6 +2,7 @@
 title = "Ошибка «Too many open files» в Linux"
 description = "Всё что необходимо знать об ошибке «Too many open files»."
 date = 2020-06-02
+updated = 2020-06-02
 
 [taxonomies]
 tags = ["linux", "pam", "kernel"]

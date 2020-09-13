@@ -2,6 +2,7 @@
 title = "Утилита для быстрого поиска файлов Everything"
 description = "Рассказ про очень быструю утилиту для поиска файлов в Windows. Альтернатива стандартному механизму поиска."
 date = 2020-03-24
+updated = 2020-03-24
 
 [taxonomies]
 tags = ["software", "awesomeware", "search"]
