@@ -3,112 +3,143 @@
     
         <url>
             <loc>https://b.tinyops.ru/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/awesome/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/backup/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/centos/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/development/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/golang/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/golang/page/1/</loc>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/linux/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/ops/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/ops/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/software/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/software/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/tutorial/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/tutorial/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/windows/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/everything/</loc>
+            
                 <lastmod>2020-03-24</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
+            
                 <lastmod>2020-02-07</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</loc>
+            
+                <lastmod>2020-09-30</lastmod>
+            
         </url>
     
         <url>
@@ -155,158 +186,174 @@
     
         <url>
             <loc>https://b.tinyops.ru/page/1/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/page/2/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/page/3/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/page/4/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
-            <lastmod>2020-04-04</lastmod>
-            <lastmod>2020-09-13</lastmod>
+            
+                <lastmod>2020-04-04</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/awesomeware/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/backup/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/borg/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/centos/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/centos7/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/development/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/devops/</loc>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/docker/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/golang/</loc>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/idea/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/jetbrains/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/kernel/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/linux/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/nginx/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/pam/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/reshenie-problem/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/rhel/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/search/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/software/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/ssh/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/troubleshooting/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/upgrade/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/vagrant/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/virtualbox/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/web-sockets/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/windows/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/zabbix/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
-            <lastmod>2020-09-13</lastmod>
+            
         </url>
     
         <url>

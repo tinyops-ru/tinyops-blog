@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Как собрать старый Golang-проект с определённой версией зависимости | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Собираем проект для Golang без фичи с модулями и указанием специальной версии одной из зависимостей.">
+
+
+  
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Собираем проект для Golang без фичи с модулями и указанием специальной версии одной из зависимостей."/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        &lsaquo; Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Как собрать старый Golang-проект с определённой версией зависимости
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-09-30">September 30, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 1 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/golang/" title="Посмотреть все посты с тэгом 'golang'">golang</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/development/" title="Посмотреть все посты с тэгом 'development'">development</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/devops/" title="Посмотреть все посты с тэгом 'devops'">devops</a>
+    
+  </div>
+
+  <p>Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то что она должна была
+работать под Windows Server 2008 (без R2). К сожалению, более новые версии Go, в том числе те, в которые завезли модули,
+использовать было нельзя. В отличие от Rust в Go старых версий с зависимостями всё было сделано плохо.</p>
+<p>Нельзя было как в Rust просто указать какую версию зависимости ты хочешь. Поэтому в этой статье опишу как максимально 
+просто решить эту проблему.</p>
+<p>Итак, для проекта была нужна библиотека <a href="https://github.com/cavaliercoder/grab">grab</a>. 
+С последнего мартовского коммита в проект <code>master</code> этой библиотеки само собой убежал и попутно поломал совместимость.
+Проект перестал собираться.</p>
+<p>Чтобы подсунуть необходимую версию нужно в <code>%GOPATH%/src/github.com/cavaliercoder</code> 
+клонировать стабильную версию с нужным тэгом. В данном случае нужен был <code>2.0.0</code>.</p>
+<ol>
+<li>
+<p>Удаляем каталог <code>grab</code>.</p>
+</li>
+<li>
+<p>Клонируем с тэгом 2.0.0:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">git clone --depth 1 --branch v2.0.0 https://github.com/cavaliercoder/grab.git</span><span style="color:#c0c5ce;">
+</span></pre></li>
+</ol>
+<p>В Idea может потребоваться реиндексация, чтобы она обновила свои кэши по зависимостям: <code>File &gt; Invalidate caches</code>.</p>
+<p>Готово.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+  <div class="text-tiniest mt-5">
+    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
+  </div>
+</footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>
