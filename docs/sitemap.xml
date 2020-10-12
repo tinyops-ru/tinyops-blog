@@ -82,6 +82,16 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/categories/security/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/categories/security/page/1/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/categories/software/</loc>
             
         </url>
@@ -212,6 +222,13 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/sftp-chroot-centos7/</loc>
+            
+                <lastmod>2020-10-12</lastmod>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/</loc>
             
         </url>
@@ -238,6 +255,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/centos7/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/chroot/</loc>
             
         </url>
     
@@ -303,6 +325,16 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/search/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/security/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/sftp/</loc>
             
         </url>
     

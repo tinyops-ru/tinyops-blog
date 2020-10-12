@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Как настроить chroot для sftp в CentOS 7 | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Ограничить доступ через SFTP домашним каталогом пользователя">
+
+
+  
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Ограничить доступ через SFTP домашним каталогом пользователя"/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        &lsaquo; Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Как настроить chroot для sftp в CentOS 7
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-10-12">October 12, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/linux/" title="Посмотреть все посты с тэгом 'linux'">linux</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/security/" title="Посмотреть все посты с тэгом 'security'">security</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/chroot/" title="Посмотреть все посты с тэгом 'chroot'">chroot</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/sftp/" title="Посмотреть все посты с тэгом 'sftp'">sftp</a>
+    
+  </div>
+
+  <p>В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP. 
+Для этого достаточно создать пользователя и запустить службу <code>sshd</code>. По умолчанию пользователь сможет перемещаться 
+по всем каталогам операционной системы к которым имеет доступ на чтение. Это очень плохо с точки зрения безопасности.</p>
+<p>К счастью, <code>sshd</code> позволяет указать корневой каталог для пользователя (механизм chroot).</p>
+<p>Дальнейшая настройка будет актуальна для CentOS 7 и OpenSSH 7.4, но скорей всего сработает и для других версий.</p>
+<p>В качестве корневого каталога будет путь <code>/sftp/bob</code>.</p>
+<h3 id="nastraivaem-sluzhbu-sshd">Настраиваем службу sshd</h3>
+<p>Добавляем в конец конфигурационного файла sshd <code>/etc/ssh/sshd_config</code> следующий текст (комментарии можно не добавлять):</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">Match User bob</span><span style="color:#c0c5ce;">
+ # Запрещаем </span><span style="color:#c0c5ce;">
+ X11Forwarding no</span><span style="color:#c0c5ce;">
+ # Запрещаем проксирование tcp-трафика</span><span style="color:#c0c5ce;">
+ AllowTcpForwarding no</span><span style="color:#c0c5ce;">
+ # Мы будем использовать только подсистему sftp</span><span style="color:#c0c5ce;">
+ ForceCommand internal-sftp</span><span style="color:#c0c5ce;">
+ # Корневой каталог для пользователя</span><span style="color:#c0c5ce;">
+ ChrootDirectory /sftp/bob</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Проверяем что конфигурация без ошибок:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">sshd -t</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">systemctl restart sshd</span><span style="color:#c0c5ce;">
+</span></pre><h3 id="ustanavlivaem-korrektnye-prava">Устанавливаем корректные права</h3>
+<p>У механизма chroot есть требование для владельцев по пути к корневому каталогу:</p>
+<blockquote>
+<p><strong>ChrootDirectory</strong><br />
+Specifies the pathname of a directory to chroot(2) to after authentication. All components of the pathname must 
+be root-owned directories that are not writable by any other user or group. After the chroot, sshd(8) 
+changes the working directory to the user's home directory.</p>
+</blockquote>
+<p>Владельцем на пути до корневого каталога (включительно) должен быть <code>root</code>.</p>
+<p>Поэтому делаем так:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">chown -R root: /vfs</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Если с правами что-то не так то в файле <code>/var/log/secure</code> будет ошибка <code>fatal: bad ownership or modes for chroot directory</code>.</p>
+<h3 id="testiruem">Тестируем</h3>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">$ sftp bob@your-server</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+Connected to your-server.</span><span style="color:#c0c5ce;">
+sftp&gt; ls</span><span style="color:#c0c5ce;">
+lost+found  test</span><span style="color:#c0c5ce;">
+sftp&gt; pwd</span><span style="color:#c0c5ce;">
+Remote working directory: /</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Всё работает.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+  <div class="text-tiniest mt-5">
+    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
+  </div>
+</footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>
