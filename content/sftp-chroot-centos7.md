@@ -19,6 +19,8 @@ categories = ["centos", "linux", "security"]
 
 В качестве корневого каталога будет путь `/sftp/bob`.
 
+### Настраиваем службу sshd
+
 Добавляем в конец конфигурационного файла sshd `/etc/ssh/sshd_config` следующий текст (комментарии можно не добавлять):
 
 ```
@@ -47,17 +49,22 @@ systemctl restart sshd
 
 ### Устанавливаем корректные права
 
+У механизма chroot есть требование для владельцев по пути к корневому каталогу:
+
 >**ChrootDirectory**  
 Specifies the pathname of a directory to chroot(2) to after authentication. All components of the pathname must 
 >be root-owned directories that are not writable by any other user or group. After the chroot, sshd(8) 
 >changes the working directory to the user's home directory.
 
-Согласно требованиям безопасности владельцем до корневого каталога должен быть пользователь `root`.
+Владельцем на пути до корневого каталога (включительно) должен быть `root`.
+
 Поэтому делаем так:
 
 ```shell script
 chown -R root: /vfs
 ```
+
+Если с правами что-то не так то в файле `/var/log/secure` будет ошибка `fatal: bad ownership or modes for chroot directory`.
 
 ### Тестируем
 
