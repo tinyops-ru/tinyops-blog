@@ -349,6 +349,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/tags/tmux/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/troubleshooting/</loc>
             
         </url>
@@ -385,6 +390,13 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/zola/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tmux/</loc>
+            
+                <lastmod>2020-11-02</lastmod>
             
         </url>
     
