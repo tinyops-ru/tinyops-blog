@@ -229,6 +229,13 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
+            
+                <lastmod>2020-11-11</lastmod>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/tags/</loc>
             
         </url>
@@ -345,6 +352,11 @@
     
         <url>
             <loc>https://b.tinyops.ru/tags/ssh/</loc>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/tags/syncthing/</loc>
             
         </url>
     

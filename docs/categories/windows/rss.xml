@@ -12,7 +12,7 @@
         <generator>Zola</generator>
         <language>ru</language>
         <atom:link href="https:&#x2F;&#x2F;b.tinyops.ru/rss.xml" rel="self" type="application/rss+xml"/>
-        <lastBuildDate>2020-03-24</lastBuildDate>
+        <lastBuildDate>2020-11-11</lastBuildDate>
 
         
         <turbo:analytics type="Yandex"
@@ -20,6 +20,84 @@
                          params="{}"></turbo:analytics>
         
 
+        
+        <item
+            
+                turbo="true"
+            
+            >
+            <title>Запуск Syncthing в виде службы Windows</title>
+            <pubDate>2020-11-11</pubDate>
+            <link>https:&#x2F;&#x2F;b.tinyops.ru/syncthing-as-windows-service</link>
+            <guid>https:&#x2F;&#x2F;b.tinyops.ru/syncthing-as-windows-service</guid>
+            <description>Как настроить запуск Syncthing в качестве службы Windows.</description>
+            
+                <turbo:source></turbo:source>
+                <turbo:topic></turbo:topic>
+                <metrics>
+                    <yandex schema_identifier="56992924">
+                        <breadcrumblist>
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/" text="Главная"/>
+
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/software" text="Категория software"/>
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/windows" text="Категория windows"/>
+                            
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/categories/awesome" text="Категория awesome"/>
+                            
+
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/software" text="Тэг software"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/awesomeware" text="Тэг awesomeware"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/syncthing" text="Тэг syncthing"/>
+                            
+                                <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/tags/windows" text="Тэг windows"/>
+                            
+
+                            <breadcrumb url="https:&#x2F;&#x2F;b.tinyops.ru/syncthing-as-windows-service" text="Запуск Syncthing в виде службы Windows"/>
+                        </breadcrumblist>
+                    </yandex>
+                </metrics>
+                <yandex:related></yandex:related>
+                <turbo:content>
+                    &lt;p&gt;Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
+выступать настольные системы, ноутбуки и мобильные устройства. Syncthing можно запустить во всех популярных операционных системах.&lt;&#x2F;p&gt;
+&lt;p&gt;Если на мобильных устройствах приложение стартует самостоятельно как служба, то на настольных системах необходима настройка.
+Вы можете запустить приложение в сеансе текущего пользователя, но запускать при каждом запуске компьютера неудобно.&lt;&#x2F;p&gt;
+&lt;p&gt;Официальное руководство &lt;a href=&quot;https:&#x2F;&#x2F;docs.syncthing.net&#x2F;users&#x2F;autostart.html&quot;&gt;предлагает&lt;&#x2F;a&gt; два способа:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Запускать через планировщик задач Windows;&lt;&#x2F;li&gt;
+&lt;li&gt;Запускать в виде службы.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Первый способ костыльный и перестанет работать если пользователь поменяет пароль, поэтому лучше настроить службу Windows.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ustanovka-nssm&quot;&gt;Установка NSSM&lt;&#x2F;h3&gt;
+&lt;p&gt;Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы. 
+Подобных утилит достаточно много, но мы возьмём одну из самых удобных - NSSM (The Non-Sucking Service Manager).
+Скачиваем с официального сайта дистрибутив &lt;a href=&quot;https:&#x2F;&#x2F;nssm.cc&#x2F;download&quot;&gt;https:&#x2F;&#x2F;nssm.cc&#x2F;download&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Распаковываем куда-нибудь, например, в &lt;code&gt;c:\apps\nssm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Затем складываем файл &lt;code&gt;nssm.exe&lt;&#x2F;code&gt; так, чтобы полный путь до приложения был следующим - &lt;code&gt;c:\apps\nssm\nssm.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sozdanie-sluzhby-windows&quot;&gt;Создание службы Windows&lt;&#x2F;h3&gt;
+&lt;p&gt;Допустим полный путь до исполняемого файла Syncthing - &lt;code&gt;c:\apps\syncthing\syncthing.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Запускаем командную строку Windows с правами локального администратора и создаём службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;span style=&quot;color:#c0c5ce;&quot;&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
+&lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
+&lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Выбираем существующего пользователя и указываем пароль.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-run-as.png&quot; alt=&quot;Выбор пользователя для запуска службы&quot; title=&quot;Выбор пользователя для запуска службы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Жмём &amp;quot;ОК&amp;quot; и перезапускаем службу.&lt;&#x2F;p&gt;
+&lt;p&gt;Через некоторое время приложение будет доступно по ссылке &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:8384&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:8384&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+
+                </turbo:content>
+            
+        </item>
         
         <item
             

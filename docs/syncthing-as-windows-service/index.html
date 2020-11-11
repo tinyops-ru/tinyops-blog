@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Запуск Syncthing в виде службы Windows | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Как настроить запуск Syncthing в качестве службы Windows.">
+
+
+  
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Как настроить запуск Syncthing в качестве службы Windows."/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        &lsaquo; Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Запуск Syncthing в виде службы Windows
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-11-11">November 11, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/software/" title="Посмотреть все посты с тэгом 'software'">software</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/awesomeware/" title="Посмотреть все посты с тэгом 'awesomeware'">awesomeware</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/syncthing/" title="Посмотреть все посты с тэгом 'syncthing'">syncthing</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/windows/" title="Посмотреть все посты с тэгом 'windows'">windows</a>
+    
+  </div>
+
+  <p>Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
+выступать настольные системы, ноутбуки и мобильные устройства. Syncthing можно запустить во всех популярных операционных системах.</p>
+<p>Если на мобильных устройствах приложение стартует самостоятельно как служба, то на настольных системах необходима настройка.
+Вы можете запустить приложение в сеансе текущего пользователя, но запускать при каждом запуске компьютера неудобно.</p>
+<p>Официальное руководство <a href="https://docs.syncthing.net/users/autostart.html">предлагает</a> два способа:</p>
+<ol>
+<li>Запускать через планировщик задач Windows;</li>
+<li>Запускать в виде службы.</li>
+</ol>
+<p>Первый способ костыльный и перестанет работать если пользователь поменяет пароль, поэтому лучше настроить службу Windows.</p>
+<h3 id="ustanovka-nssm">Установка NSSM</h3>
+<p>Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы. 
+Подобных утилит достаточно много, но мы возьмём одну из самых удобных - NSSM (The Non-Sucking Service Manager).
+Скачиваем с официального сайта дистрибутив <a href="https://nssm.cc/download">https://nssm.cc/download</a>.</p>
+<p>Распаковываем куда-нибудь, например, в <code>c:\apps\nssm</code>.</p>
+<p>Затем складываем файл <code>nssm.exe</code> так, чтобы полный путь до приложения был следующим - <code>c:\apps\nssm\nssm.exe</code>.</p>
+<h3 id="sozdanie-sluzhby-windows">Создание службы Windows</h3>
+<p>Допустим полный путь до исполняемого файла Syncthing - <code>c:\apps\syncthing\syncthing.exe</code>.</p>
+<p>Запускаем командную строку Windows с правами локального администратора и создаём службу:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe</span><span style="color:#c0c5ce;">
+c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing</span><span style="color:#c0c5ce;">
+c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START</span><span style="color:#c0c5ce;">
+</span></pre><h3 id="nastraivaem-pol-zovatelia">Настраиваем пользователя</h3>
+<p>В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. </p>
+<p>Заходим в оснастку служб Windows, переходим в свойств службы <code>Syncthing</code>.</p>
+<p><img src="/images/awesomeware/syncthing/service-properties.png" alt="Свойства службы Syncthing" title="Свойства службы Syncthing" /></p>
+<p>Выбираем существующего пользователя и указываем пароль.</p>
+<p><img src="/images/awesomeware/syncthing/service-run-as.png" alt="Выбор пользователя для запуска службы" title="Выбор пользователя для запуска службы" /></p>
+<p>Жмём &quot;ОК&quot; и перезапускаем службу.</p>
+<p>Через некоторое время приложение будет доступно по ссылке <a href="http://127.0.0.1:8384">http://127.0.0.1:8384</a>.</p>
+
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+  <div class="text-tiniest mt-5">
+    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
+  </div>
+</footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>
