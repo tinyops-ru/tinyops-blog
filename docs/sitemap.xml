@@ -3,7 +3,7 @@
     
         <url>
             <loc>https://b.tinyops.ru/</loc>
-            
+            <lastmod>2020-11-15</lastmod>
         </url>
     
         <url>
@@ -215,6 +215,11 @@
         </url>
     
         <url>
+            <loc>https://b.tinyops.ru/page/5/</loc>
+            
+        </url>
+    
+        <url>
             <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
             
                 <lastmod>2020-04-04</lastmod>
@@ -225,6 +230,13 @@
             <loc>https://b.tinyops.ru/sftp-chroot-centos7/</loc>
             
                 <lastmod>2020-10-12</lastmod>
+            
+        </url>
+    
+        <url>
+            <loc>https://b.tinyops.ru/ssh-server-security-fundamentals/</loc>
+            
+                <lastmod>2020-11-13</lastmod>
             
         </url>
     

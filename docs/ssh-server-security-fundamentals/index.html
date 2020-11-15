@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- SEO -->
+  
+<title>Настройка безопасности для SSH-сервера | Блог TinyOps</title>
+
+
+  
+<meta name="Description" content="Как настроить SSH-сервер чтобы он был безопасным.">
+
+
+  
+  <meta name="keywords" content="блог про технологии, решение linux проблем">
+  
+
+  
+  <meta property="og:url" content="https:&#x2F;&#x2F;b.tinyops.ru" />
+  
+
+  
+  <meta property="og:title" content="Блог TinyOps" />
+  
+
+  
+<meta property="og:description" content="Как настроить SSH-сервер чтобы он был безопасным."/>
+
+
+  
+  <meta property="og:type" content="blog" />
+  
+
+  
+
+  <link rel="icon" type="image&#x2F;vnd.microsoft.icon" href="/favicon.ico">
+
+  
+    
+        <!-- Yandex.Webmaster Verification Code -->
+        <meta name="yandex-verification" content="578eb2cc5cb8a301" />
+    
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--  css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+
+  <!-- theme -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
+
+  
+</head>
+
+<body>
+
+<nav id="overlord" class="overlord">
+  
+<div id="logo" class="p-4">
+    <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
+        &lsaquo; Назад
+    </a>
+</div>
+
+</nav>
+
+<section class="container">
+  
+  <h1 class="page-title mt-0">
+    Настройка безопасности для SSH-сервера
+  </h1>
+  
+<div class="frontmatter font-weight-bold">
+    <div class="d-inline-block">
+        <time class="article_time" datetime="2020-11-13">November 13, 2020</time>.
+    </div>
+
+    <div class="d-inline-block article_time"> Время чтения &mdash; 3 мин.</div>
+</div>
+
+
+  <div class="mb-3 mt-3">
+    
+      <a class="btn btn-tiny btn-light" href="/tags/software/" title="Посмотреть все посты с тэгом 'software'">software</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/security/" title="Посмотреть все посты с тэгом 'security'">security</a>
+    
+      <a class="btn btn-tiny btn-light" href="/tags/ssh/" title="Посмотреть все посты с тэгом 'ssh'">ssh</a>
+    
+  </div>
+
+  <p>SSH (Secure Shell) - это протокол прикладного уровня с шифрованием трафика, а также самый распространённый протокол 
+удалённого доступа к Linux\Unix-серверам. Самая популярная реализация серверной части называется OpenSSH.</p>
+<p><img src="/images/ssh/ssh-security.png" alt="Терминал Linux" title="Терминал Linux" /></p>
+<p>Тем не менее, даже самую безопасную систему на свете можно сделать уязвимой благодаря настройке. Во многих дистрибутивах
+служба SSH имеет уязвимую конфигурацию.</p>
+<p>Две самых распространённых уязвимости:</p>
+<ol>
+<li>Разрешён удалённый доступ пользователю <code>root</code>;</li>
+<li>Не указан список пользователей, которым разрешён доступ.</li>
+</ol>
+<p>В некоторых дистрибутивах разрешён вход для пользователей с пустыми паролями. 
+Проблема безопасности усугубляется ещё и тем что по умолчанию команда <code>useradd</code> создаёт пользователя с пустым паролем.</p>
+<h2 id="perebor-loginov-i-parolei">Перебор логинов и паролей</h2>
+<p>Несмотря на то что существуют различные векторы атак на службу SSH, самая популярная атака это перебор логинов и паролей.
+Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.</p>
+<p>В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
+увидеть такую картину: </p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">[user@pc] # ssh server</span><span style="color:#c0c5ce;">
+Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty</span><span style="color:#c0c5ce;">
+There were 13925 failed login attempts since the last successful login.</span><span style="color:#c0c5ce;">
+Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.</p>
+<h2 id="nastroika-minimal-no-rekomenduemoi-konfiguratsii">Настройка минимально рекомендуемой конфигурации</h2>
+<p>Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#65737e;"># Запрещаем вход пользователю root через удалённый доступ</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">PermitRootLogin</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Разрешаем подключение только для указанных пользователей</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">AllowUsers</span><span style="color:#c0c5ce;"> user1 user2 user3</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Меняем порт на нестандартный</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">Port</span><span style="color:#c0c5ce;"> 14819</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Запрещаем вход пользователям с пустыми паролями</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">PermitEmptyPasswords</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Отключаем неиспользуемые способы аутентификации</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">KerberosAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">GSSAPIAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Отключаем возможность доступа к графическим приложениям</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">X11Forwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;"># Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла</span><span style="color:#65737e;">
+</span><span style="color:#bf616a;">AllowAgentForwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">AllowTcpForwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">PermitTunnel</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="nastroika-usilennoi-bezopasnosti">Настройка усиленной безопасности</h2>
+<p>Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. </p>
+<h3 id="blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip">Блокируем доступ к порту SSH для всех кроме доверенных IP</h3>
+<p>Например, с помощью firewalld:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">firewall-cmd --permanent --zone=public --remote-service=ssh</span><span style="color:#c0c5ce;">
+firewall-cmd --permanent --zone=trusted --add-service=ssh</span><span style="color:#c0c5ce;">
+firewall-cmd --reload</span><span style="color:#c0c5ce;">
+</span></pre><h3 id="otkliuchaem-dostup-po-loginu-i-paroliu">Отключаем доступ по логину и паролю</h3>
+<p>Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
+инженеров предпочитаю работать с логинами и паролями.</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">PasswordAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>После этого потребуется создать ключ для пользователя:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">ssh-keygen</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>А затем скопировать его на удалённый сервер:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">ssh-copy-id user@server</span><span style="color:#c0c5ce;">
+</span></pre><h2 id="proverka-i-primenenie-nastroek">Проверка и применение настроек</h2>
+<p>Проверяем что настройки корректные:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">sshd -t</span><span style="color:#c0c5ce;">
+</span></pre>
+<p>Если приложение не сообщило об ошибках, значит всё хорошо.</p>
+<p>Перезапускаем службу:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#c0c5ce;">systemctl restart sshd</span><span style="color:#c0c5ce;">
+</span></pre>
+  
+</section>
+
+ 
+
+<footer class="mt-5 mb-5">
+  <div class="text-tiniest mt-5">
+    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
+  </div>
+</footer>
+
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56992924, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56992924"
+                    style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+
+</body>
+</html>
