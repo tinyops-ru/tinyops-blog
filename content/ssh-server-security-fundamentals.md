@@ -1,8 +1,8 @@
 +++
 title = "Настройка безопасности для SSH-сервера"
 description = "Как настроить SSH-сервер чтобы он был безопасным."
-date = 2020-11-13
-updated = 2020-11-13
+date = 2020-11-15
+updated = 2020-11-15
 
 [taxonomies]
 tags = ["software", "security", "ssh"]
@@ -81,7 +81,7 @@ PermitTunnel no
 Например, с помощью firewalld:
 
 ```shell script
-firewall-cmd --permanent --zone=public --remote-service=ssh
+firewall-cmd --permanent --zone=public --remove-service=ssh
 firewall-cmd --permanent --zone=trusted --add-service=ssh
 firewall-cmd --reload
 ```
