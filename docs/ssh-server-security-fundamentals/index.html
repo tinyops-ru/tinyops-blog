@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,11 +91,11 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/software/" title="Посмотреть все посты с тэгом 'software'">software</a>
+      <a class="btn btn-tiny btn-light" href="/tags/software/">software</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/security/" title="Посмотреть все посты с тэгом 'security'">security</a>
+      <a class="btn btn-tiny btn-light" href="/tags/security/">security</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/ssh/" title="Посмотреть все посты с тэгом 'ssh'">ssh</a>
+      <a class="btn btn-tiny btn-light" href="/tags/ssh/">ssh</a>
     
   </div>
 
@@ -117,79 +117,75 @@
 <p>В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
 увидеть такую картину: </p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[user@pc] # ssh server</span><span style="color:#c0c5ce;">
-Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty</span><span style="color:#c0c5ce;">
-There were 13925 failed login attempts since the last successful login.</span><span style="color:#c0c5ce;">
-Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">[user@pc] # ssh server
+Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
+There were 13925 failed login attempts since the last successful login.
+Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
+</span></code></pre>
 <p>Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.</p>
 <h2 id="nastroika-minimal-no-rekomenduemoi-konfiguratsii">Настройка минимально рекомендуемой конфигурации</h2>
 <p>Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#65737e;"># Запрещаем вход пользователю root через удалённый доступ</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">PermitRootLogin</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Разрешаем подключение только для указанных пользователей</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">AllowUsers</span><span style="color:#c0c5ce;"> user1 user2 user3</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Меняем порт на нестандартный</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">Port</span><span style="color:#c0c5ce;"> 14819</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Запрещаем вход пользователям с пустыми паролями</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">PermitEmptyPasswords</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Отключаем неиспользуемые способы аутентификации</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">KerberosAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">GSSAPIAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Отключаем возможность доступа к графическим приложениям</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">X11Forwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#65737e;"># Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла</span><span style="color:#65737e;">
-</span><span style="color:#bf616a;">AllowAgentForwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">AllowTcpForwarding</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">PermitTunnel</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span></pre><h2 id="nastroika-usilennoi-bezopasnosti">Настройка усиленной безопасности</h2>
+<code class="language-bash" data-lang="bash"><span style="color:#65737e;"># Запрещаем вход пользователю root через удалённый доступ
+</span><span style="color:#bf616a;">PermitRootLogin</span><span style="color:#c0c5ce;"> no
+
+</span><span style="color:#65737e;"># Разрешаем подключение только для указанных пользователей
+</span><span style="color:#c0c5ce;">AllowUsers user1 user2 user3
+
+</span><span style="color:#65737e;"># Меняем порт на нестандартный
+</span><span style="color:#c0c5ce;">Port 14819
+
+</span><span style="color:#65737e;"># Запрещаем вход пользователям с пустыми паролями
+</span><span style="color:#c0c5ce;">PermitEmptyPasswords no
+
+</span><span style="color:#65737e;"># Отключаем неиспользуемые способы аутентификации
+</span><span style="color:#c0c5ce;">KerberosAuthentication no
+</span><span style="color:#bf616a;">GSSAPIAuthentication</span><span style="color:#c0c5ce;"> no
+
+</span><span style="color:#65737e;"># Отключаем возможность доступа к графическим приложениям
+</span><span style="color:#c0c5ce;">X11Forwarding no
+
+</span><span style="color:#65737e;"># Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+</span><span style="color:#c0c5ce;">AllowAgentForwarding no
+</span><span style="color:#bf616a;">AllowTcpForwarding</span><span style="color:#c0c5ce;"> no
+</span><span style="color:#bf616a;">PermitTunnel</span><span style="color:#c0c5ce;"> no
+</span></code></pre><h2 id="nastroika-usilennoi-bezopasnosti">Настройка усиленной безопасности</h2>
 <p>Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. </p>
 <h3 id="blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip">Блокируем доступ к порту SSH для всех кроме доверенных IP</h3>
 <p>Например, с помощью firewalld:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">firewall-cmd --permanent --zone=public --remove-service=ssh</span><span style="color:#c0c5ce;">
-firewall-cmd --permanent --zone=trusted --add-service=ssh</span><span style="color:#c0c5ce;">
-firewall-cmd --reload</span><span style="color:#c0c5ce;">
-</span></pre><h3 id="otkliuchaem-dostup-po-loginu-i-paroliu">Отключаем доступ по логину и паролю</h3>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">firewall-cmd --permanent --zone=public --remove-service=ssh
+firewall-cmd --permanent --zone=trusted --add-service=ssh
+firewall-cmd --reload
+</span></code></pre><h3 id="otkliuchaem-dostup-po-loginu-i-paroliu">Отключаем доступ по логину и паролю</h3>
 <p>Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
 инженеров предпочитаю работать с логинами и паролями.</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#bf616a;">PasswordAuthentication</span><span style="color:#c0c5ce;"> no</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">PasswordAuthentication</span><span style="color:#c0c5ce;"> no
+</span></code></pre>
 <p>После этого потребуется создать ключ для пользователя:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">ssh-keygen</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">ssh-keygen
+</span></code></pre>
 <p>А затем скопировать его на удалённый сервер:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">ssh-copy-id user@server</span><span style="color:#c0c5ce;">
-</span></pre><h2 id="proverka-i-primenenie-nastroek">Проверка и применение настроек</h2>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">ssh-copy-id user@server
+</span></code></pre><h2 id="proverka-i-primenenie-nastroek">Проверка и применение настроек</h2>
 <p>Проверяем что настройки корректные:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">sshd -t</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">sshd -t
+</span></code></pre>
 <p>Если приложение не сообщило об ошибках, значит всё хорошо.</p>
 <p>Перезапускаем службу:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">systemctl restart sshd</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">systemctl restart sshd
+</span></code></pre>
   
 </section>
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

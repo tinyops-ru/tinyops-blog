@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,11 +91,11 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/linux/" title="Посмотреть все посты с тэгом 'linux'">linux</a>
+      <a class="btn btn-tiny btn-light" href="/tags/linux/">linux</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/pam/" title="Посмотреть все посты с тэгом 'pam'">pam</a>
+      <a class="btn btn-tiny btn-light" href="/tags/pam/">pam</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/kernel/" title="Посмотреть все посты с тэгом 'kernel'">kernel</a>
+      <a class="btn btn-tiny btn-light" href="/tags/kernel/">kernel</a>
     
   </div>
 
@@ -106,15 +106,15 @@
 <p>Прежде всего ограничение на количество открытых файлов устанавливает ядро операционной системы. Посмотреть его можно
 вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[root@dracula ~]# sysctl fs.file-max</span><span style="color:#c0c5ce;">
-fs.file-max = 3000000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">[root@dracula ~]# sysctl fs.file-max
+fs.file-max = 3000000
+</span></code></pre>
 <p>Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
 прочитать файл <code>/proc/sys/fs/file-nr</code>:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">$ cat /proc/sys/fs/file-nr</span><span style="color:#c0c5ce;">
-1154    133     3000000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">$ cat /proc/sys/fs/file-nr
+1154    133     3000000
+</span></code></pre>
 <ul>
 <li><code>1154</code> — текущее значение открытых файлов.</li>
 <li><code>133</code> — сколько из открытых файлов не используются.</li>
@@ -131,9 +131,9 @@ fs.file-max = 3000000</span><span style="color:#c0c5ce;">
 </ul>
 <p>Формат записи такой:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">nginx           soft   nofile 50000</span><span style="color:#c0c5ce;">
-nginx           hard   nofile 50000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">nginx           soft   nofile 50000
+nginx           hard   nofile 50000
+</span></code></pre>
 <p>Существует два вида ограничений: <code>soft</code> (мягкий) и <code>hard</code> (жесткий). Soft-ограничения носят рекомендательный характер, 
 в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (<code>nofile</code>) по hard-ограничению
 не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.</p>
@@ -148,26 +148,26 @@ nginx           hard   nofile 50000</span><span style="color:#c0c5ce;">
 в <code>/etc/security/limits.conf</code> и упомянутых выше файлах.</p>
 <p>Смотрим сколько пользователю <code>nginx</code> разрешено:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">$ sudo -u nginx bash -c &#39;ulimit -n&#39;</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-1024</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">$ sudo -u nginx bash -c &#39;ulimit -n&#39;
+
+1024
+</span></code></pre>
 <p>Видимо что всего лишь <code>1024</code>, для нагруженного сервера это может быть недостаточным. Добавляем в <code>/etc/security/limits.conf</code> строчки:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">nginx           soft   nofile 10000</span><span style="color:#c0c5ce;">
-nginx           hard   nofile 10000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code><span style="color:#c0c5ce;">nginx           soft   nofile 10000
+nginx           hard   nofile 10000
+</span></code></pre>
 <p>Тем самым разрешая лимит до 10000 файлов.</p>
 <p>В старых ядрах Linux значение <code>fs.file-max</code> может быть равно 10000. Если требуется дать <code>nginx</code> больше 10000 файлов, 
 то необходимо добавить в <code>/etc/sysctl.conf</code> значение с запасом:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">fs.file-max = 100000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code><span style="color:#c0c5ce;">fs.file-max = 100000
+</span></code></pre>
 <p>Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
 применить его «на лету», делаем вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">$ sysctl -w fs.file-max=100000</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">$ sysctl -w fs.file-max=100000
+</span></code></pre>
 <p>В отличие от первого способа, эта настройка будет актуальна до первой перезагрузки операционной системы.</p>
 <p>После изменения настроек в конфигурации ядра и PAM необходимо перезапустить процесс <code>nginx</code>.</p>
 <h2 id="poleznye-ssylki">Полезные ссылки</h2>
@@ -181,11 +181,7 @@ nginx           hard   nofile 10000</span><span style="color:#c0c5ce;">
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

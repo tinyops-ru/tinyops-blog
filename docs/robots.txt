@@ -1,2 +1,3 @@
 User-agent: *
+Allow: /
 Sitemap: https://b.tinyops.ru/sitemap.xml

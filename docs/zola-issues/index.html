@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,20 +91,20 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/zola/" title="Посмотреть все посты с тэгом 'zola'">zola</a>
+      <a class="btn btn-tiny btn-light" href="/tags/zola/">zola</a>
     
   </div>
 
   <p>Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">Change detected @ 2020-01-11 18:37:14</span><span style="color:#c0c5ce;">
--&gt; Content changed C:\pro\tinyops-blog\content/zola-issues.md</span><span style="color:#c0c5ce;">
-Failed to build the site</span><span style="color:#c0c5ce;">
-Error: Failed to render page &#39;d:\tinyops-blog\content/zola-issues.md&#39;</span><span style="color:#c0c5ce;">
-Reason: Failed to render &#39;tinyblog/templates/page.html&#39;</span><span style="color:#c0c5ce;">
-Reason: Variable `page.taxonomies[&#39;tags&#39;]` not found in context while rendering &#39;tinyblog/templates/page.html&#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?</span><span style="color:#c0c5ce;">
-Done in 31ms.</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">Change detected @ 2020-01-11 18:37:14
+-&gt; Content changed C:\pro\tinyops-blog\content/zola-issues.md
+Failed to build the site
+Error: Failed to render page &#39;d:\tinyops-blog\content/zola-issues.md&#39;
+Reason: Failed to render &#39;tinyblog/templates/page.html&#39;
+Reason: Variable `page.taxonomies[&#39;tags&#39;]` not found in context while rendering &#39;tinyblog/templates/page.html&#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
+Done in 31ms.
+</span></code></pre>
 <p>В контексте ошибки выше:</p>
 <ol>
 <li>Ошибка связана с содержимым файла <code>zola-issues.md</code></li>
@@ -113,23 +113,23 @@ Done in 31ms.</span><span style="color:#c0c5ce;">
 </ol>
 <p>Смотрим начало <code>content/zola-issues.md</code>:</p>
 <pre style="background-color:#2b303b;">
-<span style="background-color:#bf616a;color:#2b303b;">+++</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">title </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Как решать проблемы с Zola</span><span style="color:#c0c5ce;">&quot;</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">date </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">2020-01-10</span><span style="color:#c0c5ce;">
-+++</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-toml" data-lang="toml"><span style="background-color:#bf616a;color:#2b303b;">+++</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">title </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Как решать проблемы с Zola</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#bf616a;">date </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">2020-01-10
+</span><span style="color:#c0c5ce;">+++
+</span></code></pre>
 <p>и видим что секция <code>[taxonomies]</code> отсутствует. Если взялся использовать тэги и категории, то будь
 добр их определить. Исправляем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[taxonomies]</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">tags </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">zola</span><span style="color:#c0c5ce;">&quot;]</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">categories </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">tutorial</span><span style="color:#c0c5ce;">&quot;]</span><span style="color:#c0c5ce;">
-</span></pre><h2 id="oshibka-the-requested-port-is-not-available">Ошибка - The requested port is not available</h2>
+<code class="language-toml" data-lang="toml"><span style="color:#c0c5ce;">[taxonomies]
+</span><span style="color:#bf616a;">tags </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">zola</span><span style="color:#c0c5ce;">&quot;]
+</span><span style="color:#bf616a;">categories </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">tutorial</span><span style="color:#c0c5ce;">&quot;]
+</span></code></pre><h2 id="oshibka-the-requested-port-is-not-available">Ошибка - The requested port is not available</h2>
 <p>Как это выглядит в консоли:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">d:\tinyops-blog&gt;zola serve</span><span style="color:#c0c5ce;">
-The requested port is not available</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">d:\tinyops-blog&gt;zola serve
+The requested port is not available
+</span></code></pre>
 <p>Ошибка сообщает что Zola не может стартануть с выбранным tcp-портом (по умолчанию <code>1111</code>). </p>
 <p>Решения для Windows:</p>
 <ol>
@@ -140,8 +140,8 @@ The requested port is not available</span><span style="color:#c0c5ce;">
 <li>
 <p>Указать другой порт при запуске:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">zola serve --port 12345</span><span style="color:#c0c5ce;">
-</span></pre></li>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">zola serve --port 12345
+</span></code></pre></li>
 </ol>
 <h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>
 <p>По тэгу <a href="/tags/zola">zola</a> вы можете найти другие статьи из этого цикла.</p>
@@ -151,11 +151,7 @@ The requested port is not available</span><span style="color:#c0c5ce;">
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

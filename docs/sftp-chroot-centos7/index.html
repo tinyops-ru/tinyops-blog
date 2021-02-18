@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,13 +91,13 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/linux/" title="Посмотреть все посты с тэгом 'linux'">linux</a>
+      <a class="btn btn-tiny btn-light" href="/tags/linux/">linux</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/security/" title="Посмотреть все посты с тэгом 'security'">security</a>
+      <a class="btn btn-tiny btn-light" href="/tags/security/">security</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/chroot/" title="Посмотреть все посты с тэгом 'chroot'">chroot</a>
+      <a class="btn btn-tiny btn-light" href="/tags/chroot/">chroot</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/sftp/" title="Посмотреть все посты с тэгом 'sftp'">sftp</a>
+      <a class="btn btn-tiny btn-light" href="/tags/sftp/">sftp</a>
     
   </div>
 
@@ -110,24 +110,24 @@
 <h3 id="nastraivaem-sluzhbu-sshd">Настраиваем службу sshd</h3>
 <p>Добавляем в конец конфигурационного файла sshd <code>/etc/ssh/sshd_config</code> следующий текст (комментарии можно не добавлять):</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">Match User bob</span><span style="color:#c0c5ce;">
- # Запрещаем </span><span style="color:#c0c5ce;">
- X11Forwarding no</span><span style="color:#c0c5ce;">
- # Запрещаем проксирование tcp-трафика</span><span style="color:#c0c5ce;">
- AllowTcpForwarding no</span><span style="color:#c0c5ce;">
- # Мы будем использовать только подсистему sftp</span><span style="color:#c0c5ce;">
- ForceCommand internal-sftp</span><span style="color:#c0c5ce;">
- # Корневой каталог для пользователя</span><span style="color:#c0c5ce;">
- ChrootDirectory /sftp/bob</span><span style="color:#c0c5ce;">
-</span></pre>
+<code><span style="color:#c0c5ce;">Match User bob
+ # Запрещаем 
+ X11Forwarding no
+ # Запрещаем проксирование tcp-трафика
+ AllowTcpForwarding no
+ # Мы будем использовать только подсистему sftp
+ ForceCommand internal-sftp
+ # Корневой каталог для пользователя
+ ChrootDirectory /sftp/bob
+</span></code></pre>
 <p>Проверяем что конфигурация без ошибок:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">sshd -t</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">sshd -t
+</span></code></pre>
 <p>Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">systemctl restart sshd</span><span style="color:#c0c5ce;">
-</span></pre><h3 id="ustanavlivaem-korrektnye-prava">Устанавливаем корректные права</h3>
+<code><span style="color:#c0c5ce;">systemctl restart sshd
+</span></code></pre><h3 id="ustanavlivaem-korrektnye-prava">Устанавливаем корректные права</h3>
 <p>У механизма chroot есть требование для владельцев по пути к корневому каталогу:</p>
 <blockquote>
 <p><strong>ChrootDirectory</strong><br />
@@ -138,19 +138,19 @@ changes the working directory to the user's home directory.</p>
 <p>Владельцем на пути до корневого каталога (включительно) должен быть <code>root</code>.</p>
 <p>Поэтому делаем так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">chown -R root: /vfs</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">chown -R root: /vfs
+</span></code></pre>
 <p>Если с правами что-то не так то в файле <code>/var/log/secure</code> будет ошибка <code>fatal: bad ownership or modes for chroot directory</code>.</p>
 <h3 id="testiruem">Тестируем</h3>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">$ sftp bob@your-server</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-Connected to your-server.</span><span style="color:#c0c5ce;">
-sftp&gt; ls</span><span style="color:#c0c5ce;">
-lost+found  test</span><span style="color:#c0c5ce;">
-sftp&gt; pwd</span><span style="color:#c0c5ce;">
-Remote working directory: /</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">$ sftp bob@your-server
+
+Connected to your-server.
+sftp&gt; ls
+lost+found  test
+sftp&gt; pwd
+Remote working directory: /
+</span></code></pre>
 <p>Всё работает.</p>
 
   
@@ -158,11 +158,7 @@ Remote working directory: /</span><span style="color:#c0c5ce;">
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,13 +91,13 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/zabbix/" title="Посмотреть все посты с тэгом 'zabbix'">zabbix</a>
+      <a class="btn btn-tiny btn-light" href="/tags/zabbix/">zabbix</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/upgrade/" title="Посмотреть все посты с тэгом 'upgrade'">upgrade</a>
+      <a class="btn btn-tiny btn-light" href="/tags/upgrade/">upgrade</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/centos7/" title="Посмотреть все посты с тэгом 'centos7'">centos7</a>
+      <a class="btn btn-tiny btn-light" href="/tags/centos7/">centos7</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/rhel/" title="Посмотреть все посты с тэгом 'rhel'">rhel</a>
+      <a class="btn btn-tiny btn-light" href="/tags/rhel/">rhel</a>
     
   </div>
 
@@ -135,8 +135,8 @@
 <p><strong>Резервная копия базы</strong></p>
 <p>Снимаем дамп базы:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">mysqldump zabbix_server | gzip &gt; zabbix_server.sql.gz</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">mysqldump zabbix_server | gzip &gt; zabbix_server.sql.gz
+</span></code></pre>
 <p><strong>Резервная копия Zabbix Frontend</strong></p>
 <p>На текущем сервере frontend расположен в <code>/var/www/zabbix/html</code>, поэтому копируем эту папку куда-нибудь.</p>
 <h4 id="2-obnovliaem-php-s-5-6-do-7-2">2. Обновляем PHP с 5.6 до 7.2</h4>
@@ -149,17 +149,17 @@
 </ul>
 <p>Так как на моем сервере крутится только Zabbix, то список пакетов для обновления можно подсмотреть из установленных: </p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">yum list installed | grep php</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">yum list installed | grep php
+</span></code></pre>
 <p>В моем случае был уже подключен репозиторий Webtatic, поэтому ориентируемся на его наименование пакетов. 
 Все пакеты с PHP 7.2 начинаются с префикса <code>php72w</code>. </p>
 <p>Берем список тех пакетов которые у нас установлены и копируем в текстовый редактор, затем меняем префикс на <code>php72w</code>.</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \</span><span style="color:#c0c5ce;">
-php72w-devel.x86_64 php72w-embedded.x86_64 php72w-fpm.x86_64 php72w-gd.x86_64 php72w-ldap.x86_64 \ </span><span style="color:#c0c5ce;">
-php72w-mbstring.x86_64 php72w-mcrypt.x86_64 php72w-mysqlnd.x86_64 php72w-opcache.x86_64 php72w-pdo.x86_64 \</span><span style="color:#c0c5ce;">
-php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_64</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \
+php72w-devel.x86_64 php72w-embedded.x86_64 php72w-fpm.x86_64 php72w-gd.x86_64 php72w-ldap.x86_64 \ 
+php72w-mbstring.x86_64 php72w-mcrypt.x86_64 php72w-mysqlnd.x86_64 php72w-opcache.x86_64 php72w-pdo.x86_64 \
+php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_64
+</span></code></pre>
 <p>Часть пакетов yum не найдет, но это можно игнорировать. В качестве средства для запуска php 
 мы будем использовать <code>php-fpm</code>.</p>
 <p><strong>Настраиваем php-fpm</strong></p>
@@ -168,23 +168,23 @@ php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_
 <li>Меняем пользователя с <code>apache</code> на <code>nginx</code>.</li>
 <li>Меняем тип подключения на файл:<br />
 Было:<pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">listen = 127.0.0.1:9000</span><span style="color:#c0c5ce;">
-</span></pre>Стало:<pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">listen = /var/run/php5-fpm.sock</span><span style="color:#c0c5ce;">
-</span></pre></li>
+<code><span style="color:#c0c5ce;">listen = 127.0.0.1:9000
+</span></code></pre>Стало:<pre style="background-color:#2b303b;">
+<code><span style="color:#c0c5ce;">listen = /var/run/php5-fpm.sock
+</span></code></pre></li>
 </ul>
 <p>Включаем автозапуск сервиса и стартуем:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">systemctl enable php-fpm &amp;&amp; systemctl start php-fpm</span><span style="color:#c0c5ce;">
-</span></pre><h4 id="3-obnovliaem-zabbix-server">3. Обновляем Zabbix сервер</h4>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">systemctl enable php-fpm &amp;&amp; systemctl start php-fpm
+</span></code></pre><h4 id="3-obnovliaem-zabbix-server">3. Обновляем Zabbix сервер</h4>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">service zabbix-server stop</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-yum localinstall http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm</span><span style="color:#c0c5ce;">
-yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-chown -R zabbix: /etc/zabbix</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">service zabbix-server stop
+
+yum localinstall http://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent
+
+chown -R zabbix: /etc/zabbix
+</span></code></pre>
 <p>Очищаем содержимое <code>/var/www/zabbix/html</code>, затем копируем самый свежий 
 frontend из <code>/usr/share/zabbix</code> в <code>/var/www/zabbix/html</code>.</p>
 <p>Смотрим лог сервера, там побегут строчки <code>database upgrade...</code>.</p>
@@ -195,11 +195,7 @@ frontend из <code>/usr/share/zabbix</code> в <code>/var/www/zabbix/html</code
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

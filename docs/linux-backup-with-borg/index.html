@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,13 +91,13 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/borg/" title="Посмотреть все посты с тэгом 'borg'">borg</a>
+      <a class="btn btn-tiny btn-light" href="/tags/borg/">borg</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/linux/" title="Посмотреть все посты с тэгом 'linux'">linux</a>
+      <a class="btn btn-tiny btn-light" href="/tags/linux/">linux</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/backup/" title="Посмотреть все посты с тэгом 'backup'">backup</a>
+      <a class="btn btn-tiny btn-light" href="/tags/backup/">backup</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/centos/" title="Посмотреть все посты с тэгом 'centos'">centos</a>
+      <a class="btn btn-tiny btn-light" href="/tags/centos/">centos</a>
     
   </div>
 
@@ -120,67 +120,67 @@
 <p>Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.</p>
 <p>Для CentOS 7 приложение доступно в <a href="https://fedoraproject.org/wiki/EPEL">EPEL</a> репозитарии:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">yum -y install epel-release</span><span style="color:#c0c5ce;">
-yum -y install borgbackup</span><span style="color:#c0c5ce;">
-</span></pre><h3 id="nastroika-arkhivirovaniia">Настройка архивирования</h3>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">yum -y install epel-release
+yum -y install borgbackup
+</span></code></pre><h3 id="nastroika-arkhivirovaniia">Настройка архивирования</h3>
 <p>В качестве примера настроим резервное копирование для сайта <a href="https://cronbox.ru">cronbox.ru</a>.
 Файлы сайта расположены в каталоге <code>/var/www/cronbox.ru/html</code>.</p>
 <p>Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">borg init --encryption=none  /mnt/backups/cronbox.ru</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">borg init --encryption=none  /mnt/backups/cronbox.ru
+</span></code></pre>
 <p>Смотрим информацию по репозиторию:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[root@server ~]# borg info /mnt/backups/cronbox.ru</span><span style="color:#c0c5ce;">
-Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-Location: /mnt/backups/cronbox.ru</span><span style="color:#c0c5ce;">
-Encrypted: No</span><span style="color:#c0c5ce;">
-Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-------------------------------------------------------------------------------</span><span style="color:#c0c5ce;">
-                       Original size      Compressed size    Deduplicated size</span><span style="color:#c0c5ce;">
-All archives:                    0 B                  0 B                  0 B</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-                       Unique chunks         Total chunks</span><span style="color:#c0c5ce;">
-Chunk index:                       0                    0</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">[root@server ~]# borg info /mnt/backups/cronbox.ru
+Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Location: /mnt/backups/cronbox.ru
+Encrypted: No
+Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+All archives:                    0 B                  0 B                  0 B
+
+                       Unique chunks         Total chunks
+Chunk index:                       0                    0
+</span></code></pre>
 <p>Видим что пока пусто. Сделаем первую резервную копию:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html
+</span></code></pre>
 <p>Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — <code>site</code>. Для отдельного архивирования uploads можно было указать вот так:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">borg create /mnt/backups/cronbox.ru::uploads /var/www/cronbox.ru/html/uploads</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">borg create /mnt/backups/cronbox.ru::uploads /var/www/cronbox.ru/html/uploads
+</span></code></pre>
 <p>После создания копия смотрим изменения в репозитории:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">borg list /mnt/backups/cronbox.ru/site</span><span style="color:#c0c5ce;">
-site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">borg list /mnt/backups/cronbox.ru/site
+site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
+</span></code></pre>
 <p>Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[root@server backups-sites]# borg info /mnt/backups/cronbox.ru</span><span style="color:#c0c5ce;">
-Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-Location: /mnt/backups/cronbox.ru</span><span style="color:#c0c5ce;">
-Encrypted: No</span><span style="color:#c0c5ce;">
-Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb</span><span style="color:#c0c5ce;">
-------------------------------------------------------------------------------</span><span style="color:#c0c5ce;">
-                       Original size      Compressed size    Deduplicated size</span><span style="color:#c0c5ce;">
-All archives:              644.93 kB            277.42 kB            277.42 kB</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-                       Unique chunks         Total chunks</span><span style="color:#c0c5ce;">
-Chunk index:                     133                  133</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">[root@server backups-sites]# borg info /mnt/backups/cronbox.ru
+Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Location: /mnt/backups/cronbox.ru
+Encrypted: No
+Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+All archives:              644.93 kB            277.42 kB            277.42 kB
+
+                       Unique chunks         Total chunks
+Chunk index:                     133                  133
+</span></code></pre>
 <p>Как мы видим, общий объём данных (Original size) — 644КБ, хранится на диске (Deduplicated size) — 277КБ.</p>
 <h3 id="arkhivirovanie-po-raspisaniiu">Архивирование по расписанию</h3>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">[root@server]# crontab -e</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">
-0 1 * * * borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html</span><span style="color:#c0c5ce;">
-</span></pre>
+<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">[root@server]# crontab -e
+
+0 1 * * * borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html
+</span></code></pre>
 <p>Архив будет создаваться каждый день в час ночи.</p>
 <h3 id="poleznye-ssylki">Полезные ссылки</h3>
 <ul>
@@ -193,11 +193,7 @@ Chunk index:                     133                  133</span><span style="col
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

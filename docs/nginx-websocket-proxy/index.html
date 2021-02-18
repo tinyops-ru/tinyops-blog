@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,9 +91,9 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/nginx/" title="Посмотреть все посты с тэгом 'nginx'">nginx</a>
+      <a class="btn btn-tiny btn-light" href="/tags/nginx/">nginx</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/web-sockets/" title="Посмотреть все посты с тэгом 'web-sockets'">web-sockets</a>
+      <a class="btn btn-tiny btn-light" href="/tags/web-sockets/">web-sockets</a>
     
   </div>
 
@@ -103,13 +103,13 @@ HTTP запросов в Web-сокеты используется
 Передаются два заголовка: Connection и Upgrade.</p>
 <p>Например, ваше приложение слушает tcp-порт <code>12345</code> и поддерживает Web-сокеты, вот как это настраивается:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">location / {</span><span style="color:#c0c5ce;">
-    proxy_pass http://localhost:12345;</span><span style="color:#c0c5ce;">
-    proxy_http_version 1.1;</span><span style="color:#c0c5ce;">
-    proxy_set_header Upgrade $http_upgrade;</span><span style="color:#c0c5ce;">
-    proxy_set_header Connection &quot;upgrade&quot;;</span><span style="color:#c0c5ce;">
-}</span><span style="color:#c0c5ce;">
-</span></pre><h3 id="kogda-obryvaet-web-sokety">Когда обрывает Web-сокеты</h3>
+<code><span style="color:#c0c5ce;">location / {
+    proxy_pass http://localhost:12345;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection &quot;upgrade&quot;;
+}
+</span></code></pre><h3 id="kogda-obryvaet-web-sokety">Когда обрывает Web-сокеты</h3>
 <p>Как-то раз на production сервере мы поймали проблему - Web-сокеты обрывались каждые 2 минуты. 
 По умолчанию nginx закрывает проксируемые соединения после 60 секунд неактивности. Эта величина регулируется параметром
 <a href="https://nginx.org/ru/docs/http/ngx_http_proxy_module.html#proxy_read_timeout">proxy_read_timeout</a>. На нашем сервере
@@ -123,11 +123,7 @@ HTTP запросов в Web-сокеты используется
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 

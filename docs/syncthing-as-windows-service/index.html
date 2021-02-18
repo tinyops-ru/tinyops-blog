@@ -68,7 +68,7 @@
   
 <div id="logo" class="p-4">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        &lsaquo; Назад
+        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
     </a>
 </div>
 
@@ -91,13 +91,13 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/software/" title="Посмотреть все посты с тэгом 'software'">software</a>
+      <a class="btn btn-tiny btn-light" href="/tags/software/">software</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/awesomeware/" title="Посмотреть все посты с тэгом 'awesomeware'">awesomeware</a>
+      <a class="btn btn-tiny btn-light" href="/tags/awesomeware/">awesomeware</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/syncthing/" title="Посмотреть все посты с тэгом 'syncthing'">syncthing</a>
+      <a class="btn btn-tiny btn-light" href="/tags/syncthing/">syncthing</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/windows/" title="Посмотреть все посты с тэгом 'windows'">windows</a>
+      <a class="btn btn-tiny btn-light" href="/tags/windows/">windows</a>
     
   </div>
 
@@ -121,10 +121,10 @@
 <p>Допустим полный путь до исполняемого файла Syncthing - <code>c:\apps\syncthing\syncthing.exe</code>.</p>
 <p>Запускаем командную строку Windows с правами локального администратора и создаём службу:</p>
 <pre style="background-color:#2b303b;">
-<span style="color:#c0c5ce;">c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe</span><span style="color:#c0c5ce;">
-c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing</span><span style="color:#c0c5ce;">
-c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START</span><span style="color:#c0c5ce;">
-</span></pre><h3 id="nastraivaem-pol-zovatelia">Настраиваем пользователя</h3>
+<code><span style="color:#c0c5ce;">c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
+c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
+</span></code></pre><h3 id="nastraivaem-pol-zovatelia">Настраиваем пользователя</h3>
 <p>В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. </p>
 <p>Заходим в оснастку служб Windows, переходим в свойств службы <code>Syncthing</code>.</p>
 <p><img src="/images/awesomeware/syncthing/service-properties.png" alt="Свойства службы Syncthing" title="Свойства службы Syncthing" /></p>
@@ -138,11 +138,7 @@ c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START</span><span
 
  
 
-<footer class="mt-5 mb-5">
-  <div class="text-tiniest mt-5">
-    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
-  </div>
-</footer>
+<footer class="mt-5 mb-5"></footer>
 
 
 
