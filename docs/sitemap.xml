@@ -10,27 +10,35 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
+        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/</loc>
@@ -82,39 +90,39 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/everything/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-03-24</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-02-07</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-09-30</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-05-10</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-15</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-05-22</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-05-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-06-16</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/nginx-websocket-proxy/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-04-09</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/page/1/</loc>
@@ -133,19 +141,19 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/sftp-chroot-centos7/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-10-12</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/ssh-server-security-fundamentals/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-11-15</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-11-11</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/</loc>
@@ -251,7 +259,7 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tmux/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-11-02</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/too-many-open-files/</loc>
@@ -263,7 +271,7 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-intro/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-01</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-issues/</loc>
@@ -279,6 +287,6 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-tags/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-10</lastmod>
     </url>
 </urlset>

@@ -5,7 +5,7 @@
 ## Как собрать проект
 
 ```shell script
-git submodule update --init --recursive
+git clone https://github.com/tinyops-ru/tinyblog-zola-theme.git themes/tinyblog
 
 zola build --output-dir docs --base-url https://b.tinyops.ru
 ```
