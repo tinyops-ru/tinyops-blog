@@ -2,43 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2021-03-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
-        <lastmod>2021-02-18</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/</loc>
@@ -126,18 +117,6 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/page/2/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/page/3/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/page/4/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/page/5/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
@@ -263,11 +242,11 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/too-many-open-files/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-06-02</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/yandex-screenshot-tool/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-02-09</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-intro/</loc>
@@ -275,15 +254,15 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-issues/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-10</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-set-theme/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-03</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-structure/</loc>
-        <lastmod>2021-02-18</lastmod>
+        <lastmod>2020-01-02</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/zola-tags/</loc>
