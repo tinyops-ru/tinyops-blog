@@ -80,6 +80,16 @@
         <loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
     </url>
     <url>
+        <loc>https://b.tinyops.ru/categories/zola/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/categories/zola/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/ddv-theme-for-zola/</loc>
+        <lastmod>2021-03-24</lastmod>
+    </url>
+    <url>
         <loc>https://b.tinyops.ru/everything/</loc>
         <lastmod>2020-03-24</lastmod>
     </url>
@@ -208,6 +218,9 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/syncthing/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/tags/theme/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/tmux/</loc>
