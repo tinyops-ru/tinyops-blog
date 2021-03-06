@@ -2,16 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-03-04</lastmod>
+        <lastmod>2021-03-06</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/</loc>
+        <lastmod>2021-03-06</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
+        <lastmod>2021-03-06</lastmod>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/categories/awesomeware/</loc>
+        <lastmod>2021-03-06</lastmod>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/categories/awesomeware/page/1/</loc>
+        <lastmod>2021-03-06</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/</loc>
@@ -87,7 +97,7 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/ddv-theme-for-zola/</loc>
-        <lastmod>2021-03-24</lastmod>
+        <lastmod>2021-03-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/everything/</loc>
@@ -256,6 +266,10 @@
     <url>
         <loc>https://b.tinyops.ru/too-many-open-files/</loc>
         <lastmod>2020-06-02</lastmod>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/transfer-files-with-croc/</loc>
+        <lastmod>2021-03-06</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/yandex-screenshot-tool/</loc>
