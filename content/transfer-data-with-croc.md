@@ -51,28 +51,6 @@ choco install croc
 scoop install croc
 ```
 
-### Как собрать из исходников
-
-1. Установить Go не ниже 1.12
-2. Качаем зависимости:
-   ```shell
-   cd <путь к проекту>
-   
-   # Linux
-   GO111MODULE=on
-   
-   # Windows
-   set GO111MODULE=on
-   
-   go get -v github.com/schollz/croc/v8
-   ```
-3. Собираем:
-  ```shell
-  go build
-  ```
-
-На выходе будет `croc` (для Linux) либо `croc.exe` (для Windows).
-
 ## Как использовать
 
 Например, нам нужно передать файл `archive.zip` с одного устройства на другое:
