@@ -2,7 +2,7 @@
 title = "Как настроить резервное копирование файлов в Linux с помощью Borg Backup"
 description = "Настройка полного и инкрементного резервного копирования файлов в Linux. На примере CentOS 7."
 date = 2020-06-16
-updated = 2020-06-16
+updated = 2021-03-29
 
 [taxonomies]
 tags = ["borg", "linux", "backup", "centos"]
@@ -120,3 +120,4 @@ Chunk index:                     133                  133
 
 - [Официальный сайт](https://www.borgbackup.org)
 - [Документация](https://borgbackup.readthedocs.io/en/stable/)
+- [Как настроить мониторинг для borg](https://blog.cronbox.ru/kak-monitorit-borg-backup/)
