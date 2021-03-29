@@ -114,7 +114,7 @@ Chunk index:                     133                  133
 0 1 * * * borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html
 ```
 
-Архив будет создаваться каждый день в час ночи.
+Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить [мониторинг](https://blog.cronbox.ru/kak-monitorit-borg-backup/).
 
 ### Полезные ссылки
 
