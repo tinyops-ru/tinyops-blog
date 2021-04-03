@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
+        <lastmod>2021-04-03</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -123,6 +124,10 @@
         <lastmod>2020-05-18</lastmod>
     </url>
     <url>
+        <loc>https://b.tinyops.ru/kak-upravlyat-dotfiles/</loc>
+        <lastmod>2021-04-03</lastmod>
+    </url>
+    <url>
         <loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>
         <lastmod>2021-03-29</lastmod>
     </url>
@@ -178,6 +183,9 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/docker/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/tags/dotfiles/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/golang/</loc>
