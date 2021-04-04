@@ -20,8 +20,8 @@ title = "Блог TinyOps"
 description = "О технологиях, подходах и решении проблем простым языком"
 
 taxonomies = [
- {name = "tags", rss = true},
- {name = "categories", paginate_by = 10, rss = true},  # 5 items per page for a term
+ {name = "tags", feed = true},
+ {name = "categories", paginate_by = 10, feed = true},  # 5 items per page for a term
  {name = "authors"} # Basic definition: no RSS or pagination
 ]
 
