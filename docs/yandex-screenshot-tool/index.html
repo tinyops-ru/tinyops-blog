@@ -53,8 +53,8 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
   <!-- fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 
   <!-- theme -->
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
@@ -66,9 +66,12 @@
 
 <nav id="overlord" class="overlord">
   
-<div id="logo" class="p-4">
+<div id="logo" class="pl-4 pt-4 mb-3 mb-lg-0">
     <a href="https:&#x2F;&#x2F;b.tinyops.ru" title="Вернуться на главную страницу">
-        <i class="logo__icon fas fa-chevron-left mr-1"></i> < Назад
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor"
+             class="bi bi-arrow-left" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
     </a>
 </div>
 
@@ -82,7 +85,7 @@
   
 <div class="frontmatter font-weight-bold">
     <div class="d-inline-block">
-        <time class="article_time" datetime="2020-02-09">February 09, 2020</time>.
+        <time class="article_time" datetime="2020-02-09">09.02.2020</time>.
     </div>
 
     <div class="d-inline-block article_time"> Время чтения &mdash; 3 мин.</div>
@@ -91,9 +94,9 @@
 
   <div class="mb-3 mt-3">
     
-      <a class="btn btn-tiny btn-light" href="/tags/software/">software</a>
+      <a class="font-weight-bold text-secondary mr-1" href="/tags/software/" title="Посмотреть все посты с тэгом 'software'">#software</a>
     
-      <a class="btn btn-tiny btn-light" href="/tags/awesomeware/">awesomeware</a>
+      <a class="font-weight-bold text-secondary mr-1" href="/tags/awesomeware/" title="Посмотреть все посты с тэгом 'awesomeware'">#awesomeware</a>
     
   </div>
 
@@ -195,7 +198,11 @@
 
  
 
-<footer class="mt-5 mb-5"></footer>
+<footer class="mt-5 mb-5">
+  <div class="text-tiniest mt-5">
+    <a href="https://github.com/tinyops-ru/tinyblog-zola-theme" target="_blank">TINYBLOG THEME</a>
+  </div>
+</footer>
 
 
 

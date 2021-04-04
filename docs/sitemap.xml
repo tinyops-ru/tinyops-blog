@@ -2,82 +2,107 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-04-03</lastmod>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesomeware/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/awesomeware/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/ops/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/ops/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/security/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/security/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/software/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/software/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/tutorial/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/tutorial/page/1/</loc>
+        <lastmod>2021-04-04</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/windows/</loc>
