@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - software</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/categories/software/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-05-14T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/categories/software/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Настройка безопасности для SSH-сервера</title>
+		<published>2020-11-15T00:00:00+00:00</published>
+		<updated>2020-11-15T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/ssh-server-security-fundamentals/" type="text/html"/>
+		<id>https://b.tinyops.ru/ssh-server-security-fundamentals/</id>
+		<content type="html">&lt;p&gt;SSH (Secure Shell) - это протокол прикладного уровня с шифрованием трафика, а также самый распространённый протокол 
+удалённого доступа к Linux\Unix-серверам. Самая популярная реализация серверной части называется OpenSSH.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;ssh&#x2F;ssh-security.png&quot; alt=&quot;Терминал Linux&quot; title=&quot;Терминал Linux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Тем не менее, даже самую безопасную систему на свете можно сделать уязвимой благодаря настройке. Во многих дистрибутивах
+служба SSH имеет уязвимую конфигурацию.&lt;&#x2F;p&gt;
+&lt;p&gt;Две самых распространённых уязвимости:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Разрешён удалённый доступ пользователю &lt;code&gt;root&lt;&#x2F;code&gt;;&lt;&#x2F;li&gt;
+&lt;li&gt;Не указан список пользователей, которым разрешён доступ.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;В некоторых дистрибутивах разрешён вход для пользователей с пустыми паролями. 
+Проблема безопасности усугубляется ещё и тем что по умолчанию команда &lt;code&gt;useradd&lt;&#x2F;code&gt; создаёт пользователя с пустым паролем.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;perebor-loginov-i-parolei&quot;&gt;Перебор логинов и паролей&lt;&#x2F;h2&gt;
+&lt;p&gt;Несмотря на то что существуют различные векторы атак на службу SSH, самая популярная атака это перебор логинов и паролей.
+Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.&lt;&#x2F;p&gt;
+&lt;p&gt;В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
+увидеть такую картину: &lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[user@pc] # ssh server
+Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
+There were 13925 failed login attempts since the last successful login.
+Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;nastroika-minimal-no-rekomenduemoi-konfiguratsii&quot;&gt;Настройка минимально рекомендуемой конфигурации&lt;&#x2F;h2&gt;
+&lt;p&gt;Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitRootLogin&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Разрешаем подключение только для указанных пользователей
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowUsers user1 user2 user3
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Меняем порт на нестандартный
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Port 14819
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователям с пустыми паролями
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;PermitEmptyPasswords no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем неиспользуемые способы аутентификации
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;KerberosAuthentication no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;GSSAPIAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможность доступа к графическим приложениям
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;X11Forwarding no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowAgentForwarding no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowTcpForwarding&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitTunnel&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
+&lt;p&gt;Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip&quot;&gt;Блокируем доступ к порту SSH для всех кроме доверенных IP&lt;&#x2F;h3&gt;
+&lt;p&gt;Например, с помощью firewalld:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
+firewall-cmd --permanent --zone=trusted --add-service=ssh
+firewall-cmd --reload
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
+&lt;p&gt;Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
+инженеров предпочитаю работать с логинами и паролями.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PasswordAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После этого потребуется создать ключ для пользователя:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-keygen
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;А затем скопировать его на удалённый сервер:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-copy-id user@server
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
+&lt;p&gt;Проверяем что настройки корректные:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sshd -t
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если приложение не сообщило об ошибках, значит всё хорошо.&lt;&#x2F;p&gt;
+&lt;p&gt;Перезапускаем службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl restart sshd
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Запуск Syncthing в виде службы Windows</title>
+		<published>2020-11-11T00:00:00+00:00</published>
+		<updated>2021-05-14T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/syncthing-as-windows-service/" type="text/html"/>
+		<id>https://b.tinyops.ru/syncthing-as-windows-service/</id>
+		<content type="html">&lt;p&gt;Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
+выступать настольные системы, ноутбуки и мобильные устройства. Syncthing можно запустить во всех популярных операционных системах.&lt;&#x2F;p&gt;
+&lt;p&gt;Если на мобильных устройствах приложение стартует самостоятельно как служба, то на настольных системах необходима настройка.
+Вы можете запустить приложение в сеансе текущего пользователя, но запускать при каждом запуске компьютера неудобно.&lt;&#x2F;p&gt;
+&lt;p&gt;Официальное руководство &lt;a href=&quot;https:&#x2F;&#x2F;docs.syncthing.net&#x2F;users&#x2F;autostart.html&quot;&gt;предлагает&lt;&#x2F;a&gt; два способа:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Запускать через планировщик задач Windows;&lt;&#x2F;li&gt;
+&lt;li&gt;Запускать в виде службы.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Первый способ костыльный и перестанет работать если пользователь поменяет пароль, поэтому лучше настроить службу Windows.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ustanovka-nssm&quot;&gt;Установка NSSM&lt;&#x2F;h3&gt;
+&lt;p&gt;Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы. 
+Подобных утилит достаточно много, но мы возьмём одну из самых удобных - NSSM (The Non-Sucking Service Manager).
+Скачиваем с официального сайта дистрибутив &lt;a href=&quot;https:&#x2F;&#x2F;nssm.cc&#x2F;download&quot;&gt;https:&#x2F;&#x2F;nssm.cc&#x2F;download&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Распаковываем куда-нибудь, например, в &lt;code&gt;c:\apps\nssm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Затем складываем файл &lt;code&gt;nssm.exe&lt;&#x2F;code&gt; так, чтобы полный путь до приложения был следующим - &lt;code&gt;c:\apps\nssm\nssm.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sozdanie-sluzhby-windows&quot;&gt;Создание службы Windows&lt;&#x2F;h3&gt;
+&lt;p&gt;Допустим полный путь до исполняемого файла Syncthing - &lt;code&gt;c:\apps\syncthing\syncthing.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Запускаем командную строку Windows с правами локального администратора и создаём службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
+c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
+&lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
+&lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Выбираем существующего пользователя и указываем пароль.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-run-as.png&quot; alt=&quot;Выбор пользователя для запуска службы&quot; title=&quot;Выбор пользователя для запуска службы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Жмём &amp;quot;ОК&amp;quot; и перезапускаем службу.&lt;&#x2F;p&gt;
+&lt;p&gt;Через некоторое время приложение будет доступно по ссылке &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:8384&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:8384&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;drugie-stat-i&quot;&gt;Другие статьи&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;install-syncthing-centos7&#x2F;&quot;&gt;Установка Syncthing для CentOS 7&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Улучшаем работу в консоли с помощью tmux</title>
+		<published>2020-11-02T00:00:00+00:00</published>
+		<updated>2020-11-02T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/tmux/" type="text/html"/>
+		<id>https://b.tinyops.ru/tmux/</id>
+		<content type="html">&lt;p&gt;tmux - это терминальный мультиплексор (terminal multiplexer). Терминальный мультиплексор - это приложение, 
+которое способно объединять несколько сессий в одном псевдо-графическом интерфейсе.&lt;&#x2F;p&gt;
+&lt;p&gt;Главные возможности tmux:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Сохранность сессии.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность использовать множество суб-окон в главном окне.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность поделиться сессией. К сессии мультиплексора могут подключаться несколько пользователей.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;Сохранность текущей сессии&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;По умолчанию, все интерактивные сессии посылают сигнал SIGHUP всем процессам запущенным в текущей сессии при отключении.
+Если произошёл обрыв связи, то все команды которые вы запускали завершатся раньше ожидаемого времени выполнения.&lt;&#x2F;p&gt;
+&lt;p&gt;При первом запуске мультиплексор создаёт отдельную сессию, которая не привязана к вашему соединению. Например, 
+вы можете отключиться от SSH, но сессия будет активна на сервере. Затем вы можете вернуться на сервер и вернуться
+в сессию с помощью команды:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;или с указанием имени сессии:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach -t name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-tmux&quot;&gt;Установка tmux&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;centos-fedora-rhel-oracle-linux&quot;&gt;CentOS, Fedora, RHEL, Oracle Linux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo yum install -y tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ubuntu-debian&quot;&gt;Ubuntu, Debian&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo apt install tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;archlinux&quot;&gt;ArchLinux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo pacman -S tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;sozdanie-sessii&quot;&gt;Создание сессии&lt;&#x2F;h4&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux new -s name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;tmux отобразит пустой терминал на подобие такого:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-start.png&quot; alt=&quot;Стартовое окно tmux&quot; title=&quot;Стартовое окно tmux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;prefiks-dlia-komand&quot;&gt;Префикс для команд&lt;&#x2F;h4&gt;
+&lt;p&gt;Для использования команд нужно использовать комбинацию-префикс.
+По умолчанию, префикс - &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Например, чтобы создать новое окно, нажимаем &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;, затем отпускаем и нажимаем &lt;code&gt;c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;sozdanie-novogo-okna&quot;&gt;Создание нового окна&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-oknami&quot;&gt;Переключение между окнами&lt;&#x2F;h4&gt;
+&lt;p&gt;Вперёд: &lt;code&gt;prefix, n&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Назад: &lt;code&gt;prefix, p&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Переключение по номеру окна: &lt;code&gt;prefix + N&lt;&#x2F;code&gt;, где &lt;code&gt;N&lt;&#x2F;code&gt; - это номер окна.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;razdelenie-okon-i-sozdanie-panelei&quot;&gt;Разделение окон и создание панелей&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Например, можно разместить сверху вывод &lt;code&gt;htop&lt;&#x2F;code&gt;, а снизу &lt;code&gt;vmstat&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-panes.png&quot; alt=&quot;Разделение окна на панели&quot; title=&quot;Разделение окна на панели&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-paneliami&quot;&gt;Переключение между панелями&lt;&#x2F;h4&gt;
+&lt;p&gt;На верхнее: &lt;code&gt;prefix, up&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На нижнее: &lt;code&gt;prefix, down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что слева: &lt;code&gt;prefix, left&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что справа: &lt;code&gt;prefix, right&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;izmenenie-razmerov-tekushchei-paneli&quot;&gt;Изменение размеров текущей панели&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ctrl + up\down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;pomeniat-paneli-mestami&quot;&gt;Поменять панели местами&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, {&lt;&#x2F;code&gt; или &lt;code&gt;prefix, }&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;perekliuchenie-mezhdu-klientami&quot;&gt;Переключение между клиентами&lt;&#x2F;h3&gt;
+&lt;p&gt;Комбинации: &lt;code&gt;prefix, (&lt;&#x2F;code&gt; и &lt;code&gt;prefix, )&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;spravka-po-komandam&quot;&gt;Справка по командам&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ?&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;konfigurirovanie-tmux&quot;&gt;Конфигурирование tmux&lt;&#x2F;h2&gt;
+&lt;p&gt;Согласно &lt;code&gt;man tmux&lt;&#x2F;code&gt;, tmux загружает настройки из &lt;code&gt;&#x2F;etc&#x2F;tmux.conf&lt;&#x2F;code&gt;, а затем смотрит файл в домашней 
+директории текущего пользователя &lt;code&gt;~&#x2F;.tmux.conf&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;После изменений в файлах конфигурации необходимо перечитать настройки:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux source-file &#x2F;etc&#x2F;tmux.conf
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-prefiksa&quot;&gt;Как поменять комбинацию префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Кому-то может быть неудобной комбинация &lt;code&gt;Ctrl + b&lt;&#x2F;code&gt;, поэтому её можно поменять. Например, на &lt;code&gt;Ctrl + a&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana&quot;&gt;Как поменять комбинацию для разделения экрана&lt;&#x2F;h3&gt;
+&lt;p&gt;По умолчанию, разделение экрана по горизонтали &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;, по вертикали - &lt;code&gt;prefix, %&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Это не совсем интуитивные клавиши, проще использовать клавиши: &lt;code&gt;-&lt;&#x2F;code&gt; и &lt;code&gt;|&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Как поменять комбинации:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind | split-window -h
+bind - split-window -v
+unbind &amp;#39;&amp;quot;&amp;#39;
+unbind %
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;perekliuchat-sia-mezhdu-paneliami-bez-prefiksa&quot;&gt;Переключаться между панелями без префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Переключение между панелями одна из самых частых операций в tmux. Переключаться с использованием префикса неудобно.
+Удобней использовать &lt;code&gt;Alt + стрелка&lt;&#x2F;code&gt;. Как это настроить:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Утилита для быстрого поиска файлов Everything</title>
+		<published>2020-03-24T00:00:00+00:00</published>
+		<updated>2020-03-24T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/everything/" type="text/html"/>
+		<id>https://b.tinyops.ru/everything/</id>
+		<content type="html">&lt;p&gt;Продолжаю рубрику &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;, про качественное программное обеспечение, которое заслуживает внимания.
+В прошлый раз была &lt;a href=&quot;&#x2F;yandex-screenshot-tool&#x2F;&quot;&gt;утилита для скриншотов от Яндекс&lt;&#x2F;a&gt;, а сегодня - рассказ про &lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&quot;&gt;Everything&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Everything – это поисковая программа для Windows, мгновенно отыскивающая файлы и папки по их именам.
+В отличие от встроенной в Windows поисковой системы, Everything изначально показывает каждый файл и папку в компьютере (отсюда и название &amp;quot;Everything&amp;quot;, т.е. &amp;quot;все&amp;quot;).
+Вы вводите поисковый фильтр, после чего отображаются только нужные вам файлы и папки.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;everything-1.png&quot; alt=&quot;alt text&quot; title=&quot;Как выглядит главное окно программы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Автор любезно предоставил &lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;faq&#x2F;#%D0%A7%D1%82%D0%BE_%D1%82%D0%B0%D0%BA%D0%BE%D0%B5_everything&quot;&gt;исчерпывающий FAQ&lt;&#x2F;a&gt; по архитектуре, особенностях работы и решении популярных проблем. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;chem-polezna-utilita&quot;&gt;Чем полезна утилита&lt;&#x2F;h3&gt;
+&lt;p&gt;Поиск по именам файлов.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kak-nastroit&quot;&gt;Как настроить&lt;&#x2F;h3&gt;
+&lt;p&gt;Настройка для утилиты минимальна, она отлично работает с настройками по умолчанию. Я лишь добавил горячую клавишу
+чтобы открывать и скрывать окно утилиты. &lt;&#x2F;p&gt;
+&lt;p&gt;В настройках указал комбинацию горячих клавиш - &lt;code&gt;Ctrl+F3&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;everything-2.png&quot; alt=&quot;alt text&quot; title=&quot;Главная горячая комбинация&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;По первому нажатию окно утилиты появляется, по следующему - исчезает.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;otsenka-kachestva&quot;&gt;Оценка качества&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Удобство использования&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Интерфейс простой, отклик без видимых задержек.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Производительность&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Запуск - менее 1 секунды&lt;&#x2F;li&gt;
+&lt;li&gt;Поиск 600.000+ файлов менее чем за 1 секунду&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;everything-3.gif&quot; alt=&quot;alt text&quot; title=&quot;Скорость поиска файлов&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Потребление ресурсов&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1,37МБ&lt;&#x2F;code&gt; на диске для исполняемого файла &lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;1,2МБ&lt;&#x2F;code&gt; в оперативной памяти - исполняемый файл&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;176МБ&lt;&#x2F;code&gt; в оперативной памяти - хранение индекса&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;nedostatki&quot;&gt;Недостатки&lt;&#x2F;h3&gt;
+&lt;p&gt;В процессе написания статьи обнаружил недостаток. Приложение хранит свой поисковый индекс в оперативной памяти.
+В моем случае для ранения 3,5 миллиона записей она использует &lt;code&gt;173МБ&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Много ли системных ресурсов требуется Everything?&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Нет, Everything потребляет очень мало системных ресурсов.
+В свежеустановленной Windows 10 (около 120 тыс. файлов) будет занято порядка 14 МБ ОЗУ и менее 9 МБ на диске.
+В системе с миллионом файлов будет занято примерно 75 МБ ОЗУ и 45 МБ на диске.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;gde-skachat&quot;&gt;Где скачать&lt;&#x2F;h3&gt;
+&lt;p&gt;Everything абсолютно бесплатная утилита и доступна для скачивания на официальном сайте - 
+&lt;a href=&quot;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.voidtools.com&#x2F;ru-ru&#x2F;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;drugie-posty-na-etu-temu&quot;&gt;Другие посты на эту тему&lt;&#x2F;h3&gt;
+&lt;p&gt;Другие посты про удобный и быстрый софт вы можете посмотреть под тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Утилита для скриншотов от Яндекс</title>
+		<published>2020-02-09T00:00:00+00:00</published>
+		<updated>2020-02-09T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/yandex-screenshot-tool/" type="text/html"/>
+		<id>https://b.tinyops.ru/yandex-screenshot-tool/</id>
+		<content type="html">&lt;p&gt;Этим постом я стартую рубрику про качественный софт (&lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;), 
+приложения которые существенно помогают в повседневности, быстры и написаны для людей.&lt;&#x2F;p&gt;
+&lt;p&gt;Есть прекрасная статья от Никиты Прокопова - &lt;a href=&quot;https:&#x2F;&#x2F;tonsky.me&#x2F;blog&#x2F;disenchantment&#x2F;ru&#x2F;&quot;&gt;Мое разочарование в софте&lt;&#x2F;a&gt;,
+цитата оттуда:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Компьютеры стали бытовым прибором, начать программировать легче, чем когда-либо, сложнейшие вещи делаются просто и даже тривиально, написаны горы готового кода. К сожалению, у этого есть и обратная сторона — программы становятся большими, медленными, неуправляемыми, непонимаемыми.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;За годы практики у меня накопился набор надежных утилит, которые я использую каждый день. Будет круто если о них узнает
+больше людей.&lt;&#x2F;p&gt;
+&lt;p&gt;Для каждого приложения, о котором буду писать, введем критерии оценки:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Удобство для пользователя&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Не нужно быть IT-специалистом чтобы пользоваться приложением, если приложение расчитано на широкий круг пользователей.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Высокая производительность&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Время ожидания для запуска в пределах 1 секунды.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Размер исполняемого файла&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+В пределах 10МБ - отлично.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Первой будет утилита для создания скриншотов от Яндекса. Выглядит она вот так:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;yst-1.png&quot; alt=&quot;alt text&quot; title=&quot;Скриншот из утилиты&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;chto-ponravilos&quot;&gt;Что понравилось&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Сделал скриншот - сохранил на Яндекс.Диск&lt;br &#x2F;&gt;
+Он доступен на всех устройствах где ты используешь сервис. С другими утилитами ты получаешь ссылку.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Полный инструментарий для скриншотов:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Создать снимок всего экрана&lt;&#x2F;li&gt;
+&lt;li&gt;Создать снимок активного окна&lt;&#x2F;li&gt;
+&lt;li&gt;Создать снимок выбранной области&lt;&#x2F;li&gt;
+&lt;li&gt;Расшарить скриншот в Интернет&lt;&#x2F;li&gt;
+&lt;li&gt;Добавить текст&lt;&#x2F;li&gt;
+&lt;li&gt;Добавить стрелки&lt;&#x2F;li&gt;
+&lt;li&gt;Замазать чувствительные данные&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Скорость запуска и работы&lt;br &#x2F;&gt;
+В пределах 1 секунды&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Настраиваемые горячие клавиши
+Я настроил PrintScreen на снимок области&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Горячая клавиша &lt;code&gt;Ctrl+S&lt;&#x2F;code&gt; сохраняет скриншот на яндекс диск и закрывает окно утилиты&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Скриншот открывается в отдельном окне&lt;br &#x2F;&gt;
+Вспоминаю как страдал когда пользовался Lightshot. Его особенность в том что инструменты добавлялись 
+к той области скриншот которой ты хочешь сделать. Это создавало проблему со скриншотами у краев экрана. 
+Часть инструментов LightShot пропадали за краями.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;nastroiki&quot;&gt;Настройки&lt;&#x2F;h2&gt;
+&lt;p&gt;Настройки к утилите живут на отдельной вкладке настроек Яндекс.Диска. Настроек немного, но их более чем достаточно:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;yst-2.png&quot; alt=&quot;alt text&quot; title=&quot;Вкладка настроек&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Я настроил для себя захват области на &lt;code&gt;PrintScreen&lt;&#x2F;code&gt;, остальное мне не нужно.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;otsenka-kachestva&quot;&gt;Оценка качества&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Удобство использования&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Интерфейс простой, но и не выглядит обрезанным. Набор дополнительных функций исчерпывающий, есть все функции необходимые
+для работы со скриншотами&lt;&#x2F;li&gt;
+&lt;li&gt;Полноценная поддержка горячих клавиш&lt;&#x2F;li&gt;
+&lt;li&gt;Интеграция с Яндекс.Диском&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Производительность&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Запуск и снятие скриншота в пределах 1 секунды&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Потребление ресурсов&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;5МБ на диске&lt;br &#x2F;&gt;
+Утилита поставляется вместе с Яндекс.Диском, в виде отдельного исполняемого файла&lt;&#x2F;li&gt;
+&lt;li&gt;23,8МБ в оперативной памяти&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;drugie-posty-na-etu-temu&quot;&gt;Другие посты на эту тему&lt;&#x2F;h2&gt;
+&lt;p&gt;Другие посты про удобный и быстрый софт вы можете посмотреть под тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&quot;&gt;Awesomeware&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

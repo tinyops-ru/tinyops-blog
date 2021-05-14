@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - linux</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/categories/linux/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-05-14T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/categories/linux/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Установка Syncthing для CentOS 7</title>
+		<published>2021-05-14T00:00:00+00:00</published>
+		<updated>2021-05-14T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
+		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Syncthing - это приложение для синхронизации файлов между устройствами. Авторы любят дистрибутивы аля Debian\Ubuntu, 
+поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
+&lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-raspakovyvaem-distributiv&quot;&gt;2. Распаковываем дистрибутив&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Будет примерно такое содержимое (лишнее убрал):&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;├──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   ├── linux-systemd
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── README.md
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── system
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   ├── syncthing-resume.service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   └── user
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;└──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В архиве присутствует два вида конфигурации:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Системная служба&lt;&#x2F;li&gt;
+&lt;li&gt;Пользовательская служба&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;В первом случае Syncthing будет запускаться сразу при загрузке операционной системы и 
+работать независимо от сессии пользователя.&lt;&#x2F;p&gt;
+&lt;p&gt;Пользовательская служба ограничена активной сессией (ssh или графической). Например, пользователь зашёл 
+в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
+&lt;p&gt;Первый вариант на мой взгляд более удобен, данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
+&lt;p&gt;На примере пользователя &lt;code&gt;eugene&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Копируем файлы службы из дистрибутива:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Разрешаем автозапуск при загрузке ОС и запускаем службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; enable syncthing@myuser.service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; start syncthing@myuser.service
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
+&lt;p&gt;Заходим в Web-интерфейс &lt;code&gt;http:&#x2F;&#x2F;имя-сервера:8384&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;syncthing-as-windows-service&#x2F;&quot;&gt;Запуск Syncthing в виде службы Windows&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Как управлять dotfiles</title>
+		<published>2021-04-03T00:00:00+00:00</published>
+		<updated>2021-04-04T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/kak-upravlyat-dotfiles/" type="text/html"/>
+		<id>https://b.tinyops.ru/kak-upravlyat-dotfiles/</id>
+		<content type="html">&lt;p&gt;Большинство приложений для Linux хранят свою конфигурацию в текстовых файлах. Часть из них хранят файлы в домашнем каталоге пользователя. 
+Такого рода файлы обычно называют &amp;quot;dotfiles&amp;quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;Многие пользователи хранят их в git, потому что это очень удобно. Можно &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;search?q=dotfiles&quot;&gt;найти более 150 тысяч примеров на Github&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problemy-s-dotfiles&quot;&gt;Проблемы с dotfiles&lt;&#x2F;h3&gt;
+&lt;p&gt;Несмотря на простоту текстовых файлов, их использование требует определённого подхода в организации. Примеры таких проблем:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Конфигурация Vim (файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;) может быть максимально подходить для одного компьютера и быть избыточной для всех остальных.&lt;&#x2F;li&gt;
+&lt;li&gt;В ваших dotfiles может быть приватная информация, которую нельзя публиковать в git.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;organizatsionnye-podkhody&quot;&gt;Организационные подходы&lt;&#x2F;h2&gt;
+&lt;p&gt;Если вы разработчик, то работа с dotfiles, хранение и усовершенствование, для вас самый долгий проект из всех над которыми вы работали. 
+В связи с этим имеет смысл организовать свой проект дисциплинированно, для удобства сопровождения и расширяемости.&lt;&#x2F;p&gt;
+&lt;p&gt;Далее — один из подходов.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sistema-kontrolia-versii&quot;&gt;Система контроля версий&lt;&#x2F;h3&gt;
+&lt;p&gt;Имеет смысл хранить ваши конфигурационные файлы в системе контроля версий (Version Control System — VCS) и вот почему:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;У вас будет резервная копия, которая убережёт файлы от потери и повреждений:
+&lt;ul&gt;
+&lt;li&gt;Вышел из строя жёсткий диск&lt;&#x2F;li&gt;
+&lt;li&gt;Случайное удаление&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;История изменений:
+&lt;ul&gt;
+&lt;li&gt;Возможность свободно экспериментировать с настройками и легко откатить изменения&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность посмотреть настройки за все время существования ваших dotfiles, даже через несколько лет спустя.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Для dotfiles лучше выделить отдельный каталог — &lt;code&gt;.dotfiles&lt;&#x2F;code&gt; в корне домашней директории. Хранить в системе контроля версий домашний каталог не рекомендуется, т. к. усложнит поддержку dotfiles, а также команда типа &lt;code&gt;git clean&lt;&#x2F;code&gt; может удалить все файлы, и даже те, которые не входят в состав репозитория.&lt;&#x2F;p&gt;
+&lt;p&gt;В качестве системы контроля версий подойдёт любая: git, mercurial, svn и т. д. Я использую git.&lt;&#x2F;p&gt;
+&lt;p&gt;Несмотря на удобство систем контроля версий, не рекомендуется копировать один в один чужие dotfiles, без понимания того, для чего сделаны те или иные настройки. Dotfiles должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;s-chego-nachat&quot;&gt;С чего начать&lt;&#x2F;h2&gt;
+&lt;p&gt;Создадим каталог и репозитарий:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; init
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Создадим на Github отдельный репозиторий &lt;code&gt;dotfiles&lt;&#x2F;code&gt;. Копируем ссылку и добавляем к локальному:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; remote add origin git@github.com:your-user&#x2F;dotfiles.git
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Для примера добавим конфигурацию vim в наши dotfiles.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir -p ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Добавим в git и запушим изменения на GitHub:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git checkout main
+git add *
+git commit -a -m &amp;quot;[+] add .vimrc&amp;quot;
+git push
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Здесь стоит отметить, что я использую ветку &lt;code&gt;main&lt;&#x2F;code&gt; вместо &lt;code&gt;master&lt;&#x2F;code&gt;, т. к. так заведено на GitHub.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ustanovka-dotfiles&quot;&gt;Установка dotfiles&lt;&#x2F;h2&gt;
+&lt;p&gt;Продолжаем пример с &lt;code&gt;.vimrc&lt;&#x2F;code&gt;-файлом. Удалим текущий и создадим ссылку на тот что хранится в dotfiles:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rm -f ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Когда ваш репозиторий будет наполнен файлами, имеет смысл написать скрипт, который будет создавать правильные ссылки в домашнем каталоге.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zavisimosti-i-plaginy&quot;&gt;Зависимости и плагины&lt;&#x2F;h2&gt;
+&lt;p&gt;Помимо файлов конфигурации для приложений в dotfiles можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.&lt;&#x2F;p&gt;
+&lt;p&gt;Я использую плагин &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree&quot;&gt;NERDTree&lt;&#x2F;a&gt; для vim. Добавим репозиторий проекта в виде суб-модуля:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-zavisimostei-i-plaginov&quot;&gt;Установка зависимостей и плагинов&lt;&#x2F;h2&gt;
+&lt;p&gt;Установка и обновление до последних версий:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --recursive
+git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --remote
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Создаём ссылку (symlink) на каталог с плагинами:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vim&#x2F;plugged
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Каталог &lt;code&gt;~&#x2F;vim&#x2F;plugged&lt;&#x2F;code&gt; может отличаться от вашего, я использую рекомендованный от &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;junegunn&#x2F;vim-plug&quot;&gt;vim-plug&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;spetsifichnye-lokal-nye-nastroiki&quot;&gt;Специфичные локальные настройки&lt;&#x2F;h2&gt;
+&lt;p&gt;При использовании dotfiles на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.&lt;&#x2F;p&gt;
+&lt;p&gt;Например, на одной машине вам нужна поддержка Rust для Vim, а на всех остальных — нет. Также могут отличаться набор закладок для &lt;code&gt;nnn&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Для хранения различий можно использовать разные ветви в git, но это очень быстро превратится в хаос.&lt;&#x2F;p&gt;
+&lt;p&gt;Один из подходов — иметь главный репозиторий для dotfiles, с файлами, которые подходят для всех машин, а также отдельный репозиторий dotfiles_local для персональных настроек под каждую машину.&lt;&#x2F;p&gt;
+&lt;p&gt;В репозитории &lt;code&gt;dotfiles_local&lt;&#x2F;code&gt; каждая ветвь именуется именем машины. Например, &lt;code&gt;home-pc&lt;&#x2F;code&gt;, &lt;code&gt;work-pc&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kak-podgruzhat-spetsifichnye-nastroiki&quot;&gt;Как подгружать специфичные настройки&lt;&#x2F;h3&gt;
+&lt;p&gt;Для bash добавляем в &lt;code&gt;~&#x2F;.bashrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-f ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.bashrc_local &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;source &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.bashrc_local
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Для git добавляем в &lt;code&gt;~&#x2F;.gitconfig&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[include]
+	path = ~&#x2F;.gitconfig_local
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Для Vim, добавляем в файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; $LOCALFILE=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;expand&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;~&#x2F;.vimrc_local&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;filereadable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;($LOCALFILE)
+    source $LOCALFILE
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endif
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;spetsial-nye-skripty&quot;&gt;Специальные скрипты&lt;&#x2F;h2&gt;
+&lt;p&gt;Если у вас есть какие-то скрипты, которые вы используете в своей работе, их тоже можно добавить в dotfiles. Например, в каталог &lt;code&gt;.dotfiles&#x2F;bin&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Затем в &lt;code&gt;.bashrc&lt;&#x2F;code&gt; добавляем их в переменную &lt;code&gt;PATH&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;export &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;.dotfiles&#x2F;bin:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Настройка безопасности для SSH-сервера</title>
+		<published>2020-11-15T00:00:00+00:00</published>
+		<updated>2020-11-15T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/ssh-server-security-fundamentals/" type="text/html"/>
+		<id>https://b.tinyops.ru/ssh-server-security-fundamentals/</id>
+		<content type="html">&lt;p&gt;SSH (Secure Shell) - это протокол прикладного уровня с шифрованием трафика, а также самый распространённый протокол 
+удалённого доступа к Linux\Unix-серверам. Самая популярная реализация серверной части называется OpenSSH.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;ssh&#x2F;ssh-security.png&quot; alt=&quot;Терминал Linux&quot; title=&quot;Терминал Linux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Тем не менее, даже самую безопасную систему на свете можно сделать уязвимой благодаря настройке. Во многих дистрибутивах
+служба SSH имеет уязвимую конфигурацию.&lt;&#x2F;p&gt;
+&lt;p&gt;Две самых распространённых уязвимости:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Разрешён удалённый доступ пользователю &lt;code&gt;root&lt;&#x2F;code&gt;;&lt;&#x2F;li&gt;
+&lt;li&gt;Не указан список пользователей, которым разрешён доступ.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;В некоторых дистрибутивах разрешён вход для пользователей с пустыми паролями. 
+Проблема безопасности усугубляется ещё и тем что по умолчанию команда &lt;code&gt;useradd&lt;&#x2F;code&gt; создаёт пользователя с пустым паролем.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;perebor-loginov-i-parolei&quot;&gt;Перебор логинов и паролей&lt;&#x2F;h2&gt;
+&lt;p&gt;Несмотря на то что существуют различные векторы атак на службу SSH, самая популярная атака это перебор логинов и паролей.
+Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.&lt;&#x2F;p&gt;
+&lt;p&gt;В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
+увидеть такую картину: &lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[user@pc] # ssh server
+Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
+There were 13925 failed login attempts since the last successful login.
+Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;nastroika-minimal-no-rekomenduemoi-konfiguratsii&quot;&gt;Настройка минимально рекомендуемой конфигурации&lt;&#x2F;h2&gt;
+&lt;p&gt;Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitRootLogin&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Разрешаем подключение только для указанных пользователей
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowUsers user1 user2 user3
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Меняем порт на нестандартный
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Port 14819
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователям с пустыми паролями
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;PermitEmptyPasswords no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем неиспользуемые способы аутентификации
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;KerberosAuthentication no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;GSSAPIAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможность доступа к графическим приложениям
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;X11Forwarding no
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowAgentForwarding no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowTcpForwarding&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitTunnel&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
+&lt;p&gt;Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip&quot;&gt;Блокируем доступ к порту SSH для всех кроме доверенных IP&lt;&#x2F;h3&gt;
+&lt;p&gt;Например, с помощью firewalld:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
+firewall-cmd --permanent --zone=trusted --add-service=ssh
+firewall-cmd --reload
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
+&lt;p&gt;Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
+инженеров предпочитаю работать с логинами и паролями.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PasswordAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После этого потребуется создать ключ для пользователя:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-keygen
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;А затем скопировать его на удалённый сервер:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-copy-id user@server
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
+&lt;p&gt;Проверяем что настройки корректные:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sshd -t
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если приложение не сообщило об ошибках, значит всё хорошо.&lt;&#x2F;p&gt;
+&lt;p&gt;Перезапускаем службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl restart sshd
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Улучшаем работу в консоли с помощью tmux</title>
+		<published>2020-11-02T00:00:00+00:00</published>
+		<updated>2020-11-02T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/tmux/" type="text/html"/>
+		<id>https://b.tinyops.ru/tmux/</id>
+		<content type="html">&lt;p&gt;tmux - это терминальный мультиплексор (terminal multiplexer). Терминальный мультиплексор - это приложение, 
+которое способно объединять несколько сессий в одном псевдо-графическом интерфейсе.&lt;&#x2F;p&gt;
+&lt;p&gt;Главные возможности tmux:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Сохранность сессии.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность использовать множество суб-окон в главном окне.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность поделиться сессией. К сессии мультиплексора могут подключаться несколько пользователей.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;Сохранность текущей сессии&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;По умолчанию, все интерактивные сессии посылают сигнал SIGHUP всем процессам запущенным в текущей сессии при отключении.
+Если произошёл обрыв связи, то все команды которые вы запускали завершатся раньше ожидаемого времени выполнения.&lt;&#x2F;p&gt;
+&lt;p&gt;При первом запуске мультиплексор создаёт отдельную сессию, которая не привязана к вашему соединению. Например, 
+вы можете отключиться от SSH, но сессия будет активна на сервере. Затем вы можете вернуться на сервер и вернуться
+в сессию с помощью команды:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;или с указанием имени сессии:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach -t name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-tmux&quot;&gt;Установка tmux&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;centos-fedora-rhel-oracle-linux&quot;&gt;CentOS, Fedora, RHEL, Oracle Linux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo yum install -y tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ubuntu-debian&quot;&gt;Ubuntu, Debian&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo apt install tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;archlinux&quot;&gt;ArchLinux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo pacman -S tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;sozdanie-sessii&quot;&gt;Создание сессии&lt;&#x2F;h4&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux new -s name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;tmux отобразит пустой терминал на подобие такого:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-start.png&quot; alt=&quot;Стартовое окно tmux&quot; title=&quot;Стартовое окно tmux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;prefiks-dlia-komand&quot;&gt;Префикс для команд&lt;&#x2F;h4&gt;
+&lt;p&gt;Для использования команд нужно использовать комбинацию-префикс.
+По умолчанию, префикс - &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Например, чтобы создать новое окно, нажимаем &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;, затем отпускаем и нажимаем &lt;code&gt;c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;sozdanie-novogo-okna&quot;&gt;Создание нового окна&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-oknami&quot;&gt;Переключение между окнами&lt;&#x2F;h4&gt;
+&lt;p&gt;Вперёд: &lt;code&gt;prefix, n&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Назад: &lt;code&gt;prefix, p&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Переключение по номеру окна: &lt;code&gt;prefix + N&lt;&#x2F;code&gt;, где &lt;code&gt;N&lt;&#x2F;code&gt; - это номер окна.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;razdelenie-okon-i-sozdanie-panelei&quot;&gt;Разделение окон и создание панелей&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Например, можно разместить сверху вывод &lt;code&gt;htop&lt;&#x2F;code&gt;, а снизу &lt;code&gt;vmstat&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-panes.png&quot; alt=&quot;Разделение окна на панели&quot; title=&quot;Разделение окна на панели&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-paneliami&quot;&gt;Переключение между панелями&lt;&#x2F;h4&gt;
+&lt;p&gt;На верхнее: &lt;code&gt;prefix, up&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На нижнее: &lt;code&gt;prefix, down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что слева: &lt;code&gt;prefix, left&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что справа: &lt;code&gt;prefix, right&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;izmenenie-razmerov-tekushchei-paneli&quot;&gt;Изменение размеров текущей панели&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ctrl + up\down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;pomeniat-paneli-mestami&quot;&gt;Поменять панели местами&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, {&lt;&#x2F;code&gt; или &lt;code&gt;prefix, }&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;perekliuchenie-mezhdu-klientami&quot;&gt;Переключение между клиентами&lt;&#x2F;h3&gt;
+&lt;p&gt;Комбинации: &lt;code&gt;prefix, (&lt;&#x2F;code&gt; и &lt;code&gt;prefix, )&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;spravka-po-komandam&quot;&gt;Справка по командам&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ?&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;konfigurirovanie-tmux&quot;&gt;Конфигурирование tmux&lt;&#x2F;h2&gt;
+&lt;p&gt;Согласно &lt;code&gt;man tmux&lt;&#x2F;code&gt;, tmux загружает настройки из &lt;code&gt;&#x2F;etc&#x2F;tmux.conf&lt;&#x2F;code&gt;, а затем смотрит файл в домашней 
+директории текущего пользователя &lt;code&gt;~&#x2F;.tmux.conf&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;После изменений в файлах конфигурации необходимо перечитать настройки:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux source-file &#x2F;etc&#x2F;tmux.conf
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-prefiksa&quot;&gt;Как поменять комбинацию префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Кому-то может быть неудобной комбинация &lt;code&gt;Ctrl + b&lt;&#x2F;code&gt;, поэтому её можно поменять. Например, на &lt;code&gt;Ctrl + a&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana&quot;&gt;Как поменять комбинацию для разделения экрана&lt;&#x2F;h3&gt;
+&lt;p&gt;По умолчанию, разделение экрана по горизонтали &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;, по вертикали - &lt;code&gt;prefix, %&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Это не совсем интуитивные клавиши, проще использовать клавиши: &lt;code&gt;-&lt;&#x2F;code&gt; и &lt;code&gt;|&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Как поменять комбинации:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind | split-window -h
+bind - split-window -v
+unbind &amp;#39;&amp;quot;&amp;#39;
+unbind %
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;perekliuchat-sia-mezhdu-paneliami-bez-prefiksa&quot;&gt;Переключаться между панелями без префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Переключение между панелями одна из самых частых операций в tmux. Переключаться с использованием префикса неудобно.
+Удобней использовать &lt;code&gt;Alt + стрелка&lt;&#x2F;code&gt;. Как это настроить:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Как настроить chroot для sftp в CentOS 7</title>
+		<published>2020-10-12T00:00:00+00:00</published>
+		<updated>2020-10-12T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
+		<id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
+		<content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP. 
+Для этого достаточно создать пользователя и запустить службу &lt;code&gt;sshd&lt;&#x2F;code&gt;. По умолчанию пользователь сможет перемещаться 
+по всем каталогам операционной системы к которым имеет доступ на чтение. Это очень плохо с точки зрения безопасности.&lt;&#x2F;p&gt;
+&lt;p&gt;К счастью, &lt;code&gt;sshd&lt;&#x2F;code&gt; позволяет указать корневой каталог для пользователя (механизм chroot).&lt;&#x2F;p&gt;
+&lt;p&gt;Дальнейшая настройка будет актуальна для CentOS 7 и OpenSSH 7.4, но скорей всего сработает и для других версий.&lt;&#x2F;p&gt;
+&lt;p&gt;В качестве корневого каталога будет путь &lt;code&gt;&#x2F;sftp&#x2F;bob&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;nastraivaem-sluzhbu-sshd&quot;&gt;Настраиваем службу sshd&lt;&#x2F;h3&gt;
+&lt;p&gt;Добавляем в конец конфигурационного файла sshd &lt;code&gt;&#x2F;etc&#x2F;ssh&#x2F;sshd_config&lt;&#x2F;code&gt; следующий текст (комментарии можно не добавлять):&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Match User bob
+ # Запрещаем 
+ X11Forwarding no
+ # Запрещаем проксирование tcp-трафика
+ AllowTcpForwarding no
+ # Мы будем использовать только подсистему sftp
+ ForceCommand internal-sftp
+ # Корневой каталог для пользователя
+ ChrootDirectory &#x2F;sftp&#x2F;bob
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Проверяем что конфигурация без ошибок:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sshd -t
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl restart sshd
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
+&lt;p&gt;У механизма chroot есть требование для владельцев по пути к корневому каталогу:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ChrootDirectory&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Specifies the pathname of a directory to chroot(2) to after authentication. All components of the pathname must 
+be root-owned directories that are not writable by any other user or group. After the chroot, sshd(8) 
+changes the working directory to the user&#x27;s home directory.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Владельцем на пути до корневого каталога (включительно) должен быть &lt;code&gt;root&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Поэтому делаем так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chown -R root: &#x2F;vfs
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если с правами что-то не так то в файле &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt; будет ошибка &lt;code&gt;fatal: bad ownership or modes for chroot directory&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;testiruem&quot;&gt;Тестируем&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sftp bob@your-server
+
+Connected to your-server.
+sftp&amp;gt; ls
+lost+found  test
+sftp&amp;gt; pwd
+Remote working directory: &#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Всё работает.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Как настроить резервное копирование файлов в Linux с помощью Borg Backup</title>
+		<published>2020-06-16T00:00:00+00:00</published>
+		<updated>2021-03-29T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/linux-backup-with-borg/" type="text/html"/>
+		<id>https://b.tinyops.ru/linux-backup-with-borg/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&#x2F;&quot;&gt;BorgBackup&lt;&#x2F;a&gt; — это приложение для резервного копирования файлов 
+с поддержкой &lt;a href=&quot;https:&#x2F;&#x2F;ru.wikipedia.org&#x2F;wiki&#x2F;%D0%94%D0%B5%D0%B4%D1%83%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F&quot;&gt;дедупликации&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;osnovnye-vozmozhnosti&quot;&gt;Основные возможности&lt;&#x2F;h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Эффективное хранение&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Каждый файл разбивается на порции (chunks) и добавляется в репозиторий резервных копий если его там ещё не присутствовало.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Скорость работы&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Приложение написано на Python, но критические участки реализованы на C&#x2F;Python. 
+Используется кэширование и индексирование данных.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Поддержка сжатия&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Поддерживаются четыре вида сжатия данных: lz4, zstd, zlib и lzma.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;Поддержка шифрования&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Данные можно зашифровать с помощью 256-битного AES, целостность данных проверяется с помощью HMAC-SHA256.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;borg&#x2F;borg-site.png&quot; alt=&quot;alt text&quot; title=&quot;Документация к Borg&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
+&lt;p&gt;Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.&lt;&#x2F;p&gt;
+&lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитарии:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum -y install epel-release
+yum -y install borgbackup
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
+&lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;cronbox.ru&quot;&gt;cronbox.ru&lt;&#x2F;a&gt;.
+Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
+без шифрования данных:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Смотрим информацию по репозиторию:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+Encrypted: No
+Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+All archives:                    0 B                  0 B                  0 B
+
+                       Unique chunks         Total chunks
+Chunk index:                       0                    0
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Видим что пока пусто. Сделаем первую резервную копию:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
+Поэтому в команде мы указали имя архива — &lt;code&gt;site&lt;&#x2F;code&gt;. Для отдельного архивирования uploads можно было указать вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После создания копия смотрим изменения в репозитории:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
+site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+Encrypted: No
+Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+All archives:              644.93 kB            277.42 kB            277.42 kB
+
+                       Unique chunks         Total chunks
+Chunk index:                     133                  133
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Как мы видим, общий объём данных (Original size) — 644КБ, хранится на диске (Deduplicated size) — 277КБ.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;arkhivirovanie-po-raspisaniiu&quot;&gt;Архивирование по расписанию&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server]# crontab -e
+
+0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить &lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;мониторинг&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&quot;&gt;Официальный сайт&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;borgbackup.readthedocs.io&#x2F;en&#x2F;stable&#x2F;&quot;&gt;Документация&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;Как настроить мониторинг для borg&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Ошибка «Too many open files» в Linux</title>
+		<published>2020-06-02T00:00:00+00:00</published>
+		<updated>2020-06-02T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/too-many-open-files/" type="text/html"/>
+		<id>https://b.tinyops.ru/too-many-open-files/</id>
+		<content type="html">&lt;p&gt;Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
+открытых файлов. Простыми словами — процессу было разрешено открыть максимум 100 файлов, а он попытался открыть 101-й.&lt;&#x2F;p&gt;
+&lt;p&gt;Далее — разберёмся как работает это ограничение в операционных системах Linux. Все пути будут указаны для CentOS\RHEL-образных систем.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ogranicheniia-iadra-linux&quot;&gt;Ограничения ядра Linux&lt;&#x2F;h2&gt;
+&lt;p&gt;Прежде всего ограничение на количество открытых файлов устанавливает ядро операционной системы. Посмотреть его можно
+вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@dracula ~]# sysctl fs.file-max
+fs.file-max = 3000000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
+прочитать файл &lt;code&gt;&#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
+1154    133     3000000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;1154&lt;&#x2F;code&gt; — текущее значение открытых файлов.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;133&lt;&#x2F;code&gt; — сколько из открытых файлов не используются.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;3000000&lt;&#x2F;code&gt; — сколько разрешено открывать файлов.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;pam&quot;&gt;PAM&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;www.linux-pam.org&#x2F;Linux-PAM-html&#x2F;sag-introduction.html&quot;&gt;PAM&lt;&#x2F;a&gt; (Pluggable Authentication Modules for Linux) — 
+это набор динамически-подключаемых библиотек для аутентификации пользователей.&lt;&#x2F;p&gt;
+&lt;p&gt;Конфигурация для PAM хранится в следующих каталогах и файлах:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.d&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;pam.d&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Формат записи такой:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;nginx           soft   nofile 50000
+nginx           hard   nofile 50000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Существует два вида ограничений: &lt;code&gt;soft&lt;&#x2F;code&gt; (мягкий) и &lt;code&gt;hard&lt;&#x2F;code&gt; (жесткий). Soft-ограничения носят рекомендательный характер, 
+в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (&lt;code&gt;nofile&lt;&#x2F;code&gt;) по hard-ограничению
+не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;protsess-iadro-i-pam&quot;&gt;Процесс, ядро и PAM&lt;&#x2F;h2&gt;
+&lt;p&gt;Все что описано выше показано на схеме:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;too-many-open-files.png&quot; alt=&quot;alt text&quot; title=&quot;Ядро, PAM и процесс&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
+Далее — если процесс поддерживает PAM, делается вызов через библиотеку, не исчерпались ли лимиты.&lt;&#x2F;p&gt;
+&lt;p&gt;Если процесс не поддерживает PAM, какие бы лимиты ему не установили в конфигурационных файлах, он будет их игнорировать.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;oshibka-too-many-open-files&quot;&gt;Ошибка «Too many open files»&lt;&#x2F;h2&gt;
+&lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки 
+в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; и упомянутых выше файлах.&lt;&#x2F;p&gt;
+&lt;p&gt;Смотрим сколько пользователю &lt;code&gt;nginx&lt;&#x2F;code&gt; разрешено:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sudo -u nginx bash -c &amp;#39;ulimit -n&amp;#39;
+
+1024
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Видимо что всего лишь &lt;code&gt;1024&lt;&#x2F;code&gt;, для нагруженного сервера это может быть недостаточным. Добавляем в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; строчки:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;nginx           soft   nofile 10000
+nginx           hard   nofile 10000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Тем самым разрешая лимит до 10000 файлов.&lt;&#x2F;p&gt;
+&lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов, 
+то необходимо добавить в &lt;code&gt;&#x2F;etc&#x2F;sysctl.conf&lt;&#x2F;code&gt; значение с запасом:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;fs.file-max = 100000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
+применить его «на лету», делаем вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sysctl -w fs.file-max=100000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В отличие от первого способа, эта настройка будет актуальна до первой перезагрузки операционной системы.&lt;&#x2F;p&gt;
+&lt;p&gt;После изменения настроек в конфигурации ядра и PAM необходимо перезапустить процесс &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.kernel.org&#x2F;doc&#x2F;Documentation&#x2F;sysctl&#x2F;fs.txt&quot;&gt;https:&#x2F;&#x2F;www.kernel.org&#x2F;doc&#x2F;Documentation&#x2F;sysctl&#x2F;fs.txt&lt;&#x2F;a&gt; - описание параметров ядра.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;how-to-fix-su-cannot-open-session&#x2F;&quot;&gt;Статья про то как исправить ошибку «su: cannot open session: Permission denied»&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7</title>
+		<published>2020-05-22T00:00:00+00:00</published>
+		<updated>2020-05-22T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
+		<id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
+		<content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; su - zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cannot open session: Permission denied
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;При этом если попытаться запустить какую-нибудь команду &lt;code&gt;id&lt;&#x2F;code&gt; через &lt;code&gt;sudo&lt;&#x2F;code&gt; от имени &lt;code&gt;zero&lt;&#x2F;code&gt; получаем уже другую ошибку:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -u&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero id
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; pam_open_session: Permission denied
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; policy plugin failed session initialization
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Проверяем не заблокирован ли пользователь:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; passwd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;zero&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; PS 2019-09-12 0 99999 7&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; (Password set, SHA512 crypt.)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Все окей. Проверяем не истёк ли пароль:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -l&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; password change                                    : Sep 12, 2019
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; expires                                        : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; inactive                                       : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Account&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; expires                                         : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Minimum&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; number of days between password change          : 0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Maximum&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; number of days between password change          : 99999
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Number&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; of days of warning before password expires       : 7
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Здесь тоже все в порядке, пароль не истёк. Смотрим лог аутентификации &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; tail &#x2F;var&#x2F;log&#x2F;secure
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: root : TTY=pts&#x2F;0 ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: pam_limits(sudo:session)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Could not set limit for &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nofile&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;: Operation not permitted
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;TTY&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pts&#x2F;0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Смотрим конфиг &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
+zero         soft   nofile 1500000
+zero         hard   nofile 1500000
+...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон 
+значений для &lt;code&gt;nofile&lt;&#x2F;code&gt;: &lt;code&gt;1-1048576&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и &lt;code&gt;su&lt;&#x2F;code&gt; начинает работать.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]# su - zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[zero@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]$
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+</feed>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - awesomeware</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/categories/awesomeware/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-05-14T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/categories/awesomeware/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Установка Syncthing для CentOS 7</title>
+		<published>2021-05-14T00:00:00+00:00</published>
+		<updated>2021-05-14T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
+		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
+		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Syncthing - это приложение для синхронизации файлов между устройствами. Авторы любят дистрибутивы аля Debian\Ubuntu, 
+поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
+&lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-raspakovyvaem-distributiv&quot;&gt;2. Распаковываем дистрибутив&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Будет примерно такое содержимое (лишнее убрал):&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;├──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   ├── linux-systemd
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── README.md
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── system
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   ├── syncthing-resume.service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   └── user
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;└──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В архиве присутствует два вида конфигурации:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Системная служба&lt;&#x2F;li&gt;
+&lt;li&gt;Пользовательская служба&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;В первом случае Syncthing будет запускаться сразу при загрузке операционной системы и 
+работать независимо от сессии пользователя.&lt;&#x2F;p&gt;
+&lt;p&gt;Пользовательская служба ограничена активной сессией (ssh или графической). Например, пользователь зашёл 
+в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
+&lt;p&gt;Первый вариант на мой взгляд более удобен, данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
+&lt;p&gt;На примере пользователя &lt;code&gt;eugene&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Копируем файлы службы из дистрибутива:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Разрешаем автозапуск при загрузке ОС и запускаем службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; enable syncthing@myuser.service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; start syncthing@myuser.service
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
+&lt;p&gt;Заходим в Web-интерфейс &lt;code&gt;http:&#x2F;&#x2F;имя-сервера:8384&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;syncthing-as-windows-service&#x2F;&quot;&gt;Запуск Syncthing в виде службы Windows&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Передача файлов и текста с помощью croc</title>
+		<published>2021-03-06T00:00:00+00:00</published>
+		<updated>2021-03-06T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/transfer-data-with-croc/" type="text/html"/>
+		<id>https://b.tinyops.ru/transfer-data-with-croc/</id>
+		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;schollz&#x2F;croc&quot;&gt;croc&lt;&#x2F;a&gt; - это консольная утилита для удобной и безопасной передачи данных между двумя устройствами.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;croc.png&quot; alt=&quot;Репозитарий croc на Github&quot; title=&quot;Репозиторий croc на Github&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Основные возможности:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Передача данных (файлы, текст) между устройствами (с использованием relay);&lt;&#x2F;li&gt;
+&lt;li&gt;End-to-end шифрование (авторы утилиты не смогут прочитать, то что вы передаёте);&lt;&#x2F;li&gt;
+&lt;li&gt;Кросс-платформа (поддерживаются все популярные ОС);&lt;&#x2F;li&gt;
+&lt;li&gt;Можно передавать сразу несколько файлов;&lt;&#x2F;li&gt;
+&lt;li&gt;Поддержка докачки;&lt;&#x2F;li&gt;
+&lt;li&gt;Не нужно открывать порты и настраивать port-forwarding;&lt;&#x2F;li&gt;
+&lt;li&gt;С ориентиром на IPV6 и поддержкой IPV4;&lt;&#x2F;li&gt;
+&lt;li&gt;Поддержка работы через Proxy типа Tor.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;kak-ustanovit&quot;&gt;Как установить&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;linux&quot;&gt;Linux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;curl https:&#x2F;&#x2F;getcroc.schollz.com | bash
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;macos&quot;&gt;MacOS&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;brew install croc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;&#x2F;h3&gt;
+&lt;p&gt;Если вы используете менеджер пакетов &lt;a href=&quot;https:&#x2F;&#x2F;chocolatey.org&#x2F;&quot;&gt;Chocolatey&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;choco install croc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если вы используете менеджер пакетов &lt;a href=&quot;https:&#x2F;&#x2F;scoop.sh&#x2F;&quot;&gt;Scoop&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;scoop install croc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
+&lt;p&gt;Например, нам нужно передать файл &lt;code&gt;archive.zip&lt;&#x2F;code&gt; с одного устройства на другое:&lt;&#x2F;p&gt;
+&lt;p&gt;Инициируем передачу на устройстве с которого отправляем файл:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc send archive.zip
+Sending &amp;#39;archive.zip&amp;#39; (3.3 kB)
+Code is: sweden-light-jacket
+On the other computer run
+
+croc sweden-light-jacket
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Утилита сгенерировала секретное слово, которое мы должны использовать на принимающей стороне. Также croc подсказывает 
+какую команду мы должны запустить на втором устройстве:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc sweden-light-jacket
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Запускаем:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc sweden-light-jacket
+Accept &amp;#39;archive.zip&amp;#39; (3.3 kB)? (y&#x2F;n) y
+
+Receiving (&amp;lt;-123.100.94.21:12345)
+archive.zip 100% |████████████████████| (3.3&#x2F;3.3 kB, 12.864 kB&#x2F;s)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-otpravit-tekst&quot;&gt;Как отправить текст&lt;&#x2F;h3&gt;
+&lt;p&gt;Аналогично файлу, но команда запуска на исходном устройстве будет такой:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc send --text &amp;quot;ВАШ ТЕКСТ&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;schollz&#x2F;croc&quot;&gt;Репозиторий на GitHub&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;schollz.com&#x2F;software&#x2F;croc6&quot;&gt;Пост автора&lt;&#x2F;a&gt; с подробностями об утилите (на английском)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;Другие посты про крутые приложения&lt;&#x2F;a&gt; &lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+</feed>

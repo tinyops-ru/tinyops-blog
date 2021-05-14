@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - ops</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/categories/ops/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-04-04T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/categories/ops/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Как развернуть php приложение в Docker</title>
+		<published>2020-04-04T00:00:00+00:00</published>
+		<updated>2020-04-04T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/run-php-in-docker/" type="text/html"/>
+		<id>https://b.tinyops.ru/run-php-in-docker/</id>
+		<content type="html">&lt;p&gt;По ходу работы мне потребовалось мигрировать тройку php-приложений на новый сервер. На старом сервере был CentOS 6, зоопарк софта и набор
+недокументированных хаков. Т.к. я из мира JVM-языков, то мир php для меня чужой. 
+Чтобы минимизировать себе психологический урон в будущем, я решил собрать docker образ для каждого из приложений. &lt;&#x2F;p&gt;
+&lt;p&gt;Такое оборачивание дает дополнительное преимущество - если кто-то хакнул приложение, 
+то можно без привлечения внешних security-средств (например, tripwire) легко сдампить текущее состояние в файл, откатить
+до нехакнутого варианта. А дальше уже звать разработчиков и пусть роются в дампе :))&lt;&#x2F;p&gt;
+&lt;p&gt;За основу я взял образ с php 5.6 + Apache. Приложения требовали &lt;code&gt;ImageMagick&lt;&#x2F;code&gt;, &lt;code&gt;gd&lt;&#x2F;code&gt; и &lt;code&gt;zip&lt;&#x2F;code&gt;, 
+поэтому добавил их через скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt;. Также требовалось установить
+часовой пояс сервера, сделал это классическим &lt;code&gt;echo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Перед сборкой скопировал файлы приложения в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Файл сценария сборки - &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;FROM&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; php:5.6-apache
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+                      libmagickwand-dev --no-install-recommends \
+                   &amp;amp;&amp;amp; pecl install imagick \
+        &amp;amp;&amp;amp; docker-php-ext-enable imagick
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \
+    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;echo &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;date.timezone = Europe&#x2F;Moscow&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;a2enmod rewrite
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;service apache2 restart
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;COPY&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; app&#x2F; &#x2F;var&#x2F;www&#x2F;html
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chown -R www-data.www-data &#x2F;var&#x2F;www
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chmod -R ug=rwx &#x2F;var&#x2F;www
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mkdir &#x2F;tmp&#x2F;webmodule
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chmod a=rwx &#x2F;tmp&#x2F;webmodule
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EXPOSE &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;80
+
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Собираем:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-dobavliat-rasshireniia-dlia-php&quot;&gt;Как добавлять расширения для php&lt;&#x2F;h2&gt;
+&lt;p&gt;Авторы PHP любезно предоставили скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt; внутри базового контейнера. В примере выше видно как это
+использовать.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;kak-ispol-zovat-svoi-php-ini&quot;&gt;Как использовать свой php.ini&lt;&#x2F;h2&gt;
+&lt;p&gt;Добавляем в &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-reshit-problemu-s-pravami-dostupa&quot;&gt;Как решить проблему с правами доступа&lt;&#x2F;h2&gt;
+&lt;p&gt;В &lt;code&gt;Dockerfile&lt;&#x2F;code&gt; есть пара команд, которые дают полные права для пользователя &lt;code&gt;www-data&lt;&#x2F;code&gt;, 
+а также задают ID пользователя и группы для него равные &lt;code&gt;1001&lt;&#x2F;code&gt;.
+На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
+которую использую как volume:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
+&lt;p&gt;С помощью docker compose можно завести вот так:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;
+
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;phpfpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-repo&#x2F;my-app:1.0.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+    ports&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;9123:80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
+    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
+      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_USER=#1001
+      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_GROUP=#1001
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Чтобы данные которые загружают юзеры сохранялись делаем volume.&lt;&#x2F;p&gt;
+&lt;p&gt;Стартуем:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker-compose up -d
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Приложение будет доступно на порту &lt;code&gt;9123&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

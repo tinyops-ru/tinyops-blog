@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - tmux</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/tags/tmux/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-11-02T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/tags/tmux/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Улучшаем работу в консоли с помощью tmux</title>
+		<published>2020-11-02T00:00:00+00:00</published>
+		<updated>2020-11-02T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/tmux/" type="text/html"/>
+		<id>https://b.tinyops.ru/tmux/</id>
+		<content type="html">&lt;p&gt;tmux - это терминальный мультиплексор (terminal multiplexer). Терминальный мультиплексор - это приложение, 
+которое способно объединять несколько сессий в одном псевдо-графическом интерфейсе.&lt;&#x2F;p&gt;
+&lt;p&gt;Главные возможности tmux:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Сохранность сессии.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность использовать множество суб-окон в главном окне.&lt;&#x2F;li&gt;
+&lt;li&gt;Возможность поделиться сессией. К сессии мультиплексора могут подключаться несколько пользователей.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;strong&gt;Сохранность текущей сессии&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;По умолчанию, все интерактивные сессии посылают сигнал SIGHUP всем процессам запущенным в текущей сессии при отключении.
+Если произошёл обрыв связи, то все команды которые вы запускали завершатся раньше ожидаемого времени выполнения.&lt;&#x2F;p&gt;
+&lt;p&gt;При первом запуске мультиплексор создаёт отдельную сессию, которая не привязана к вашему соединению. Например, 
+вы можете отключиться от SSH, но сессия будет активна на сервере. Затем вы можете вернуться на сервер и вернуться
+в сессию с помощью команды:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;или с указанием имени сессии:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach -t name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-tmux&quot;&gt;Установка tmux&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;centos-fedora-rhel-oracle-linux&quot;&gt;CentOS, Fedora, RHEL, Oracle Linux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo yum install -y tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ubuntu-debian&quot;&gt;Ubuntu, Debian&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo apt install tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;archlinux&quot;&gt;ArchLinux&lt;&#x2F;h3&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo pacman -S tmux
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;sozdanie-sessii&quot;&gt;Создание сессии&lt;&#x2F;h4&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux new -s name
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;tmux отобразит пустой терминал на подобие такого:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-start.png&quot; alt=&quot;Стартовое окно tmux&quot; title=&quot;Стартовое окно tmux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;prefiks-dlia-komand&quot;&gt;Префикс для команд&lt;&#x2F;h4&gt;
+&lt;p&gt;Для использования команд нужно использовать комбинацию-префикс.
+По умолчанию, префикс - &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Например, чтобы создать новое окно, нажимаем &lt;code&gt;ctrl+b&lt;&#x2F;code&gt;, затем отпускаем и нажимаем &lt;code&gt;c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;sozdanie-novogo-okna&quot;&gt;Создание нового окна&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-oknami&quot;&gt;Переключение между окнами&lt;&#x2F;h4&gt;
+&lt;p&gt;Вперёд: &lt;code&gt;prefix, n&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Назад: &lt;code&gt;prefix, p&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Переключение по номеру окна: &lt;code&gt;prefix + N&lt;&#x2F;code&gt;, где &lt;code&gt;N&lt;&#x2F;code&gt; - это номер окна.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;razdelenie-okon-i-sozdanie-panelei&quot;&gt;Разделение окон и создание панелей&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Например, можно разместить сверху вывод &lt;code&gt;htop&lt;&#x2F;code&gt;, а снизу &lt;code&gt;vmstat&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-panes.png&quot; alt=&quot;Разделение окна на панели&quot; title=&quot;Разделение окна на панели&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;perekliuchenie-mezhdu-paneliami&quot;&gt;Переключение между панелями&lt;&#x2F;h4&gt;
+&lt;p&gt;На верхнее: &lt;code&gt;prefix, up&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На нижнее: &lt;code&gt;prefix, down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что слева: &lt;code&gt;prefix, left&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На то что справа: &lt;code&gt;prefix, right&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;izmenenie-razmerov-tekushchei-paneli&quot;&gt;Изменение размеров текущей панели&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ctrl + up\down&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;pomeniat-paneli-mestami&quot;&gt;Поменять панели местами&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, {&lt;&#x2F;code&gt; или &lt;code&gt;prefix, }&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;perekliuchenie-mezhdu-klientami&quot;&gt;Переключение между клиентами&lt;&#x2F;h3&gt;
+&lt;p&gt;Комбинации: &lt;code&gt;prefix, (&lt;&#x2F;code&gt; и &lt;code&gt;prefix, )&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;spravka-po-komandam&quot;&gt;Справка по командам&lt;&#x2F;h4&gt;
+&lt;p&gt;Комбинация: &lt;code&gt;prefix, ?&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;konfigurirovanie-tmux&quot;&gt;Конфигурирование tmux&lt;&#x2F;h2&gt;
+&lt;p&gt;Согласно &lt;code&gt;man tmux&lt;&#x2F;code&gt;, tmux загружает настройки из &lt;code&gt;&#x2F;etc&#x2F;tmux.conf&lt;&#x2F;code&gt;, а затем смотрит файл в домашней 
+директории текущего пользователя &lt;code&gt;~&#x2F;.tmux.conf&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;После изменений в файлах конфигурации необходимо перечитать настройки:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux source-file &#x2F;etc&#x2F;tmux.conf
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-prefiksa&quot;&gt;Как поменять комбинацию префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Кому-то может быть неудобной комбинация &lt;code&gt;Ctrl + b&lt;&#x2F;code&gt;, поэтому её можно поменять. Например, на &lt;code&gt;Ctrl + a&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana&quot;&gt;Как поменять комбинацию для разделения экрана&lt;&#x2F;h3&gt;
+&lt;p&gt;По умолчанию, разделение экрана по горизонтали &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;, по вертикали - &lt;code&gt;prefix, %&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Это не совсем интуитивные клавиши, проще использовать клавиши: &lt;code&gt;-&lt;&#x2F;code&gt; и &lt;code&gt;|&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Как поменять комбинации:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind | split-window -h
+bind - split-window -v
+unbind &amp;#39;&amp;quot;&amp;#39;
+unbind %
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;perekliuchat-sia-mezhdu-paneliami-bez-prefiksa&quot;&gt;Переключаться между панелями без префикса&lt;&#x2F;h3&gt;
+&lt;p&gt;Переключение между панелями одна из самых частых операций в tmux. Переключаться с использованием префикса неудобно.
+Удобней использовать &lt;code&gt;Alt + стрелка&lt;&#x2F;code&gt;. Как это настроить:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+	</entry>
+</feed>

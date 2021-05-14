@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - golang</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/tags/golang/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-09-30T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/tags/golang/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Как собрать старый Golang-проект с определённой версией зависимости</title>
+		<published>2020-09-30T00:00:00+00:00</published>
+		<updated>2020-09-30T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/how-to-build-golang-with-dep-version/" type="text/html"/>
+		<id>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</id>
+		<content type="html">&lt;p&gt;Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то что она должна была
+работать под Windows Server 2008 (без R2). К сожалению, более новые версии Go, в том числе те, в которые завезли модули,
+использовать было нельзя. В отличие от Rust в Go старых версий с зависимостями всё было сделано плохо.&lt;&#x2F;p&gt;
+&lt;p&gt;Нельзя было как в Rust просто указать какую версию зависимости ты хочешь. Поэтому в этой статье опишу как максимально 
+просто решить эту проблему.&lt;&#x2F;p&gt;
+&lt;p&gt;Итак, для проекта была нужна библиотека &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab&quot;&gt;grab&lt;&#x2F;a&gt;. 
+С последнего мартовского коммита в проект &lt;code&gt;master&lt;&#x2F;code&gt; этой библиотеки само собой убежал и попутно поломал совместимость.
+Проект перестал собираться.&lt;&#x2F;p&gt;
+&lt;p&gt;Чтобы подсунуть необходимую версию нужно в &lt;code&gt;%GOPATH%&#x2F;src&#x2F;github.com&#x2F;cavaliercoder&lt;&#x2F;code&gt; 
+клонировать стабильную версию с нужным тэгом. В данном случае нужен был &lt;code&gt;2.0.0&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Удаляем каталог &lt;code&gt;grab&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Клонируем с тэгом 2.0.0:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone --depth 1 --branch v2.0.0 https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab.git
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;В Idea может потребоваться реиндексация, чтобы она обновила свои кэши по зависимостям: &lt;code&gt;File &amp;gt; Invalidate caches&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Готово.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

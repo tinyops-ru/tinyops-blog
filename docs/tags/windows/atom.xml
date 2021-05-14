@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Блог TinyOps - windows</title>
+	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+	<link href="https://b.tinyops.ru/tags/windows/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://b.tinyops.ru"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-05-14T00:00:00+00:00</updated>
+	<id>https://b.tinyops.ru/tags/windows/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Запуск Syncthing в виде службы Windows</title>
+		<published>2020-11-11T00:00:00+00:00</published>
+		<updated>2021-05-14T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/syncthing-as-windows-service/" type="text/html"/>
+		<id>https://b.tinyops.ru/syncthing-as-windows-service/</id>
+		<content type="html">&lt;p&gt;Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
+выступать настольные системы, ноутбуки и мобильные устройства. Syncthing можно запустить во всех популярных операционных системах.&lt;&#x2F;p&gt;
+&lt;p&gt;Если на мобильных устройствах приложение стартует самостоятельно как служба, то на настольных системах необходима настройка.
+Вы можете запустить приложение в сеансе текущего пользователя, но запускать при каждом запуске компьютера неудобно.&lt;&#x2F;p&gt;
+&lt;p&gt;Официальное руководство &lt;a href=&quot;https:&#x2F;&#x2F;docs.syncthing.net&#x2F;users&#x2F;autostart.html&quot;&gt;предлагает&lt;&#x2F;a&gt; два способа:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Запускать через планировщик задач Windows;&lt;&#x2F;li&gt;
+&lt;li&gt;Запускать в виде службы.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Первый способ костыльный и перестанет работать если пользователь поменяет пароль, поэтому лучше настроить службу Windows.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;ustanovka-nssm&quot;&gt;Установка NSSM&lt;&#x2F;h3&gt;
+&lt;p&gt;Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы. 
+Подобных утилит достаточно много, но мы возьмём одну из самых удобных - NSSM (The Non-Sucking Service Manager).
+Скачиваем с официального сайта дистрибутив &lt;a href=&quot;https:&#x2F;&#x2F;nssm.cc&#x2F;download&quot;&gt;https:&#x2F;&#x2F;nssm.cc&#x2F;download&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Распаковываем куда-нибудь, например, в &lt;code&gt;c:\apps\nssm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Затем складываем файл &lt;code&gt;nssm.exe&lt;&#x2F;code&gt; так, чтобы полный путь до приложения был следующим - &lt;code&gt;c:\apps\nssm\nssm.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sozdanie-sluzhby-windows&quot;&gt;Создание службы Windows&lt;&#x2F;h3&gt;
+&lt;p&gt;Допустим полный путь до исполняемого файла Syncthing - &lt;code&gt;c:\apps\syncthing\syncthing.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Запускаем командную строку Windows с правами локального администратора и создаём службу:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
+&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
+c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
+&lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
+&lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Выбираем существующего пользователя и указываем пароль.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-run-as.png&quot; alt=&quot;Выбор пользователя для запуска службы&quot; title=&quot;Выбор пользователя для запуска службы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Жмём &amp;quot;ОК&amp;quot; и перезапускаем службу.&lt;&#x2F;p&gt;
+&lt;p&gt;Через некоторое время приложение будет доступно по ссылке &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:8384&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:8384&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;drugie-stat-i&quot;&gt;Другие статьи&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;install-syncthing-centos7&#x2F;&quot;&gt;Установка Syncthing для CentOS 7&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+	</entry>
+	<entry xml:lang="en">
+		<title>Как исправить глюки в консоли Windows 10 при подключении через SSH</title>
+		<published>2020-02-07T00:00:00+00:00</published>
+		<updated>2020-02-07T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/fix-console-glitches-windows-10/" type="text/html"/>
+		<id>https://b.tinyops.ru/fix-console-glitches-windows-10/</id>
+		<content type="html">&lt;p&gt;Несколько лет назад Microsoft взяли курс на дружбу с операционными системами на базе ядра Linux. 
+Благодаря этому в Windows 10 появились крутые возможности:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Встроенный SSH клиент&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Возможность подключаться через SSH прямо из консоли Windows.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Windows Subsystem for Linux&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+Возможность использовать софт под linux прямо из консоли Windows, пусть и с рядом ограничений.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;К сожалению, реализация OpenSSH клиента под Windows работает с ошибками. Одна из главный проблем это мигающий экран
+в приложениях с псевдо-графикой. Из такого рода приложений я используют только классический Midnight Commander, поэтому
+исправлять проблему будем прежде всего для него. Уверен что решение сработает и для остальных приложений. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h3&gt;
+&lt;p&gt;Решение простое - использовать SSH клиент из пакета &lt;a href=&quot;https:&#x2F;&#x2F;git-scm.com&#x2F;download&#x2F;win&quot;&gt;Git for Windows&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Устанавливаем набор утилит &lt;a href=&quot;https:&#x2F;&#x2F;git-scm.com&#x2F;download&#x2F;win&quot;&gt;Git for Windows&lt;&#x2F;a&gt;, выбираем все субпакеты в процессе установки&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Добавляем в переменную окружения &lt;code&gt;PATH&lt;&#x2F;code&gt; путь &lt;code&gt;до ssh.exe&lt;&#x2F;code&gt; из пакета &lt;code&gt;Git for Windows&lt;&#x2F;code&gt;:&lt;br &#x2F;&gt;
+Желательно добавить в начало значения переменной. Например, вот так:&lt;br &#x2F;&gt;
+&lt;img src=&quot;&#x2F;images&#x2F;windows&#x2F;windows-ssh-glitches-path.png&quot; alt=&quot;alt text&quot; title=&quot;Переменные окружения&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Открываем Командную строку заново и пробуем использовать ssh клиент с запуском Midnight Commander&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;windows&#x2F;windows-ssh-glitches-mc.png&quot; alt=&quot;alt text&quot; title=&quot;Midnight Commander&quot; &#x2F;&gt; &lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Все работает как надо :)&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;pravil-nyi-kurs&quot;&gt;Правильный курс&lt;&#x2F;h3&gt;
+&lt;p&gt;Несмотря на известные проблемы со встроенным клиентом SSH и Linux-подсистемой для Windows я искренне верю что
+Microsoft выбрали верное направление. Десятки лет администраторы Windows серверов не имели современной командной строки,
+с историей команд, поиском, подстановкой и справочной системой на подобие man. Руководство Microsoft не считало нужным
+развивать это направление и делало ставку на графические интерфейсы, мол тыкать мышкой всегда понятней и удобней.
+Мировой опыт работы с Linux\Unix-системами доказал что это не так. &lt;&#x2F;p&gt;
+&lt;p&gt;Я верю что Сатья Наделла, действующий глава Microsoft, доведет интеграцию до уровня production ready.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>
