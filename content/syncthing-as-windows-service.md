@@ -2,7 +2,7 @@
 title = "Запуск Syncthing в виде службы Windows"
 description = "Как настроить запуск Syncthing в качестве службы Windows."
 date = 2020-11-11
-updated = 2020-11-11
+updated = 2021-05-14
 
 [taxonomies]
 tags = ["software", "awesomeware", "syncthing", "windows"]
@@ -58,3 +58,8 @@ c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
 Жмём "ОК" и перезапускаем службу.
 
 Через некоторое время приложение будет доступно по ссылке [http://127.0.0.1:8384](http://127.0.0.1:8384).
+
+## Другие статьи
+
+- [Установка Syncthing для CentOS 7](/install-syncthing-centos7/)
+- Статьи про другие приложения с тэгом [#awesomeware](/tags/awesomeware/)
