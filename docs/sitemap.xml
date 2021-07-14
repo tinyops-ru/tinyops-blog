@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-05-14</lastmod>
+        <lastmod>2021-07-14</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -131,11 +131,11 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/install-syncthing-centos7/</loc>
-        <lastmod>2021-05-14</lastmod>
+        <lastmod>2021-07-14</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/kak-upravlyat-dotfiles/</loc>
-        <lastmod>2021-04-04</lastmod>
+        <lastmod>2021-07-14</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>

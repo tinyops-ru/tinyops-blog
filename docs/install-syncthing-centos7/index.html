@@ -107,12 +107,12 @@
   </div>
 
   <p><img src="/images/awesomeware/syncthing/syncthing-logo.png" alt="Логотип приложения Syncthing" title="Логотип приложения Syncthing" /></p>
-<p>Syncthing - это приложение для синхронизации файлов между устройствами. Авторы любят дистрибутивы аля Debian\Ubuntu, 
+<p>Syncthing — это приложение для синхронизации файлов между устройствами. Авторы предпочитают дистрибутивы аля Debian\Ubuntu, 
 поэтому для большинства остальных ОС требуется ручная установка.</p>
 <h3 id="1-skachivaem-distributiv">1. Скачиваем дистрибутив</h3>
 <p>Скачиваем свежую версию с GitHub <a href="https://github.com/syncthing/syncthing/releases/latest">https://github.com/syncthing/syncthing/releases/latest</a></p>
 <p>Файл будет выглядеть подобным образом <code>syncthing-linux-arm64-v1.16.1.tar.gz</code>.</p>
-<h3 id="2-raspakovyvaem-distributiv">2. Распаковываем дистрибутив</h3>
+<h3 id="2-raspakovyvaem">2. Распаковываем</h3>
 <pre style="background-color:#2b303b;">
 <code class="language-bash" data-lang="bash"><span style="color:#bf616a;">tar</span><span style="color:#c0c5ce;"> xvzf syncthing-linux-arm64-v1.16.1.tar.gz
 </span><span style="color:#96b5b4;">cd</span><span style="color:#c0c5ce;"> syncthing-linux-arm64-v1.16.1
@@ -138,7 +138,7 @@
 работать независимо от сессии пользователя.</p>
 <p>Пользовательская служба ограничена активной сессией (ssh или графической). Например, пользователь зашёл 
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.</p>
-<p>Первый вариант на мой взгляд более удобен, данные будут синхронизированы быстрей.</p>
+<p>В первом варианте данные будут синхронизированы быстрей.</p>
 <h3 id="3-ustanavlivaem-ispolniaemyi-fail">3. Устанавливаем исполняемый файл</h3>
 <pre style="background-color:#2b303b;">
 <code class="language-bash" data-lang="bash"><span style="color:#bf616a;">sudo</span><span style="color:#c0c5ce;"> cp syncthing /usr/local/bin/syncthing

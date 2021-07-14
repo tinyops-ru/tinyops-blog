@@ -5,21 +5,21 @@
 	<link href="https://b.tinyops.ru/tags/centos/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://b.tinyops.ru"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-05-14T00:00:00+00:00</updated>
+	<updated>2021-07-14T00:00:00+00:00</updated>
 	<id>https://b.tinyops.ru/tags/centos/atom.xml</id>
 	<entry xml:lang="en">
 		<title>Установка Syncthing для CentOS 7</title>
 		<published>2021-05-14T00:00:00+00:00</published>
-		<updated>2021-05-14T00:00:00+00:00</updated>
+		<updated>2021-07-14T00:00:00+00:00</updated>
 		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
 		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
 		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
-&lt;p&gt;Syncthing - это приложение для синхронизации файлов между устройствами. Авторы любят дистрибутивы аля Debian\Ubuntu, 
+&lt;p&gt;Syncthing — это приложение для синхронизации файлов между устройствами. Авторы предпочитают дистрибутивы аля Debian\Ubuntu, 
 поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
 &lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;2-raspakovyvaem-distributiv&quot;&gt;2. Распаковываем дистрибутив&lt;&#x2F;h3&gt;
+&lt;h3 id=&quot;2-raspakovyvaem&quot;&gt;2. Распаковываем&lt;&#x2F;h3&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
@@ -45,7 +45,7 @@
 работать независимо от сессии пользователя.&lt;&#x2F;p&gt;
 &lt;p&gt;Пользовательская служба ограничена активной сессией (ssh или графической). Например, пользователь зашёл 
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
-&lt;p&gt;Первый вариант на мой взгляд более удобен, данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
+&lt;p&gt;В первом варианте данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing

@@ -5,21 +5,21 @@
 	<link href="https://b.tinyops.ru/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://b.tinyops.ru"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-05-14T00:00:00+00:00</updated>
+	<updated>2021-07-14T00:00:00+00:00</updated>
 	<id>https://b.tinyops.ru/atom.xml</id>
 	<entry xml:lang="en">
 		<title>Установка Syncthing для CentOS 7</title>
 		<published>2021-05-14T00:00:00+00:00</published>
-		<updated>2021-05-14T00:00:00+00:00</updated>
+		<updated>2021-07-14T00:00:00+00:00</updated>
 		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
 		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
 		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
-&lt;p&gt;Syncthing - это приложение для синхронизации файлов между устройствами. Авторы любят дистрибутивы аля Debian\Ubuntu, 
+&lt;p&gt;Syncthing — это приложение для синхронизации файлов между устройствами. Авторы предпочитают дистрибутивы аля Debian\Ubuntu, 
 поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
 &lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;2-raspakovyvaem-distributiv&quot;&gt;2. Распаковываем дистрибутив&lt;&#x2F;h3&gt;
+&lt;h3 id=&quot;2-raspakovyvaem&quot;&gt;2. Распаковываем&lt;&#x2F;h3&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
@@ -45,7 +45,7 @@
 работать независимо от сессии пользователя.&lt;&#x2F;p&gt;
 &lt;p&gt;Пользовательская служба ограничена активной сессией (ssh или графической). Например, пользователь зашёл 
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
-&lt;p&gt;Первый вариант на мой взгляд более удобен, данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
+&lt;p&gt;В первом варианте данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
@@ -72,24 +72,27 @@
 	<entry xml:lang="en">
 		<title>Как управлять dotfiles</title>
 		<published>2021-04-03T00:00:00+00:00</published>
-		<updated>2021-04-04T00:00:00+00:00</updated>
+		<updated>2021-07-14T00:00:00+00:00</updated>
 		<link href="https://b.tinyops.ru/kak-upravlyat-dotfiles/" type="text/html"/>
 		<id>https://b.tinyops.ru/kak-upravlyat-dotfiles/</id>
-		<content type="html">&lt;p&gt;Большинство приложений для Linux хранят свою конфигурацию в текстовых файлах. Часть из них хранят файлы в домашнем каталоге пользователя. 
-Такого рода файлы обычно называют &amp;quot;dotfiles&amp;quot;.&lt;&#x2F;p&gt;
-&lt;p&gt;Многие пользователи хранят их в git, потому что это очень удобно. Можно &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;search?q=dotfiles&quot;&gt;найти более 150 тысяч примеров на Github&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+		<content type="html">&lt;p&gt;Dotfiles — это текстовые конфигурационные файлы в операционных системах Unix и Linux. 
+Например, &lt;code&gt;.bash_profile&lt;&#x2F;code&gt;, &lt;code&gt;.vimrc&lt;&#x2F;code&gt; и т.д. Они называются именно так потому что обычно имя файла начинается со знака точки.
+Тем не менее часть файлов конфигурации не начинаются со знака точки, но в то же время относятся к &lt;code&gt;dotfiles&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;problemy-s-dotfiles&quot;&gt;Проблемы с dotfiles&lt;&#x2F;h3&gt;
-&lt;p&gt;Несмотря на простоту текстовых файлов, их использование требует определённого подхода в организации. Примеры таких проблем:&lt;&#x2F;p&gt;
+&lt;p&gt;Что может быть проще текстовых файлов?
+Чем больше таких файлов, тем сложней ими управлять, требуется определённый подход.&lt;&#x2F;p&gt;
+&lt;p&gt;Самые популярные проблемы:&lt;&#x2F;p&gt;
 &lt;ul&gt;
-&lt;li&gt;Конфигурация Vim (файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;) может быть максимально подходить для одного компьютера и быть избыточной для всех остальных.&lt;&#x2F;li&gt;
-&lt;li&gt;В ваших dotfiles может быть приватная информация, которую нельзя публиковать в git.&lt;&#x2F;li&gt;
+&lt;li&gt;У меня несколько компьютеров. Как мне перемещать файлы между ними? Как синхронизировать изменения?&lt;&#x2F;li&gt;
+&lt;li&gt;Конфигурация Vim (файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;) может быть максимально подходить для одного компьютера и быть избыточной для всех остальных&lt;&#x2F;li&gt;
+&lt;li&gt;В ваших &lt;code&gt;dotfiles&lt;&#x2F;code&gt; может быть приватная информация, которую нельзя публиковать в git&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;h2 id=&quot;organizatsionnye-podkhody&quot;&gt;Организационные подходы&lt;&#x2F;h2&gt;
-&lt;p&gt;Если вы разработчик, то работа с dotfiles, хранение и усовершенствование, для вас самый долгий проект из всех над которыми вы работали. 
+&lt;h2 id=&quot;organizatsionnyi-podkhod&quot;&gt;Организационный подход&lt;&#x2F;h2&gt;
+&lt;p&gt;Если вы разработчик, то работа с &lt;code&gt;dotfiles&lt;&#x2F;code&gt;, хранение и усовершенствование, для вас самый долгий проект из всех над которыми вы работали. 
 В связи с этим имеет смысл организовать свой проект дисциплинированно, для удобства сопровождения и расширяемости.&lt;&#x2F;p&gt;
-&lt;p&gt;Далее — один из подходов.&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;sistema-kontrolia-versii&quot;&gt;Система контроля версий&lt;&#x2F;h3&gt;
-&lt;p&gt;Имеет смысл хранить ваши конфигурационные файлы в системе контроля версий (Version Control System — VCS) и вот почему:&lt;&#x2F;p&gt;
+&lt;p&gt;Многие пользователи хранят &lt;code&gt;dotfiles&lt;&#x2F;code&gt; в git, потому что это очень удобно.
+Можно &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;search?q=dotfiles&quot;&gt;найти более 150 тысяч примеров на Github&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Преимущества такого подхода:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;У вас будет резервная копия, которая убережёт файлы от потери и повреждений:
 &lt;ul&gt;
@@ -104,11 +107,15 @@
 &lt;&#x2F;ul&gt;
 &lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;p&gt;Для dotfiles лучше выделить отдельный каталог — &lt;code&gt;.dotfiles&lt;&#x2F;code&gt; в корне домашней директории. Хранить в системе контроля версий домашний каталог не рекомендуется, т. к. усложнит поддержку dotfiles, а также команда типа &lt;code&gt;git clean&lt;&#x2F;code&gt; может удалить все файлы, и даже те, которые не входят в состав репозитория.&lt;&#x2F;p&gt;
+&lt;p&gt;Для &lt;code&gt;dotfiles&lt;&#x2F;code&gt; лучше выделить отдельный каталог — &lt;code&gt;.dotfiles&lt;&#x2F;code&gt; в корне домашней директории. 
+Хранить в системе контроля версий домашний каталог не рекомендуется, т. к. усложнит поддержку &lt;code&gt;dotfiles&lt;&#x2F;code&gt;, 
+а также команда типа &lt;code&gt;git clean&lt;&#x2F;code&gt; может удалить все файлы, и даже те, которые не входят в состав репозитория.&lt;&#x2F;p&gt;
 &lt;p&gt;В качестве системы контроля версий подойдёт любая: git, mercurial, svn и т. д. Я использую git.&lt;&#x2F;p&gt;
-&lt;p&gt;Несмотря на удобство систем контроля версий, не рекомендуется копировать один в один чужие dotfiles, без понимания того, для чего сделаны те или иные настройки. Dotfiles должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.&lt;&#x2F;p&gt;
+&lt;p&gt;Несмотря на удобство систем контроля версий, не рекомендуется копировать один в один чужие &lt;code&gt;dotfiles&lt;&#x2F;code&gt;, 
+без понимания того, для чего сделаны те или иные настройки. 
+&lt;code&gt;Dotfiles&lt;&#x2F;code&gt; должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;s-chego-nachat&quot;&gt;С чего начать&lt;&#x2F;h2&gt;
-&lt;p&gt;Создадим каталог и репозитарий:&lt;&#x2F;p&gt;
+&lt;p&gt;Создадим каталог и репозиторий:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; init
@@ -138,7 +145,7 @@ git push
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Когда ваш репозиторий будет наполнен файлами, имеет смысл написать скрипт, который будет создавать правильные ссылки в домашнем каталоге.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;zavisimosti-i-plaginy&quot;&gt;Зависимости и плагины&lt;&#x2F;h2&gt;
-&lt;p&gt;Помимо файлов конфигурации для приложений в dotfiles можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.&lt;&#x2F;p&gt;
+&lt;p&gt;Помимо файлов конфигурации для приложений в &lt;code&gt;dotfiles&lt;&#x2F;code&gt; можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.&lt;&#x2F;p&gt;
 &lt;p&gt;Я использую плагин &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree&quot;&gt;NERDTree&lt;&#x2F;a&gt; для vim. Добавим репозиторий проекта в виде суб-модуля:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
 &lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
@@ -154,7 +161,7 @@ git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule upd
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Каталог &lt;code&gt;~&#x2F;vim&#x2F;plugged&lt;&#x2F;code&gt; может отличаться от вашего, я использую рекомендованный от &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;junegunn&#x2F;vim-plug&quot;&gt;vim-plug&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;spetsifichnye-lokal-nye-nastroiki&quot;&gt;Специфичные локальные настройки&lt;&#x2F;h2&gt;
-&lt;p&gt;При использовании dotfiles на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.&lt;&#x2F;p&gt;
+&lt;p&gt;При использовании &lt;code&gt;dotfiles&lt;&#x2F;code&gt; на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, на одной машине вам нужна поддержка Rust для Vim, а на всех остальных — нет. Также могут отличаться набор закладок для &lt;code&gt;nnn&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Для хранения различий можно использовать разные ветви в git, но это очень быстро превратится в хаос.&lt;&#x2F;p&gt;
 &lt;p&gt;Один из подходов — иметь главный репозиторий для dotfiles, с файлами, которые подходят для всех машин, а также отдельный репозиторий dotfiles_local для персональных настроек под каждую машину.&lt;&#x2F;p&gt;
