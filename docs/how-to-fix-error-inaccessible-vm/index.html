@@ -114,32 +114,32 @@ inaccessible virtual machines or find a way to fix them.</p>
 <p>Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)</p>
 <p>Для начала посмотрим список виртуальных машин:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">$ VBoxManage list vms
-
-"prometheus_default_1562491030033_47028" {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
-"bamboo-agent-centos7_default_1568705322865_68355" {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
-"<inaccessible>" {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
-"supervisor-jolokia_default_1572425247238_89749" {ee47977e-11f2-47b4-a2af-756cfff524f2}
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> VBoxManage list vms
+</span><span>
+</span><span>&quot;</span><span style="color:#a3be8c;">prometheus_default_1562491030033_47028</span><span>&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
+</span><span>&quot;</span><span style="color:#a3be8c;">bamboo-agent-centos7_default_1568705322865_68355</span><span>&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
+</span><span>&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span>&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
+</span><span>&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span>&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
+</span></code></pre>
 <p>Запоминаем уникальный ID проблемной виртуальной машины - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>. </p>
 <p>Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">VBoxManage unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">VBoxManage</span><span> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+</span></code></pre>
 <p>И снова регистрируем:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">VBoxManage registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">VBoxManage</span><span> registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+</span></code></pre>
 <p>Теперь можно поднять машину как и планировали первоначально:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">vagrant up
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">vagrant</span><span> up
+</span></code></pre>
 <h3 id="chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin">Что делать если у меня несколько проблемных машин?</h3>
 <p>Бывают ситуации когда машин со статусом <code>inaccessible</code> может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.</p>
 <p><strong>Решение для Vagrant:</strong></p>
 <p>Заходим в каталог с Vagrantfile и читаем UUID:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">$ cat .vagrant/machines/default/virtualbox/id
-
-4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> cat .vagrant/machines/default/virtualbox/id
+</span><span>
+</span><span style="color:#bf616a;">4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+</span></code></pre>
 <p>На этом все.</p>
 
   

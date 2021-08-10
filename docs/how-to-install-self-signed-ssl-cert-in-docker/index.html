@@ -109,59 +109,59 @@
 
   <p>Представим что у нас есть Java-приложение, которое делает запросы к другим Web-сервисам. В свою очередь, Web-сервисы работают с HTTPS, но сертификат доверенный только для домена компании.</p>
 <p>В логах приложения подобные ошибки:</p>
-<pre><code>PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
-    at sun.security.ssl.Alert.createSSLException(Alert.java:131)
-    at sun.security.ssl.TransportContext.fatal(TransportContext.java:324)
-    at sun.security.ssl.TransportContext.fatal(TransportContext.java:267)
-    at sun.security.ssl.TransportContext.fatal(TransportContext.java:262)
-    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:654)
-    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:473)
-    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:369)
-    at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:377)
-    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:444)
-    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:422)
-    at sun.security.ssl.TransportContext.dispatch(TransportContext.java:182)
-    at sun.security.ssl.SSLTransport.decode(SSLTransport.java:152)
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+</span><span>javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+</span><span>    at sun.security.ssl.Alert.createSSLException(Alert.java:131)
+</span><span>    at sun.security.ssl.TransportContext.fatal(TransportContext.java:324)
+</span><span>    at sun.security.ssl.TransportContext.fatal(TransportContext.java:267)
+</span><span>    at sun.security.ssl.TransportContext.fatal(TransportContext.java:262)
+</span><span>    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:654)
+</span><span>    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:473)
+</span><span>    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:369)
+</span><span>    at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:377)
+</span><span>    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:444)
+</span><span>    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:422)
+</span><span>    at sun.security.ssl.TransportContext.dispatch(TransportContext.java:182)
+</span><span>    at sun.security.ssl.SSLTransport.decode(SSLTransport.java:152)
+</span></code></pre>
 <p>Нам необходимо добавить самоподписной корневой сертификат в хранилище сертификатов JVM.</p>
 <p>В JVM сертификаты хранятся в файле-хранилище <code>${JAVA_HOME}/jre/lib/cacerts</code>.</p>
 <p>Находим где располагается JVM, для этого заходим в контейнер приложения:</p>
-<pre><code>docker exec -it app /bin/bash
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>docker exec -it app /bin/bash
+</span></code></pre>
 <p>и ищем:</p>
-<pre><code>root@458b6bbf28b5:/app# whereis java
-java: /usr/local/openjdk-8/bin/java
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>root@458b6bbf28b5:/app# whereis java
+</span><span>java: /usr/local/openjdk-8/bin/java
+</span></code></pre>
 <p>Соответственно, наш <code>JAVA_HOME</code> это <code>/usr/local/openjdk-8</code>.</p>
 <p>Теперь выходим из контейнера и копируем каталог <code>security</code>:</p>
-<pre><code>docker cp app:/usr/local/openjdk-8/jre/lib/security .
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>docker cp app:/usr/local/openjdk-8/jre/lib/security .
+</span></code></pre>
 <p>Правим <code>docker-compose.yml</code> для проброса каталога внутрь контейнера:</p>
-<pre><code>version: '3.3'
-
-services:
-
-  app:
-    container_name: app
-    image: registry.company.ru/app:1.3.7-12
-    restart: always
-    volumes:
-     - ./application.properties:/app/application.properties
-     - ./data:/app/data
-     - ./logs:/app/logs
-     - ./security:/usr/local/openjdk-8/jre/lib/security
-    ports:
-     - "35000:8080"
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>version: &#39;3.3&#39;
+</span><span>
+</span><span>services:
+</span><span>
+</span><span>  app:
+</span><span>    container_name: app
+</span><span>    image: registry.company.ru/app:1.3.7-12
+</span><span>    restart: always
+</span><span>    volumes:
+</span><span>     - ./application.properties:/app/application.properties
+</span><span>     - ./data:/app/data
+</span><span>     - ./logs:/app/logs
+</span><span>     - ./security:/usr/local/openjdk-8/jre/lib/security
+</span><span>    ports:
+</span><span>     - &quot;35000:8080&quot;
+</span></code></pre>
 <p>Добавляем сертификат в файл <code>cacerts</code>:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">keytool -importcert -keystore security/cacerts -file custom-ca.crt -alias "custom-ca"
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">keytool -importcert -keystore</span><span> security/cacerts</span><span style="color:#bf616a;"> -file</span><span> custom-ca.crt</span><span style="color:#bf616a;"> -alias </span><span>&quot;</span><span style="color:#a3be8c;">custom-ca</span><span>&quot;
+</span></code></pre>
 <p>Пароль по умолчанию для доступа в хранилище <code>changeit</code>.</p>
 <p>Рестартуем приложение:</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">docker-compose down
-docker-compose up -d
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">docker-compose</span><span> down
+</span><span style="color:#bf616a;">docker-compose</span><span> up</span><span style="color:#bf616a;"> -d
+</span></code></pre>
 
   
 </section>

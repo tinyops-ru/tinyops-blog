@@ -31,61 +31,61 @@
 &lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
 &lt;p&gt;Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.&lt;&#x2F;p&gt;
 &lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитарии:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum -y install epel-release
-yum -y install borgbackup
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;yum -y install epel-release
+&lt;&#x2F;span&gt;&lt;span&gt;yum -y install borgbackup
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
 &lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;cronbox.ru&quot;&gt;cronbox.ru&lt;&#x2F;a&gt;.
 Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Смотрим информацию по репозиторию:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-Encrypted: No
-Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-------------------------------------------------------------------------------
-                       Original size      Compressed size    Deduplicated size
-All archives:                    0 B                  0 B                  0 B
-
-                       Unique chunks         Total chunks
-Chunk index:                       0                    0
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Encrypted: No
+&lt;&#x2F;span&gt;&lt;span&gt;Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;------------------------------------------------------------------------------
+&lt;&#x2F;span&gt;&lt;span&gt;                       Original size      Compressed size    Deduplicated size
+&lt;&#x2F;span&gt;&lt;span&gt;All archives:                    0 B                  0 B                  0 B
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                       Unique chunks         Total chunks
+&lt;&#x2F;span&gt;&lt;span&gt;Chunk index:                       0                    0
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что пока пусто. Сделаем первую резервную копию:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — &lt;code&gt;site&lt;&#x2F;code&gt;. Для отдельного архивирования uploads можно было указать вот так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После создания копия смотрим изменения в репозитории:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
-site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
+&lt;&#x2F;span&gt;&lt;span&gt;site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-Encrypted: No
-Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-------------------------------------------------------------------------------
-                       Original size      Compressed size    Deduplicated size
-All archives:              644.93 kB            277.42 kB            277.42 kB
-
-                       Unique chunks         Total chunks
-Chunk index:                     133                  133
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Encrypted: No
+&lt;&#x2F;span&gt;&lt;span&gt;Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
+&lt;&#x2F;span&gt;&lt;span&gt;------------------------------------------------------------------------------
+&lt;&#x2F;span&gt;&lt;span&gt;                       Original size      Compressed size    Deduplicated size
+&lt;&#x2F;span&gt;&lt;span&gt;All archives:              644.93 kB            277.42 kB            277.42 kB
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                       Unique chunks         Total chunks
+&lt;&#x2F;span&gt;&lt;span&gt;Chunk index:                     133                  133
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Как мы видим, общий объём данных (Original size) — 644КБ, хранится на диске (Deduplicated size) — 277КБ.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;arkhivirovanie-po-raspisaniiu&quot;&gt;Архивирование по расписанию&lt;&#x2F;h3&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server]# crontab -e
-
-0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server]# crontab -e
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить &lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;мониторинг&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;

@@ -26,11 +26,11 @@ web-сайт, github, twitter и instagram. Дополнительно доба�
 &lt;h2 id=&quot;kak-ustanovit-temu&quot;&gt;Как установить тему&lt;&#x2F;h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Заходим в каталог с вашим блогом&lt;&#x2F;li&gt;
-&lt;li&gt;Клонируем репозитарий с темой:&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;tinyops-ru&#x2F;ddv-theme themes&#x2F;ddv
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;li&gt;Клонируем репозитарий с темой:&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;tinyops-ru&#x2F;ddv-theme themes&#x2F;ddv
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;&#x2F;li&gt;
-&lt;li&gt;В файле конфигурации &lt;code&gt;config.toml&lt;&#x2F;code&gt; указываем:&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;theme=&quot;ddv&quot;
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;li&gt;В файле конфигурации &lt;code&gt;config.toml&lt;&#x2F;code&gt; указываем:&lt;pre data-lang=&quot;toml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;theme&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ddv&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;kak-nastroit-temu&quot;&gt;Как настроить тему&lt;&#x2F;h2&gt;

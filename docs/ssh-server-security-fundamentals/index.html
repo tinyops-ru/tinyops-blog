@@ -122,65 +122,65 @@
 Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.</p>
 <p>В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
 увидеть такую картину: </p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">[user@pc] # ssh server
-Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
-There were 13925 failed login attempts since the last successful login.
-Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>[user@pc] # ssh server
+</span><span>Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
+</span><span>There were 13925 failed login attempts since the last successful login.
+</span><span>Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
+</span></code></pre>
 <p>Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.</p>
 <h2 id="nastroika-minimal-no-rekomenduemoi-konfiguratsii">Настройка минимально рекомендуемой конфигурации</h2>
 <p>Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash"># Запрещаем вход пользователю root через удалённый доступ
-PermitRootLogin no
-
-# Разрешаем подключение только для указанных пользователей
-AllowUsers user1 user2 user3
-
-# Меняем порт на нестандартный
-Port 14819
-
-# Запрещаем вход пользователям с пустыми паролями
-PermitEmptyPasswords no
-
-# Отключаем неиспользуемые способы аутентификации
-KerberosAuthentication no
-GSSAPIAuthentication no
-
-# Отключаем возможность доступа к графическим приложениям
-X11Forwarding no
-
-# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
-AllowAgentForwarding no
-AllowTcpForwarding no
-PermitTunnel no
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># Запрещаем вход пользователю root через удалённый доступ
+</span><span style="color:#bf616a;">PermitRootLogin</span><span> no
+</span><span>
+</span><span style="color:#65737e;"># Разрешаем подключение только для указанных пользователей
+</span><span style="color:#bf616a;">AllowUsers</span><span> user1 user2 user3
+</span><span>
+</span><span style="color:#65737e;"># Меняем порт на нестандартный
+</span><span style="color:#bf616a;">Port</span><span> 14819
+</span><span>
+</span><span style="color:#65737e;"># Запрещаем вход пользователям с пустыми паролями
+</span><span style="color:#bf616a;">PermitEmptyPasswords</span><span> no
+</span><span>
+</span><span style="color:#65737e;"># Отключаем неиспользуемые способы аутентификации
+</span><span style="color:#bf616a;">KerberosAuthentication</span><span> no
+</span><span style="color:#bf616a;">GSSAPIAuthentication</span><span> no
+</span><span>
+</span><span style="color:#65737e;"># Отключаем возможность доступа к графическим приложениям
+</span><span style="color:#bf616a;">X11Forwarding</span><span> no
+</span><span>
+</span><span style="color:#65737e;"># Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+</span><span style="color:#bf616a;">AllowAgentForwarding</span><span> no
+</span><span style="color:#bf616a;">AllowTcpForwarding</span><span> no
+</span><span style="color:#bf616a;">PermitTunnel</span><span> no
+</span></code></pre>
 <h2 id="nastroika-usilennoi-bezopasnosti">Настройка усиленной безопасности</h2>
 <p>Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. </p>
 <h3 id="blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip">Блокируем доступ к порту SSH для всех кроме доверенных IP</h3>
 <p>Например, с помощью firewalld:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">firewall-cmd --permanent --zone=public --remove-service=ssh
-firewall-cmd --permanent --zone=trusted --add-service=ssh
-firewall-cmd --reload
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>firewall-cmd --permanent --zone=public --remove-service=ssh
+</span><span>firewall-cmd --permanent --zone=trusted --add-service=ssh
+</span><span>firewall-cmd --reload
+</span></code></pre>
 <h3 id="otkliuchaem-dostup-po-loginu-i-paroliu">Отключаем доступ по логину и паролю</h3>
 <p>Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
 инженеров предпочитаю работать с логинами и паролями.</p>
-<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">PasswordAuthentication no
-</code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">PasswordAuthentication</span><span> no
+</span></code></pre>
 <p>После этого потребуется создать ключ для пользователя:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">ssh-keygen
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>ssh-keygen
+</span></code></pre>
 <p>А затем скопировать его на удалённый сервер:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">ssh-copy-id user@server
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>ssh-copy-id user@server
+</span></code></pre>
 <h2 id="proverka-i-primenenie-nastroek">Проверка и применение настроек</h2>
 <p>Проверяем что настройки корректные:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">sshd -t
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>sshd -t
+</span></code></pre>
 <p>Если приложение не сообщило об ошибках, значит всё хорошо.</p>
 <p>Перезапускаем службу:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">systemctl restart sshd
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>systemctl restart sshd
+</span></code></pre>
 
   
 </section>

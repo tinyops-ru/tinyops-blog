@@ -30,65 +30,65 @@
 Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.&lt;&#x2F;p&gt;
 &lt;p&gt;В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
 увидеть такую картину: &lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[user@pc] # ssh server
-Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
-There were 13925 failed login attempts since the last successful login.
-Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[user@pc] # ssh server
+&lt;&#x2F;span&gt;&lt;span&gt;Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
+&lt;&#x2F;span&gt;&lt;span&gt;There were 13925 failed login attempts since the last successful login.
+&lt;&#x2F;span&gt;&lt;span&gt;Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;nastroika-minimal-no-rekomenduemoi-konfiguratsii&quot;&gt;Настройка минимально рекомендуемой конфигурации&lt;&#x2F;h2&gt;
 &lt;p&gt;Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
-PermitRootLogin no
-
-# Разрешаем подключение только для указанных пользователей
-AllowUsers user1 user2 user3
-
-# Меняем порт на нестандартный
-Port 14819
-
-# Запрещаем вход пользователям с пустыми паролями
-PermitEmptyPasswords no
-
-# Отключаем неиспользуемые способы аутентификации
-KerberosAuthentication no
-GSSAPIAuthentication no
-
-# Отключаем возможность доступа к графическим приложениям
-X11Forwarding no
-
-# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
-AllowAgentForwarding no
-AllowTcpForwarding no
-PermitTunnel no
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitRootLogin&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Разрешаем подключение только для указанных пользователей
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowUsers&lt;&#x2F;span&gt;&lt;span&gt; user1 user2 user3
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Меняем порт на нестандартный
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Port&lt;&#x2F;span&gt;&lt;span&gt; 14819
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователям с пустыми паролями
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitEmptyPasswords&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем неиспользуемые способы аутентификации
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;KerberosAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;GSSAPIAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможность доступа к графическим приложениям
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;X11Forwarding&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowAgentForwarding&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowTcpForwarding&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitTunnel&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
 &lt;p&gt;Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. &lt;&#x2F;p&gt;
 &lt;h3 id=&quot;blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip&quot;&gt;Блокируем доступ к порту SSH для всех кроме доверенных IP&lt;&#x2F;h3&gt;
 &lt;p&gt;Например, с помощью firewalld:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
-firewall-cmd --permanent --zone=trusted --add-service=ssh
-firewall-cmd --reload
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
+&lt;&#x2F;span&gt;&lt;span&gt;firewall-cmd --permanent --zone=trusted --add-service=ssh
+&lt;&#x2F;span&gt;&lt;span&gt;firewall-cmd --reload
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
 &lt;p&gt;Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
 инженеров предпочитаю работать с логинами и паролями.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PasswordAuthentication no
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PasswordAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После этого потребуется создать ключ для пользователя:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;ssh-keygen
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;ssh-keygen
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;А затем скопировать его на удалённый сервер:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;ssh-copy-id user@server
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;ssh-copy-id user@server
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
 &lt;p&gt;Проверяем что настройки корректные:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sshd -t
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;sshd -t
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если приложение не сообщило об ошибках, значит всё хорошо.&lt;&#x2F;p&gt;
 &lt;p&gt;Перезапускаем службу:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;systemctl restart sshd
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;systemctl restart sshd
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 </content>
 	</entry>
 	<entry xml:lang="en">

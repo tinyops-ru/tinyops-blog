@@ -118,28 +118,28 @@
 </li>
 <li>
 <p>Создадим подкаталог в котором будут хранится файлы темы которую выбрали:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">mkdir themes\tinyblog
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>mkdir themes\tinyblog
+</span></code></pre>
 </li>
 <li>
 <p>Добавим модуль тему как git модуль:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">git submodule add https://github.com/lebe-dev/tinyblog-zola-theme themes/tinyblog
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>git submodule add https://github.com/lebe-dev/tinyblog-zola-theme themes/tinyblog
+</span></code></pre>
 </li>
 <li>
 <p>Подкачаем актуальную версию темы:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">git submodule update --init --recursive 
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>git submodule update --init --recursive 
+</span></code></pre>
 <p>либо заходим в каталог тем и делаем pull:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">cd themes
-git clone https://github.com/lebe-dev/tinyblog-zola-theme tinyblog
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>cd themes
+</span><span>git clone https://github.com/lebe-dev/tinyblog-zola-theme tinyblog
+</span></code></pre>
 </li>
 <li>
 <p>Настраиваем файл конфигурации сайта</p>
 <p>В файле конфигурации <code>config.toml</code> указываем тему:</p>
-<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">theme = "tinyblog" 
-</code></pre>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#bf616a;">theme </span><span>= &quot;</span><span style="color:#a3be8c;">tinyblog</span><span>&quot;</span><span style="background-color:#bf616a;color:#2b303b;"> </span><span>
+</span></code></pre>
 </li>
 <li>
 <p>Открываем сайт в браузере и видим что тема применилась.</p>

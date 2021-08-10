@@ -24,76 +24,76 @@
 часовой пояс сервера, сделал это классическим &lt;code&gt;echo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Перед сборкой скопировал файлы приложения в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Файл сценария сборки - &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;dockerfile&quot; class=&quot;language-dockerfile &quot;&gt;&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;FROM php:5.6-apache
-
-RUN apt-get update &amp;&amp; apt-get install -y \
-                      libmagickwand-dev --no-install-recommends \
-                   &amp;&amp; pecl install imagick \
-        &amp;&amp; docker-php-ext-enable imagick
-
-RUN apt-get update &amp;&amp; apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &amp;&amp; docker-php-ext-install -j$(nproc) gd \
-    &amp;&amp; docker-php-ext-install -j$(nproc) zip
-
-RUN echo &quot;date.timezone = Europe&#x2F;Moscow&quot; &gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
-
-RUN a2enmod rewrite
-RUN service apache2 restart
-COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html
-
-RUN usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data
-
-RUN chown -R www-data.www-data &#x2F;var&#x2F;www
-RUN chmod -R ug=rwx &#x2F;var&#x2F;www
-
-RUN mkdir &#x2F;tmp&#x2F;webmodule
-RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule
-EXPOSE 80
-
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;dockerfile&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-dockerfile &quot;&gt;&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;FROM&lt;&#x2F;span&gt;&lt;span&gt; php:5.6-apache
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+&lt;&#x2F;span&gt;&lt;span&gt;                      libmagickwand-dev --no-install-recommends \
+&lt;&#x2F;span&gt;&lt;span&gt;                   &amp;amp;&amp;amp; pecl install imagick \
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;amp;&amp;amp; docker-php-ext-enable imagick
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+&lt;&#x2F;span&gt;&lt;span&gt;        libfreetype6-dev \
+&lt;&#x2F;span&gt;&lt;span&gt;        libjpeg62-turbo-dev \
+&lt;&#x2F;span&gt;&lt;span&gt;        libpng-dev \
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;echo &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;date.timezone = Europe&#x2F;Moscow&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;a2enmod rewrite
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;service apache2 restart
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;COPY&lt;&#x2F;span&gt;&lt;span&gt; app&#x2F; &#x2F;var&#x2F;www&#x2F;html
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;chown -R www-data.www-data &#x2F;var&#x2F;www
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;chmod -R ug=rwx &#x2F;var&#x2F;www
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;mkdir &#x2F;tmp&#x2F;webmodule
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span&gt;chmod a=rwx &#x2F;tmp&#x2F;webmodule
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EXPOSE &lt;&#x2F;span&gt;&lt;span&gt;80
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Собираем:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;kak-dobavliat-rasshireniia-dlia-php&quot;&gt;Как добавлять расширения для php&lt;&#x2F;h2&gt;
 &lt;p&gt;Авторы PHP любезно предоставили скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt; внутри базового контейнера. В примере выше видно как это
 использовать.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-ispol-zovat-svoi-php-ini&quot;&gt;Как использовать свой php.ini&lt;&#x2F;h2&gt;
 &lt;p&gt;Добавляем в &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;kak-reshit-problemu-s-pravami-dostupa&quot;&gt;Как решить проблему с правами доступа&lt;&#x2F;h2&gt;
 &lt;p&gt;В &lt;code&gt;Dockerfile&lt;&#x2F;code&gt; есть пара команд, которые дают полные права для пользователя &lt;code&gt;www-data&lt;&#x2F;code&gt;, 
 а также задают ID пользователя и группы для него равные &lt;code&gt;1001&lt;&#x2F;code&gt;.
 На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
 которую использую как volume:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;...
-volumes:
-      - .&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-...
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+&lt;&#x2F;span&gt;&lt;span&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
 &lt;p&gt;С помощью docker compose можно завести вот так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;version: &#x27;2&#x27;
-
-services:
-  phpfpm:
-    image: &quot;my-repo&#x2F;my-app:1.0.0&quot;
-    volumes:
-      - .&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-    ports:
-      - &quot;9123:80&quot;
-    environment:
-      - APACHE_RUN_USER=#1001
-      - APACHE_RUN_GROUP=#1001
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;phpfpm&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-repo&#x2F;my-app:1.0.0&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;9123:80&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_USER=#1001
+&lt;&#x2F;span&gt;&lt;span&gt;      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_GROUP=#1001
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Чтобы данные которые загружают юзеры сохранялись делаем volume.&lt;&#x2F;p&gt;
 &lt;p&gt;Стартуем:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;docker-compose up -d
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;docker-compose up -d
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Приложение будет доступно на порту &lt;code&gt;9123&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 </content>
 	</entry>

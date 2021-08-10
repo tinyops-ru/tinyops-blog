@@ -112,76 +112,76 @@
 часовой пояс сервера, сделал это классическим <code>echo</code>.</p>
 <p>Перед сборкой скопировал файлы приложения в подкаталог <code>app</code>. </p>
 <p>Файл сценария сборки - <code>Dockerfile</code>:</p>
-<pre data-lang="dockerfile" class="language-dockerfile "><code class="language-dockerfile" data-lang="dockerfile">FROM php:5.6-apache
-
-RUN apt-get update && apt-get install -y \
-                      libmagickwand-dev --no-install-recommends \
-                   && pecl install imagick \
-        && docker-php-ext-enable imagick
-
-RUN apt-get update && apt-get install -y \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install -j$(nproc) zip
-
-RUN echo "date.timezone = Europe/Moscow" > /usr/local/etc/php/conf.d/timezone.ini
-
-RUN a2enmod rewrite
-RUN service apache2 restart
-COPY app/ /var/www/html
-
-RUN usermod -u 1001 www-data && groupmod -g 1001 www-data
-
-RUN chown -R www-data.www-data /var/www
-RUN chmod -R ug=rwx /var/www
-
-RUN mkdir /tmp/webmodule
-RUN chmod a=rwx /tmp/webmodule
-EXPOSE 80
-
-</code></pre>
+<pre data-lang="dockerfile" style="background-color:#2b303b;color:#c0c5ce;" class="language-dockerfile "><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#b48ead;">FROM</span><span> php:5.6-apache
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>apt-get update &amp;&amp; apt-get install -y \
+</span><span>                      libmagickwand-dev --no-install-recommends \
+</span><span>                   &amp;&amp; pecl install imagick \
+</span><span>        &amp;&amp; docker-php-ext-enable imagick
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>apt-get update &amp;&amp; apt-get install -y \
+</span><span>        libfreetype6-dev \
+</span><span>        libjpeg62-turbo-dev \
+</span><span>        libpng-dev \
+</span><span>    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+</span><span>    &amp;&amp; docker-php-ext-install -j$(nproc) gd \
+</span><span>    &amp;&amp; docker-php-ext-install -j$(nproc) zip
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>echo &quot;</span><span style="color:#a3be8c;">date.timezone = Europe/Moscow</span><span>&quot; &gt; /usr/local/etc/php/conf.d/timezone.ini
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>a2enmod rewrite
+</span><span style="color:#b48ead;">RUN </span><span>service apache2 restart
+</span><span style="color:#b48ead;">COPY</span><span> app/ /var/www/html
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>chown -R www-data.www-data /var/www
+</span><span style="color:#b48ead;">RUN </span><span>chmod -R ug=rwx /var/www
+</span><span>
+</span><span style="color:#b48ead;">RUN </span><span>mkdir /tmp/webmodule
+</span><span style="color:#b48ead;">RUN </span><span>chmod a=rwx /tmp/webmodule
+</span><span style="color:#b48ead;">EXPOSE </span><span>80
+</span><span>
+</span></code></pre>
 <p>Собираем:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">docker build -t my-repo/my-app:1.0.0 .
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>docker build -t my-repo/my-app:1.0.0 .
+</span></code></pre>
 <h2 id="kak-dobavliat-rasshireniia-dlia-php">Как добавлять расширения для php</h2>
 <p>Авторы PHP любезно предоставили скрипт <code>docker-php-ext-install</code> внутри базового контейнера. В примере выше видно как это
 использовать.</p>
 <h2 id="kak-ispol-zovat-svoi-php-ini">Как использовать свой php.ini</h2>
 <p>Добавляем в <code>Dockerfile</code>:</p>
-<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">COPY php.ini /usr/local/etc/php/
-</code></pre>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#a3be8c;">COPY php.ini /usr/local/etc/php/
+</span></code></pre>
 <h2 id="kak-reshit-problemu-s-pravami-dostupa">Как решить проблему с правами доступа</h2>
 <p>В <code>Dockerfile</code> есть пара команд, которые дают полные права для пользователя <code>www-data</code>, 
 а также задают ID пользователя и группы для него равные <code>1001</code>.
 На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
 которую использую как volume:</p>
-<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">...
-volumes:
-      - ./storage:/var/www/html/data
-...
-</code></pre>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span>...
+</span><span style="color:#bf616a;">volumes</span><span>:
+</span><span>      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data
+</span><span>...
+</span></code></pre>
 <h2 id="kak-ispol-zovat">Как использовать</h2>
 <p>С помощью docker compose можно завести вот так:</p>
-<pre data-lang="yaml" class="language-yaml "><code class="language-yaml" data-lang="yaml">version: '2'
-
-services:
-  phpfpm:
-    image: "my-repo/my-app:1.0.0"
-    volumes:
-      - ./storage:/var/www/html/data
-    ports:
-      - "9123:80"
-    environment:
-      - APACHE_RUN_USER=#1001
-      - APACHE_RUN_GROUP=#1001
-</code></pre>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#bf616a;">version</span><span>: &#39;</span><span style="color:#a3be8c;">2</span><span>&#39;
+</span><span>
+</span><span style="color:#bf616a;">services</span><span>:
+</span><span>  </span><span style="color:#bf616a;">phpfpm</span><span>:
+</span><span>    </span><span style="color:#bf616a;">image</span><span>: &quot;</span><span style="color:#a3be8c;">my-repo/my-app:1.0.0</span><span>&quot;
+</span><span>    </span><span style="color:#bf616a;">volumes</span><span>:
+</span><span>      - </span><span style="color:#a3be8c;">./storage:/var/www/html/data
+</span><span>    </span><span style="color:#bf616a;">ports</span><span>:
+</span><span>      - &quot;</span><span style="color:#a3be8c;">9123:80</span><span>&quot;
+</span><span>    </span><span style="color:#bf616a;">environment</span><span>:
+</span><span>      - </span><span style="color:#a3be8c;">APACHE_RUN_USER=#1001
+</span><span>      - </span><span style="color:#a3be8c;">APACHE_RUN_GROUP=#1001
+</span></code></pre>
 <p>Чтобы данные которые загружают юзеры сохранялись делаем volume.</p>
 <p>Стартуем:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">docker-compose up -d
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>docker-compose up -d
+</span></code></pre>
 <p>Приложение будет доступно на порту <code>9123</code>.</p>
 
   

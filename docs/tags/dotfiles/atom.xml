@@ -54,42 +54,42 @@
 &lt;code&gt;Dotfiles&lt;&#x2F;code&gt; должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;s-chego-nachat&quot;&gt;С чего начать&lt;&#x2F;h2&gt;
 &lt;p&gt;Создадим каталог и репозиторий:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir ~&#x2F;.dotfiles &amp;&amp; cd ~&#x2F;.dotfiles
-git init
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; init
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Создадим на Github отдельный репозиторий &lt;code&gt;dotfiles&lt;&#x2F;code&gt;. Копируем ссылку и добавляем к локальному:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git remote add origin git@github.com:your-user&#x2F;dotfiles.git
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; remote add origin git@github.com:your-user&#x2F;dotfiles.git
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для примера добавим конфигурацию vim в наши dotfiles.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir -p ~&#x2F;.dotfiles&#x2F;vim&#x2F;plugins
-cp ~&#x2F;.vimrc ~&#x2F;.dotfiles&#x2F;vim
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir -p ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles&#x2F;vim
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Добавим в git и запушим изменения на GitHub:&lt;&#x2F;p&gt;
-&lt;pre&gt;&lt;code&gt;git checkout main
-git add *
-git commit -a -m &quot;[+] add .vimrc&quot;
-git push
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;git checkout main
+&lt;&#x2F;span&gt;&lt;span&gt;git add *
+&lt;&#x2F;span&gt;&lt;span&gt;git commit -a -m &amp;quot;[+] add .vimrc&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;git push
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Здесь стоит отметить, что я использую ветку &lt;code&gt;main&lt;&#x2F;code&gt; вместо &lt;code&gt;master&lt;&#x2F;code&gt;, т. к. так заведено на GitHub.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;ustanovka-dotfiles&quot;&gt;Установка dotfiles&lt;&#x2F;h2&gt;
 &lt;p&gt;Продолжаем пример с &lt;code&gt;.vimrc&lt;&#x2F;code&gt;-файлом. Удалим текущий и создадим ссылку на тот что хранится в dotfiles:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;rm -f ~&#x2F;.vimrc
-ln -s ~&#x2F;.dotfiles&#x2F;vim&#x2F;.vimrc ~&#x2F;.vimrc
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rm -f ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.vimrc
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.vimrc
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Когда ваш репозиторий будет наполнен файлами, имеет смысл написать скрипт, который будет создавать правильные ссылки в домашнем каталоге.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;zavisimosti-i-plaginy&quot;&gt;Зависимости и плагины&lt;&#x2F;h2&gt;
 &lt;p&gt;Помимо файлов конфигурации для приложений в &lt;code&gt;dotfiles&lt;&#x2F;code&gt; можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.&lt;&#x2F;p&gt;
 &lt;p&gt;Я использую плагин &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree&quot;&gt;NERDTree&lt;&#x2F;a&gt; для vim. Добавим репозиторий проекта в виде суб-модуля:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;ustanovka-zavisimostei-i-plaginov&quot;&gt;Установка зависимостей и плагинов&lt;&#x2F;h2&gt;
 &lt;p&gt;Установка и обновление до последних версий:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git submodule update --init --recursive
-git submodule update --init --remote
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --recursive
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --remote
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Создаём ссылку (symlink) на каталог с плагинами:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;ln -s ~&#x2F;.dotfiles&#x2F;vim&#x2F;plugins ~&#x2F;.vim&#x2F;plugged
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.vim&#x2F;plugged
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Каталог &lt;code&gt;~&#x2F;vim&#x2F;plugged&lt;&#x2F;code&gt; может отличаться от вашего, я использую рекомендованный от &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;junegunn&#x2F;vim-plug&quot;&gt;vim-plug&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;spetsifichnye-lokal-nye-nastroiki&quot;&gt;Специфичные локальные настройки&lt;&#x2F;h2&gt;
 &lt;p&gt;При использовании &lt;code&gt;dotfiles&lt;&#x2F;code&gt; на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.&lt;&#x2F;p&gt;
@@ -99,25 +99,25 @@ git submodule update --init --remote
 &lt;p&gt;В репозитории &lt;code&gt;dotfiles_local&lt;&#x2F;code&gt; каждая ветвь именуется именем машины. Например, &lt;code&gt;home-pc&lt;&#x2F;code&gt;, &lt;code&gt;work-pc&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;kak-podgruzhat-spetsifichnye-nastroiki&quot;&gt;Как подгружать специфичные настройки&lt;&#x2F;h3&gt;
 &lt;p&gt;Для bash добавляем в &lt;code&gt;~&#x2F;.bashrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;if [ -f ~&#x2F;.bashrc_local ]; then
-    source ~&#x2F;.bashrc_local
-fi
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-f ~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.bashrc_local &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;source &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;.bashrc_local
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для git добавляем в &lt;code&gt;~&#x2F;.gitconfig&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre&gt;&lt;code&gt;[include]
-	path = ~&#x2F;.gitconfig_local
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;[include]
+&lt;&#x2F;span&gt;&lt;span&gt;	path = ~&#x2F;.gitconfig_local
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для Vim, добавляем в файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;vim&quot; class=&quot;language-vim &quot;&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;let $LOCALFILE=expand(&quot;~&#x2F;.vimrc_local&quot;)
-if filereadable($LOCALFILE)
-    source $LOCALFILE
-endif
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;vim&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-vim &quot;&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; $LOCALFILE=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;expand&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;~&#x2F;.vimrc_local&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;filereadable&lt;&#x2F;span&gt;&lt;span&gt;($LOCALFILE)
+&lt;&#x2F;span&gt;&lt;span&gt;    source $LOCALFILE
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endif
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h2 id=&quot;spetsial-nye-skripty&quot;&gt;Специальные скрипты&lt;&#x2F;h2&gt;
 &lt;p&gt;Если у вас есть какие-то скрипты, которые вы используете в своей работе, их тоже можно добавить в dotfiles. Например, в каталог &lt;code&gt;.dotfiles&#x2F;bin&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Затем в &lt;code&gt;.bashrc&lt;&#x2F;code&gt; добавляем их в переменную &lt;code&gt;PATH&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;export PATH=~&#x2F;.dotfiles&#x2F;bin:${PATH}
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;export &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;.dotfiles&#x2F;bin:&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 </content>
 	</entry>
 </feed>

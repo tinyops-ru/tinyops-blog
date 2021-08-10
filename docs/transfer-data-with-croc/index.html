@@ -116,43 +116,43 @@
 </ul>
 <h2 id="kak-ustanovit">Как установить</h2>
 <h3 id="linux">Linux</h3>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">curl https://getcroc.schollz.com | bash
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>curl https://getcroc.schollz.com | bash
+</span></code></pre>
 <h3 id="macos">MacOS</h3>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">brew install croc
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>brew install croc
+</span></code></pre>
 <h3 id="windows">Windows</h3>
 <p>Если вы используете менеджер пакетов <a href="https://chocolatey.org/">Chocolatey</a>:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">choco install croc
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>choco install croc
+</span></code></pre>
 <p>Если вы используете менеджер пакетов <a href="https://scoop.sh/">Scoop</a>:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">scoop install croc
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>scoop install croc
+</span></code></pre>
 <h2 id="kak-ispol-zovat">Как использовать</h2>
 <p>Например, нам нужно передать файл <code>archive.zip</code> с одного устройства на другое:</p>
 <p>Инициируем передачу на устройстве с которого отправляем файл:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">croc send archive.zip
-Sending 'archive.zip' (3.3 kB)
-Code is: sweden-light-jacket
-On the other computer run
-
-croc sweden-light-jacket
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>croc send archive.zip
+</span><span>Sending &#39;archive.zip&#39; (3.3 kB)
+</span><span>Code is: sweden-light-jacket
+</span><span>On the other computer run
+</span><span>
+</span><span>croc sweden-light-jacket
+</span></code></pre>
 <p>Утилита сгенерировала секретное слово, которое мы должны использовать на принимающей стороне. Также croc подсказывает 
 какую команду мы должны запустить на втором устройстве:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">croc sweden-light-jacket
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>croc sweden-light-jacket
+</span></code></pre>
 <p>Запускаем:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">croc sweden-light-jacket
-Accept 'archive.zip' (3.3 kB)? (y/n) y
-
-Receiving (<-123.100.94.21:12345)
-archive.zip 100% |████████████████████| (3.3/3.3 kB, 12.864 kB/s)
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>croc sweden-light-jacket
+</span><span>Accept &#39;archive.zip&#39; (3.3 kB)? (y/n) y
+</span><span>
+</span><span>Receiving (&lt;-123.100.94.21:12345)
+</span><span>archive.zip 100% |████████████████████| (3.3/3.3 kB, 12.864 kB/s)
+</span></code></pre>
 <h3 id="kak-otpravit-tekst">Как отправить текст</h3>
 <p>Аналогично файлу, но команда запуска на исходном устройстве будет такой:</p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">croc send --text "ВАШ ТЕКСТ"
-</code></pre>
+<pre data-lang="shell" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell "><code class="language-shell" data-lang="shell"><span>croc send --text &quot;ВАШ ТЕКСТ&quot;
+</span></code></pre>
 <h2 id="poleznye-ssylki">Полезные ссылки</h2>
 <ul>
 <li><a href="https://github.com/schollz/croc">Репозиторий на GitHub</a></li>

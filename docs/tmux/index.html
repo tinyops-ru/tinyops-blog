@@ -119,25 +119,25 @@
 <p>При первом запуске мультиплексор создаёт отдельную сессию, которая не привязана к вашему соединению. Например, 
 вы можете отключиться от SSH, но сессия будет активна на сервере. Затем вы можете вернуться на сервер и вернуться
 в сессию с помощью команды:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">tmux attach
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>tmux attach
+</span></code></pre>
 <p>или с указанием имени сессии:</p>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">tmux attach -t name
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>tmux attach -t name
+</span></code></pre>
 <h2 id="ustanovka-tmux">Установка tmux</h2>
 <h3 id="centos-fedora-rhel-oracle-linux">CentOS, Fedora, RHEL, Oracle Linux</h3>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">sudo yum install -y tmux
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>sudo yum install -y tmux
+</span></code></pre>
 <h3 id="ubuntu-debian">Ubuntu, Debian</h3>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">sudo apt install tmux
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>sudo apt install tmux
+</span></code></pre>
 <h3 id="archlinux">ArchLinux</h3>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">sudo pacman -S tmux
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>sudo pacman -S tmux
+</span></code></pre>
 <h3 id="kak-ispol-zovat">Как использовать</h3>
 <h4 id="sozdanie-sessii">Создание сессии</h4>
-<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">tmux new -s name
-</code></pre>
+<pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>tmux new -s name
+</span></code></pre>
 <p>tmux отобразит пустой терминал на подобие такого:</p>
 <p><img src="/images/linux/tmux/tmux-start.png" alt="Стартовое окно tmux" title="Стартовое окно tmux" /></p>
 <h4 id="prefiks-dlia-komand">Префикс для команд</h4>
@@ -171,31 +171,31 @@
 <p>Согласно <code>man tmux</code>, tmux загружает настройки из <code>/etc/tmux.conf</code>, а затем смотрит файл в домашней 
 директории текущего пользователя <code>~/.tmux.conf</code>.</p>
 <p>После изменений в файлах конфигурации необходимо перечитать настройки:</p>
-<pre><code>tmux source-file /etc/tmux.conf
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>tmux source-file /etc/tmux.conf
+</span></code></pre>
 <h3 id="kak-pomeniat-kombinatsiiu-prefiksa">Как поменять комбинацию префикса</h3>
 <p>Кому-то может быть неудобной комбинация <code>Ctrl + b</code>, поэтому её можно поменять. Например, на <code>Ctrl + a</code>:</p>
-<pre><code>unbind C-b
-set-option -g prefix C-a
-bind-key C-a send-prefix
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>unbind C-b
+</span><span>set-option -g prefix C-a
+</span><span>bind-key C-a send-prefix
+</span></code></pre>
 <h3 id="kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana">Как поменять комбинацию для разделения экрана</h3>
 <p>По умолчанию, разделение экрана по горизонтали <code>prefix, &quot;</code>, по вертикали - <code>prefix, %</code>.</p>
 <p>Это не совсем интуитивные клавиши, проще использовать клавиши: <code>-</code> и <code>|</code>.</p>
 <p>Как поменять комбинации:</p>
-<pre><code>bind | split-window -h
-bind - split-window -v
-unbind '"'
-unbind %
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>bind | split-window -h
+</span><span>bind - split-window -v
+</span><span>unbind &#39;&quot;&#39;
+</span><span>unbind %
+</span></code></pre>
 <h3 id="perekliuchat-sia-mezhdu-paneliami-bez-prefiksa">Переключаться между панелями без префикса</h3>
 <p>Переключение между панелями одна из самых частых операций в tmux. Переключаться с использованием префикса неудобно.
 Удобней использовать <code>Alt + стрелка</code>. Как это настроить:</p>
-<pre><code>bind -n M-Left select-pane -L
-bind -n M-Right select-pane -R
-bind -n M-Up select-pane -U
-bind -n M-Down select-pane -D
-</code></pre>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>bind -n M-Left select-pane -L
+</span><span>bind -n M-Right select-pane -R
+</span><span>bind -n M-Up select-pane -U
+</span><span>bind -n M-Down select-pane -D
+</span></code></pre>
 
   
 </section>

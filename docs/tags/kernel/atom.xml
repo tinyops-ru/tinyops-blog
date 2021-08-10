@@ -19,14 +19,14 @@
 &lt;h2 id=&quot;ogranicheniia-iadra-linux&quot;&gt;Ограничения ядра Linux&lt;&#x2F;h2&gt;
 &lt;p&gt;Прежде всего ограничение на количество открытых файлов устанавливает ядро операционной системы. Посмотреть его можно
 вот так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@dracula ~]# sysctl fs.file-max
-fs.file-max = 3000000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@dracula ~]# sysctl fs.file-max
+&lt;&#x2F;span&gt;&lt;span&gt;fs.file-max = 3000000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
 прочитать файл &lt;code&gt;&#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
-1154    133     3000000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
+&lt;&#x2F;span&gt;&lt;span&gt;1154    133     3000000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;1154&lt;&#x2F;code&gt; — текущее значение открытых файлов.&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;code&gt;133&lt;&#x2F;code&gt; — сколько из открытых файлов не используются.&lt;&#x2F;li&gt;
@@ -42,9 +42,9 @@ fs.file-max = 3000000
 &lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;pam.d&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Формат записи такой:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;nginx           soft   nofile 50000
-nginx           hard   nofile 50000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;nginx           soft   nofile 50000
+&lt;&#x2F;span&gt;&lt;span&gt;nginx           hard   nofile 50000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Существует два вида ограничений: &lt;code&gt;soft&lt;&#x2F;code&gt; (мягкий) и &lt;code&gt;hard&lt;&#x2F;code&gt; (жесткий). Soft-ограничения носят рекомендательный характер, 
 в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (&lt;code&gt;nofile&lt;&#x2F;code&gt;) по hard-ограничению
 не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.&lt;&#x2F;p&gt;
@@ -58,23 +58,23 @@ nginx           hard   nofile 50000
 &lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки 
 в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; и упомянутых выше файлах.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим сколько пользователю &lt;code&gt;nginx&lt;&#x2F;code&gt; разрешено:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ sudo -u nginx bash -c &#x27;ulimit -n&#x27;
-
-1024
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ sudo -u nginx bash -c &amp;#39;ulimit -n&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;1024
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видимо что всего лишь &lt;code&gt;1024&lt;&#x2F;code&gt;, для нагруженного сервера это может быть недостаточным. Добавляем в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; строчки:&lt;&#x2F;p&gt;
-&lt;pre&gt;&lt;code&gt;nginx           soft   nofile 10000
-nginx           hard   nofile 10000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;nginx           soft   nofile 10000
+&lt;&#x2F;span&gt;&lt;span&gt;nginx           hard   nofile 10000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Тем самым разрешая лимит до 10000 файлов.&lt;&#x2F;p&gt;
 &lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов, 
 то необходимо добавить в &lt;code&gt;&#x2F;etc&#x2F;sysctl.conf&lt;&#x2F;code&gt; значение с запасом:&lt;&#x2F;p&gt;
-&lt;pre&gt;&lt;code&gt;fs.file-max = 100000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;fs.file-max = 100000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
 применить его «на лету», делаем вот так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ sysctl -w fs.file-max=100000
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ sysctl -w fs.file-max=100000
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В отличие от первого способа, эта настройка будет актуальна до первой перезагрузки операционной системы.&lt;&#x2F;p&gt;
 &lt;p&gt;После изменения настроек в конфигурации ядра и PAM необходимо перезапустить процесс &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
@@ -91,49 +91,49 @@ nginx           hard   nofile 10000
 		<link href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
 		<id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
 		<content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# su - zero
-Last login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
-su: cannot open session: Permission denied
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; su - zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span&gt; cannot open session: Permission denied
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;При этом если попытаться запустить какую-нибудь команду &lt;code&gt;id&lt;&#x2F;code&gt; через &lt;code&gt;sudo&lt;&#x2F;code&gt; от имени &lt;code&gt;zero&lt;&#x2F;code&gt; получаем уже другую ошибку:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# sudo -u zero id
-sudo: pam_open_session: Permission denied
-sudo: policy plugin failed session initialization
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -u&lt;&#x2F;span&gt;&lt;span&gt; zero id
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span&gt; pam_open_session: Permission denied
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span&gt; policy plugin failed session initialization
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Проверяем не заблокирован ли пользователь:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# passwd -S zero
-zero PS 2019-09-12 0 99999 7 -1 (Password set, SHA512 crypt.)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; passwd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span&gt; zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;zero&lt;&#x2F;span&gt;&lt;span&gt; PS 2019-09-12 0 99999 7&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -1&lt;&#x2F;span&gt;&lt;span&gt; (Password set, SHA512 crypt.)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Все окей. Проверяем не истёк ли пароль:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# chage -l zero
-Last password change                                    : Sep 12, 2019
-Password expires                                        : never
-Password inactive                                       : never
-Account expires                                         : never
-Minimum number of days between password change          : 0
-Maximum number of days between password change          : 99999
-Number of days of warning before password expires       : 7
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; chage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -l&lt;&#x2F;span&gt;&lt;span&gt; zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; password change                                    : Sep 12, 2019
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span&gt; expires                                        : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span&gt; inactive                                       : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Account&lt;&#x2F;span&gt;&lt;span&gt; expires                                         : never
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Minimum&lt;&#x2F;span&gt;&lt;span&gt; number of days between password change          : 0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Maximum&lt;&#x2F;span&gt;&lt;span&gt; number of days between password change          : 99999
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Number&lt;&#x2F;span&gt;&lt;span&gt; of days of warning before password expires       : 7
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Здесь тоже все в порядке, пароль не истёк. Смотрим лог аутентификации &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# tail &#x2F;var&#x2F;log&#x2F;secure
-May 21 15:22:46 hercules sudo: root : TTY=pts&#x2F;0 ; PWD=&#x2F;root ; USER=zero ; COMMAND=&#x2F;bin&#x2F;id
-May 21 15:22:46 hercules sudo: pam_limits(sudo:session): Could not set limit for &#x27;nofile&#x27;: Operation not permitted
-May 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; TTY=pts&#x2F;0 ; PWD=&#x2F;root ; USER=zero ; COMMAND=&#x2F;bin&#x2F;id
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; tail &#x2F;var&#x2F;log&#x2F;secure
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: root : TTY=pts&#x2F;0 ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: pam_limits(sudo:session)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; Could not set limit for &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nofile&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;: Operation not permitted
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;TTY&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pts&#x2F;0 &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим конфиг &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;...
-zero         soft   nofile 1500000
-zero         hard   nofile 1500000
-...
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;...
+&lt;&#x2F;span&gt;&lt;span&gt;zero         soft   nofile 1500000
+&lt;&#x2F;span&gt;&lt;span&gt;zero         hard   nofile 1500000
+&lt;&#x2F;span&gt;&lt;span&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон 
 значений для &lt;code&gt;nofile&lt;&#x2F;code&gt;: &lt;code&gt;1-1048576&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и &lt;code&gt;su&lt;&#x2F;code&gt; начинает работать.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules ~]# su - zero
-Last login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0
-[zero@hercules ~]$
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span&gt;]# su - zero
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[zero@hercules ~&lt;&#x2F;span&gt;&lt;span&gt;]$
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;

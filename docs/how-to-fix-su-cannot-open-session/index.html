@@ -108,49 +108,49 @@
   </div>
 
   <p>При попытке войти из <code>root</code> под пользователем <code>zero</code> получаем ошибку:</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules]# su - zero
-Last login: Thu May 21 12:24:16 MSK 2020 on pts/0
-su: cannot open session: Permission denied
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules]#</span><span> su - zero
+</span><span style="color:#bf616a;">Last</span><span> login: Thu May 21 12:24:16 MSK 2020 on pts/0
+</span><span style="color:#bf616a;">su:</span><span> cannot open session: Permission denied
+</span></code></pre>
 <p>При этом если попытаться запустить какую-нибудь команду <code>id</code> через <code>sudo</code> от имени <code>zero</code> получаем уже другую ошибку:</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules]# sudo -u zero id
-sudo: pam_open_session: Permission denied
-sudo: policy plugin failed session initialization
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules]#</span><span> sudo</span><span style="color:#bf616a;"> -u</span><span> zero id
+</span><span style="color:#bf616a;">sudo:</span><span> pam_open_session: Permission denied
+</span><span style="color:#bf616a;">sudo:</span><span> policy plugin failed session initialization
+</span></code></pre>
 <p>Проверяем не заблокирован ли пользователь:</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules]# passwd -S zero
-zero PS 2019-09-12 0 99999 7 -1 (Password set, SHA512 crypt.)
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules]#</span><span> passwd</span><span style="color:#bf616a;"> -S</span><span> zero
+</span><span style="color:#bf616a;">zero</span><span> PS 2019-09-12 0 99999 7</span><span style="color:#bf616a;"> -1</span><span> (Password set, SHA512 crypt.)
+</span></code></pre>
 <p>Все окей. Проверяем не истёк ли пароль:</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules]# chage -l zero
-Last password change                                    : Sep 12, 2019
-Password expires                                        : never
-Password inactive                                       : never
-Account expires                                         : never
-Minimum number of days between password change          : 0
-Maximum number of days between password change          : 99999
-Number of days of warning before password expires       : 7
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules]#</span><span> chage</span><span style="color:#bf616a;"> -l</span><span> zero
+</span><span style="color:#bf616a;">Last</span><span> password change                                    : Sep 12, 2019
+</span><span style="color:#bf616a;">Password</span><span> expires                                        : never
+</span><span style="color:#bf616a;">Password</span><span> inactive                                       : never
+</span><span style="color:#bf616a;">Account</span><span> expires                                         : never
+</span><span style="color:#bf616a;">Minimum</span><span> number of days between password change          : 0
+</span><span style="color:#bf616a;">Maximum</span><span> number of days between password change          : 99999
+</span><span style="color:#bf616a;">Number</span><span> of days of warning before password expires       : 7
+</span></code></pre>
 <p>Здесь тоже все в порядке, пароль не истёк. Смотрим лог аутентификации <code>/var/log/secure</code>:</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules]# tail /var/log/secure
-May 21 15:22:46 hercules sudo: root : TTY=pts/0 ; PWD=/root ; USER=zero ; COMMAND=/bin/id
-May 21 15:22:46 hercules sudo: pam_limits(sudo:session): Could not set limit for 'nofile': Operation not permitted
-May 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; TTY=pts/0 ; PWD=/root ; USER=zero ; COMMAND=/bin/id
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules]#</span><span> tail /var/log/secure
+</span><span style="color:#bf616a;">May</span><span> 21 15:22:46 hercules sudo: root : TTY=pts/0 ; </span><span style="color:#bf616a;">PWD</span><span>=</span><span style="color:#a3be8c;">/root </span><span>; </span><span style="color:#bf616a;">USER</span><span>=</span><span style="color:#a3be8c;">zero </span><span>; </span><span style="color:#bf616a;">COMMAND</span><span>=</span><span style="color:#a3be8c;">/bin/id
+</span><span style="color:#bf616a;">May</span><span> 21 15:22:46 hercules sudo: pam_limits(sudo:session)</span><span style="color:#96b5b4;">:</span><span> Could not set limit for &#39;</span><span style="color:#a3be8c;">nofile</span><span>&#39;: Operation not permitted
+</span><span style="color:#bf616a;">May</span><span> 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; </span><span style="color:#bf616a;">TTY</span><span>=</span><span style="color:#a3be8c;">pts/0 </span><span>; </span><span style="color:#bf616a;">PWD</span><span>=</span><span style="color:#a3be8c;">/root </span><span>; </span><span style="color:#bf616a;">USER</span><span>=</span><span style="color:#a3be8c;">zero </span><span>; </span><span style="color:#bf616a;">COMMAND</span><span>=</span><span style="color:#a3be8c;">/bin/id
+</span></code></pre>
 <p>Видим что есть проблема с настройкой <code>nofile</code> для модуля <code>pam_limits</code>. </p>
 <p>Смотрим конфиг <code>/etc/security/limits.conf</code>:</p>
-<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text">...
-zero         soft   nofile 1500000
-zero         hard   nofile 1500000
-...
-</code></pre>
+<pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>...
+</span><span>zero         soft   nofile 1500000
+</span><span>zero         hard   nofile 1500000
+</span><span>...
+</span></code></pre>
 <p>Для пользователя <code>zero</code> установлен лимит на максимально количество открытых файлов — <code>1500000</code>. Допустимый диапазон 
 значений для <code>nofile</code>: <code>1-1048576</code>.</p>
 <p>Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и <code>su</code> начинает работать.</p>
-<pre data-lang="sh" class="language-sh "><code class="language-sh" data-lang="sh">[root@hercules ~]# su - zero
-Last login: Thu May 21 15:29:14 MSK 2020 on pts/0
-[zero@hercules ~]$
-</code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules ~</span><span>]# su - zero
+</span><span style="color:#bf616a;">Last</span><span> login: Thu May 21 15:29:14 MSK 2020 on pts/0
+</span><span style="color:#bf616a;">[zero@hercules ~</span><span>]$
+</span></code></pre>
 <h3 id="poleznye-ssylki">Полезные ссылки</h3>
 <ul>
 <li><a href="/too-many-open-files/">Подробная статья про ошибку «Too many open files» в Linux</a></li>

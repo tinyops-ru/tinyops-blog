@@ -122,10 +122,10 @@
 <ol>
 <li>
 <p>В файле-конфигурации темы <code>theme.toml</code> нужно подключить taxonomies:</p>
-<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">taxonomies = [
-    {name = "tags", rss = true}
-]
-</code></pre>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#bf616a;">taxonomies </span><span>= [
+</span><span>    {</span><span style="color:#bf616a;">name </span><span>= &quot;</span><span style="color:#a3be8c;">tags</span><span>&quot;, </span><span style="color:#bf616a;">rss </span><span>= </span><span style="color:#d08770;">true</span><span>}
+</span><span>]
+</span></code></pre>
 </li>
 <li>
 <p>В шаблоне <code>page.html</code> добавить HTML-код<br />
@@ -134,17 +134,17 @@
 Результат будет содержать массив тэгов.
 Затем использовать цикл for чтобы пробежаться по списку.</p>
 <p>Например, вот так:</p>
-<pre data-lang="jinja2" class="language-jinja2 "><code class="language-jinja2" data-lang="jinja2">{% for tagName in page.taxonomies['tags'] %}
-    <a class="btn btn-tiny btn-light" href="/tags/{{tagName}}/">{{tagName}}</a>
-{% endfor %}
-</code></pre>
+<pre data-lang="jinja2" style="background-color:#2b303b;color:#c0c5ce;" class="language-jinja2 "><code class="language-jinja2" data-lang="jinja2"><span>{% </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">tagName </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">page</span><span>.</span><span style="color:#bf616a;">taxonomies</span><span>[&#39;</span><span style="color:#a3be8c;">tags</span><span>&#39;] %}
+</span><span>    &lt;a class=&quot;btn btn-tiny btn-light&quot; href=&quot;/tags/{{</span><span style="color:#bf616a;">tagName</span><span>}}/&quot;&gt;{{</span><span style="color:#bf616a;">tagName</span><span>}}&lt;/a&gt;
+</span><span>{% </span><span style="color:#b48ead;">endfor </span><span>%}
+</span></code></pre>
 </li>
 <li>
 <p>Настроить тэги для поста<br />
 Во frontmatter-части файла с постом нужно добавить описание тэгов. Например, вот так:</p>
-<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">[taxonomies]
-tags = ["zola"]
-</code></pre>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[taxonomies]
+</span><span style="color:#bf616a;">tags </span><span>= [&quot;</span><span style="color:#a3be8c;">zola</span><span>&quot;]
+</span></code></pre>
 </li>
 </ol>
 <p>Пример отображения тэгов вы можете увидеть сразу под заголовком данной статьи.</p>

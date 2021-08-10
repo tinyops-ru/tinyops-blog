@@ -113,8 +113,8 @@
 <p>Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.</p>
 </blockquote>
 <p>Эта фича включается через файл конфигурации <code>gradle.properties</code>, вот так:</p>
-<pre data-lang="properties" class="language-properties "><code class="language-properties" data-lang="properties">org.gradle.caching=true
-</code></pre>
+<pre data-lang="properties" style="background-color:#2b303b;color:#c0c5ce;" class="language-properties "><code class="language-properties" data-lang="properties"><span>org.gradle.caching=</span><span style="color:#a3be8c;">true
+</span></code></pre>
 <p>На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
 Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог <code>out</code> и перестает
 видеть изменения в тестах.</p>
