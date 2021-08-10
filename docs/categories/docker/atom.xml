@@ -11,8 +11,8 @@
 		<title>Как добавить самоподписной SSL-сертификат для JVM в Docker</title>
 		<published>2021-08-10T00:00:00+00:00</published>
 		<updated>2021-08-10T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/kak-to-install-self-signed-ssl-cert-in-docker/" type="text/html"/>
-		<id>https://b.tinyops.ru/kak-to-install-self-signed-ssl-cert-in-docker/</id>
+		<link href="https://b.tinyops.ru/how-to-install-self-signed-ssl-cert-in-docker/" type="text/html"/>
+		<id>https://b.tinyops.ru/how-to-install-self-signed-ssl-cert-in-docker/</id>
 		<content type="html">&lt;p&gt;Представим что у нас есть Java-приложение, которое делает запросы к другим Web-сервисам. В свою очередь, Web-сервисы работают с HTTPS, но сертификат доверенный только для домена компании.&lt;&#x2F;p&gt;
 &lt;p&gt;В логах приложения подобные ошибки:&lt;&#x2F;p&gt;
 &lt;pre&gt;&lt;code&gt;PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
