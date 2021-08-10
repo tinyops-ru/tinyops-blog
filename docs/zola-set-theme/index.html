@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -119,30 +119,29 @@
 </li>
 <li>
 <p>Создадим подкаталог в котором будут хранится файлы темы которую выбрали:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">mkdir themes\tinyblog
-</span></code></pre></li>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">mkdir themes\tinyblog
+</code></pre>
+</li>
 <li>
 <p>Добавим модуль тему как git модуль:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">git submodule add https://github.com/lebe-dev/tinyblog-zola-theme themes/tinyblog
-</span></code></pre></li>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">git submodule add https://github.com/lebe-dev/tinyblog-zola-theme themes/tinyblog
+</code></pre>
+</li>
 <li>
 <p>Подкачаем актуальную версию темы:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">git submodule update --init --recursive 
-</span></code></pre>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">git submodule update --init --recursive 
+</code></pre>
 <p>либо заходим в каталог тем и делаем pull:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">cd themes
-</span><span style="color:#c0c5ce;">git clone https://github.com/lebe-dev/tinyblog-zola-theme tinyblog
-</span></code></pre></li>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">cd themes
+git clone https://github.com/lebe-dev/tinyblog-zola-theme tinyblog
+</code></pre>
+</li>
 <li>
 <p>Настраиваем файл конфигурации сайта</p>
 <p>В файле конфигурации <code>config.toml</code> указываем тему:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-toml" data-lang="toml"><span style="color:#bf616a;">theme </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">tinyblog</span><span style="color:#c0c5ce;">&quot;</span><span style="background-color:#bf616a;color:#2b303b;"> </span><span style="color:#c0c5ce;">
-</span></code></pre></li>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">theme = "tinyblog" 
+</code></pre>
+</li>
 <li>
 <p>Открываем сайт в браузере и видим что тема применилась.</p>
 </li>

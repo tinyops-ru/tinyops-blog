@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-07-14</lastmod>
+        <lastmod>2021-08-10</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -36,6 +36,12 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/categories/docker/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/categories/docker/page/1/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/</loc>
@@ -134,6 +140,10 @@
         <lastmod>2021-07-14</lastmod>
     </url>
     <url>
+        <loc>https://b.tinyops.ru/kak-to-install-self-signed-ssl-cert-in-docker/</loc>
+        <lastmod>2021-08-10</lastmod>
+    </url>
+    <url>
         <loc>https://b.tinyops.ru/kak-upravlyat-dotfiles/</loc>
         <lastmod>2021-07-14</lastmod>
     </url>
@@ -204,6 +214,9 @@
         <loc>https://b.tinyops.ru/tags/idea/</loc>
     </url>
     <url>
+        <loc>https://b.tinyops.ru/tags/java/</loc>
+    </url>
+    <url>
         <loc>https://b.tinyops.ru/tags/jetbrains/</loc>
     </url>
     <url>
@@ -238,6 +251,9 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/ssh/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/tags/ssl/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/syncthing/</loc>

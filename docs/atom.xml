@@ -5,8 +5,71 @@
 	<link href="https://b.tinyops.ru/atom.xml" rel="self" type="application/atom+xml"/>
   <link href="https://b.tinyops.ru"/>
 	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-07-14T00:00:00+00:00</updated>
+	<updated>2021-08-10T00:00:00+00:00</updated>
 	<id>https://b.tinyops.ru/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Как добавить самоподписной SSL-сертификат для JVM в Docker</title>
+		<published>2021-08-10T00:00:00+00:00</published>
+		<updated>2021-08-10T00:00:00+00:00</updated>
+		<link href="https://b.tinyops.ru/kak-to-install-self-signed-ssl-cert-in-docker/" type="text/html"/>
+		<id>https://b.tinyops.ru/kak-to-install-self-signed-ssl-cert-in-docker/</id>
+		<content type="html">&lt;p&gt;Представим что у нас есть Java-приложение, которое делает запросы к другим Web-сервисам. В свою очередь, Web-сервисы работают с HTTPS, но сертификат доверенный только для домена компании.&lt;&#x2F;p&gt;
+&lt;p&gt;В логах приложения подобные ошибки:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+    at sun.security.ssl.Alert.createSSLException(Alert.java:131)
+    at sun.security.ssl.TransportContext.fatal(TransportContext.java:324)
+    at sun.security.ssl.TransportContext.fatal(TransportContext.java:267)
+    at sun.security.ssl.TransportContext.fatal(TransportContext.java:262)
+    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:654)
+    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:473)
+    at sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:369)
+    at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:377)
+    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:444)
+    at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:422)
+    at sun.security.ssl.TransportContext.dispatch(TransportContext.java:182)
+    at sun.security.ssl.SSLTransport.decode(SSLTransport.java:152)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Нам необходимо добавить самоподписной корневой сертификат в хранилище сертификатов JVM.&lt;&#x2F;p&gt;
+&lt;p&gt;В JVM сертификаты хранятся в файле-хранилище &lt;code&gt;${JAVA_HOME}&#x2F;jre&#x2F;lib&#x2F;cacerts&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Находим где располагается JVM, для этого заходим в контейнер приложения:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;docker exec -it app &#x2F;bin&#x2F;bash
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;и ищем:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;root@458b6bbf28b5:&#x2F;app# whereis java
+java: &#x2F;usr&#x2F;local&#x2F;openjdk-8&#x2F;bin&#x2F;java
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Соответственно, наш &lt;code&gt;JAVA_HOME&lt;&#x2F;code&gt; это &lt;code&gt;&#x2F;usr&#x2F;local&#x2F;openjdk-8&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Теперь выходим из контейнера и копируем каталог &lt;code&gt;security&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;docker cp app:&#x2F;usr&#x2F;local&#x2F;openjdk-8&#x2F;jre&#x2F;lib&#x2F;security .
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Правим &lt;code&gt;docker-compose.yml&lt;&#x2F;code&gt; для проброса каталога внутрь контейнера:&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;version: &#x27;3.3&#x27;
+
+services:
+
+  app:
+    container_name: app
+    image: registry.company.ru&#x2F;app:1.3.7-12
+    restart: always
+    volumes:
+     - .&#x2F;application.properties:&#x2F;app&#x2F;application.properties
+     - .&#x2F;data:&#x2F;app&#x2F;data
+     - .&#x2F;logs:&#x2F;app&#x2F;logs
+     - .&#x2F;security:&#x2F;usr&#x2F;local&#x2F;openjdk-8&#x2F;jre&#x2F;lib&#x2F;security
+    ports:
+     - &quot;35000:8080&quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Добавляем сертификат в файл &lt;code&gt;cacerts&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;keytool -importcert -keystore security&#x2F;cacerts -file custom-ca.crt -alias &quot;custom-ca&quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Пароль по умолчанию для доступа в хранилище &lt;code&gt;changeit&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Рестартуем приложение:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;docker-compose down
+docker-compose up -d
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+	</entry>
 	<entry xml:lang="en">
 		<title>Установка Syncthing для CentOS 7</title>
 		<published>2021-05-14T00:00:00+00:00</published>
@@ -20,22 +83,20 @@
 &lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;2-raspakovyvaem&quot;&gt;2. Распаковываем&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;tar xvzf syncthing-linux-arm64-v1.16.1.tar.gz
+cd syncthing-linux-arm64-v1.16.1
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Будет примерно такое содержимое (лишнее убрал):&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;├──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   ├── linux-systemd
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── README.md
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── system
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   ├── syncthing-resume.service
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   └── user
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;└──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;├── etc
+│   ├── linux-systemd
+│   │   ├── README.md
+│   │   ├── system
+│   │   │   ├── syncthing-resume.service
+│   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
+│   │   └── user
+│   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
+└── syncthing
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В архиве присутствует два вида конфигурации:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;Системная служба&lt;&#x2F;li&gt;
@@ -47,20 +108,19 @@
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
 &lt;p&gt;В первом варианте данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+sudo chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
 &lt;p&gt;На примере пользователя &lt;code&gt;eugene&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Копируем файлы службы из дистрибутива:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cp etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Разрешаем автозапуск при загрузке ОС и запускаем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; enable syncthing@myuser.service
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; start syncthing@myuser.service
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;systemctl enable syncthing@myuser.service
+systemctl start syncthing@myuser.service
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
 &lt;p&gt;Заходим в Web-интерфейс &lt;code&gt;http:&#x2F;&#x2F;имя-сервера:8384&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
 &lt;ul&gt;
@@ -116,49 +176,42 @@
 &lt;code&gt;Dotfiles&lt;&#x2F;code&gt; должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;s-chego-nachat&quot;&gt;С чего начать&lt;&#x2F;h2&gt;
 &lt;p&gt;Создадим каталог и репозиторий:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles &amp;amp;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; init
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir ~&#x2F;.dotfiles &amp;&amp; cd ~&#x2F;.dotfiles
+git init
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Создадим на Github отдельный репозиторий &lt;code&gt;dotfiles&lt;&#x2F;code&gt;. Копируем ссылку и добавляем к локальному:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; remote add origin git@github.com:your-user&#x2F;dotfiles.git
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git remote add origin git@github.com:your-user&#x2F;dotfiles.git
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для примера добавим конфигурацию vim в наши dotfiles.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;mkdir -p ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir -p ~&#x2F;.dotfiles&#x2F;vim&#x2F;plugins
+cp ~&#x2F;.vimrc ~&#x2F;.dotfiles&#x2F;vim
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Добавим в git и запушим изменения на GitHub:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git checkout main
+&lt;pre&gt;&lt;code&gt;git checkout main
 git add *
-git commit -a -m &amp;quot;[+] add .vimrc&amp;quot;
+git commit -a -m &quot;[+] add .vimrc&quot;
 git push
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Здесь стоит отметить, что я использую ветку &lt;code&gt;main&lt;&#x2F;code&gt; вместо &lt;code&gt;master&lt;&#x2F;code&gt;, т. к. так заведено на GitHub.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;ustanovka-dotfiles&quot;&gt;Установка dotfiles&lt;&#x2F;h2&gt;
 &lt;p&gt;Продолжаем пример с &lt;code&gt;.vimrc&lt;&#x2F;code&gt;-файлом. Удалим текущий и создадим ссылку на тот что хранится в dotfiles:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rm -f ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;.vimrc &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vimrc
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;rm -f ~&#x2F;.vimrc
+ln -s ~&#x2F;.dotfiles&#x2F;vim&#x2F;.vimrc ~&#x2F;.vimrc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Когда ваш репозиторий будет наполнен файлами, имеет смысл написать скрипт, который будет создавать правильные ссылки в домашнем каталоге.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;zavisimosti-i-plaginy&quot;&gt;Зависимости и плагины&lt;&#x2F;h2&gt;
 &lt;p&gt;Помимо файлов конфигурации для приложений в &lt;code&gt;dotfiles&lt;&#x2F;code&gt; можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.&lt;&#x2F;p&gt;
 &lt;p&gt;Я использую плагин &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree&quot;&gt;NERDTree&lt;&#x2F;a&gt; для vim. Добавим репозиторий проекта в виде суб-модуля:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-zavisimostei-i-plaginov&quot;&gt;Установка зависимостей и плагинов&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;preservim&#x2F;nerdtree vim&#x2F;plugins&#x2F;nerdtree
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;ustanovka-zavisimostei-i-plaginov&quot;&gt;Установка зависимостей и плагинов&lt;&#x2F;h2&gt;
 &lt;p&gt;Установка и обновление до последних версий:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --recursive
-git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule update&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --init --remote
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;git submodule update --init --recursive
+git submodule update --init --remote
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Создаём ссылку (symlink) на каталог с плагинами:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ln -s ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.dotfiles&#x2F;vim&#x2F;plugins &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.vim&#x2F;plugged
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;ln -s ~&#x2F;.dotfiles&#x2F;vim&#x2F;plugins ~&#x2F;.vim&#x2F;plugged
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Каталог &lt;code&gt;~&#x2F;vim&#x2F;plugged&lt;&#x2F;code&gt; может отличаться от вашего, я использую рекомендованный от &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;junegunn&#x2F;vim-plug&quot;&gt;vim-plug&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;spetsifichnye-lokal-nye-nastroiki&quot;&gt;Специфичные локальные настройки&lt;&#x2F;h2&gt;
 &lt;p&gt;При использовании &lt;code&gt;dotfiles&lt;&#x2F;code&gt; на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.&lt;&#x2F;p&gt;
@@ -168,28 +221,26 @@ git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule upd
 &lt;p&gt;В репозитории &lt;code&gt;dotfiles_local&lt;&#x2F;code&gt; каждая ветвь именуется именем машины. Например, &lt;code&gt;home-pc&lt;&#x2F;code&gt;, &lt;code&gt;work-pc&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;kak-podgruzhat-spetsifichnye-nastroiki&quot;&gt;Как подгружать специфичные настройки&lt;&#x2F;h3&gt;
 &lt;p&gt;Для bash добавляем в &lt;code&gt;~&#x2F;.bashrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;[ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;-f ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.bashrc_local &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;then
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;source &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&#x2F;.bashrc_local
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fi
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;if [ -f ~&#x2F;.bashrc_local ]; then
+    source ~&#x2F;.bashrc_local
+fi
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для git добавляем в &lt;code&gt;~&#x2F;.gitconfig&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[include]
+&lt;pre&gt;&lt;code&gt;[include]
 	path = ~&#x2F;.gitconfig_local
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для Vim, добавляем в файл &lt;code&gt;.vimrc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; $LOCALFILE=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;expand&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;~&#x2F;.vimrc_local&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;filereadable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;($LOCALFILE)
+&lt;pre data-lang=&quot;vim&quot; class=&quot;language-vim &quot;&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;let $LOCALFILE=expand(&quot;~&#x2F;.vimrc_local&quot;)
+if filereadable($LOCALFILE)
     source $LOCALFILE
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endif
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;spetsial-nye-skripty&quot;&gt;Специальные скрипты&lt;&#x2F;h2&gt;
+endif
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;spetsial-nye-skripty&quot;&gt;Специальные скрипты&lt;&#x2F;h2&gt;
 &lt;p&gt;Если у вас есть какие-то скрипты, которые вы используете в своей работе, их тоже можно добавить в dotfiles. Например, в каталог &lt;code&gt;.dotfiles&#x2F;bin&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Затем в &lt;code&gt;.bashrc&lt;&#x2F;code&gt; добавляем их в переменную &lt;code&gt;PATH&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;export &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;.dotfiles&#x2F;bin:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PATH&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;}
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;export PATH=~&#x2F;.dotfiles&#x2F;bin:${PATH}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
 	</entry>
 	<entry xml:lang="en">
 		<title>Передача файлов и текста с помощью croc</title>
@@ -212,47 +263,44 @@ git&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; submodule upd
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;kak-ustanovit&quot;&gt;Как установить&lt;&#x2F;h2&gt;
 &lt;h3 id=&quot;linux&quot;&gt;Linux&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;curl https:&#x2F;&#x2F;getcroc.schollz.com | bash
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;macos&quot;&gt;MacOS&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;brew install croc
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;curl https:&#x2F;&#x2F;getcroc.schollz.com | bash
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;macos&quot;&gt;MacOS&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;brew install croc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;windows&quot;&gt;Windows&lt;&#x2F;h3&gt;
 &lt;p&gt;Если вы используете менеджер пакетов &lt;a href=&quot;https:&#x2F;&#x2F;chocolatey.org&#x2F;&quot;&gt;Chocolatey&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;choco install croc
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;choco install croc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если вы используете менеджер пакетов &lt;a href=&quot;https:&#x2F;&#x2F;scoop.sh&#x2F;&quot;&gt;Scoop&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;scoop install croc
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;scoop install croc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
 &lt;p&gt;Например, нам нужно передать файл &lt;code&gt;archive.zip&lt;&#x2F;code&gt; с одного устройства на другое:&lt;&#x2F;p&gt;
 &lt;p&gt;Инициируем передачу на устройстве с которого отправляем файл:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc send archive.zip
-Sending &amp;#39;archive.zip&amp;#39; (3.3 kB)
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;croc send archive.zip
+Sending &#x27;archive.zip&#x27; (3.3 kB)
 Code is: sweden-light-jacket
 On the other computer run
 
 croc sweden-light-jacket
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Утилита сгенерировала секретное слово, которое мы должны использовать на принимающей стороне. Также croc подсказывает 
 какую команду мы должны запустить на втором устройстве:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc sweden-light-jacket
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;croc sweden-light-jacket
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Запускаем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc sweden-light-jacket
-Accept &amp;#39;archive.zip&amp;#39; (3.3 kB)? (y&#x2F;n) y
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;croc sweden-light-jacket
+Accept &#x27;archive.zip&#x27; (3.3 kB)? (y&#x2F;n) y
 
-Receiving (&amp;lt;-123.100.94.21:12345)
+Receiving (&lt;-123.100.94.21:12345)
 archive.zip 100% |████████████████████| (3.3&#x2F;3.3 kB, 12.864 kB&#x2F;s)
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-otpravit-tekst&quot;&gt;Как отправить текст&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kak-otpravit-tekst&quot;&gt;Как отправить текст&lt;&#x2F;h3&gt;
 &lt;p&gt;Аналогично файлу, но команда запуска на исходном устройстве будет такой:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;croc send --text &amp;quot;ВАШ ТЕКСТ&amp;quot;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;croc send --text &quot;ВАШ ТЕКСТ&quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;schollz&#x2F;croc&quot;&gt;Репозиторий на GitHub&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;schollz.com&#x2F;software&#x2F;croc6&quot;&gt;Пост автора&lt;&#x2F;a&gt; с подробностями об утилите (на английском)&lt;&#x2F;li&gt;
@@ -279,12 +327,12 @@ web-сайт, github, twitter и instagram. Дополнительно доба�
 &lt;h2 id=&quot;kak-ustanovit-temu&quot;&gt;Как установить тему&lt;&#x2F;h2&gt;
 &lt;ol&gt;
 &lt;li&gt;Заходим в каталог с вашим блогом&lt;&#x2F;li&gt;
-&lt;li&gt;Клонируем репозитарий с темой:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;tinyops-ru&#x2F;ddv-theme themes&#x2F;ddv
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;В файле конфигурации &lt;code&gt;config.toml&lt;&#x2F;code&gt; указываем:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;theme&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ddv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Клонируем репозитарий с темой:&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;tinyops-ru&#x2F;ddv-theme themes&#x2F;ddv
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;В файле конфигурации &lt;code&gt;config.toml&lt;&#x2F;code&gt; указываем:&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;theme=&quot;ddv&quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;kak-nastroit-temu&quot;&gt;Как настроить тему&lt;&#x2F;h2&gt;
 &lt;p&gt;Все переменные конфигурации в секции &lt;code&gt;[extra]&lt;&#x2F;code&gt; файла &lt;code&gt;themes&#x2F;ddv&#x2F;config.toml&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
@@ -317,70 +365,66 @@ web-сайт, github, twitter и instagram. Дополнительно доба�
 Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.&lt;&#x2F;p&gt;
 &lt;p&gt;В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
 увидеть такую картину: &lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[user@pc] # ssh server
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[user@pc] # ssh server
 Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
 There were 13925 failed login attempts since the last successful login.
 Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;nastroika-minimal-no-rekomenduemoi-konfiguratsii&quot;&gt;Настройка минимально рекомендуемой конфигурации&lt;&#x2F;h2&gt;
 &lt;p&gt;Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitRootLogin&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
+PermitRootLogin no
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Разрешаем подключение только для указанных пользователей
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowUsers user1 user2 user3
+# Разрешаем подключение только для указанных пользователей
+AllowUsers user1 user2 user3
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Меняем порт на нестандартный
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Port 14819
+# Меняем порт на нестандартный
+Port 14819
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователям с пустыми паролями
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;PermitEmptyPasswords no
+# Запрещаем вход пользователям с пустыми паролями
+PermitEmptyPasswords no
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем неиспользуемые способы аутентификации
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;KerberosAuthentication no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;GSSAPIAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
+# Отключаем неиспользуемые способы аутентификации
+KerberosAuthentication no
+GSSAPIAuthentication no
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможность доступа к графическим приложениям
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;X11Forwarding no
+# Отключаем возможность доступа к графическим приложениям
+X11Forwarding no
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;AllowAgentForwarding no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowTcpForwarding&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitTunnel&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
+# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
+AllowAgentForwarding no
+AllowTcpForwarding no
+PermitTunnel no
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
 &lt;p&gt;Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. &lt;&#x2F;p&gt;
 &lt;h3 id=&quot;blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip&quot;&gt;Блокируем доступ к порту SSH для всех кроме доверенных IP&lt;&#x2F;h3&gt;
 &lt;p&gt;Например, с помощью firewalld:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
 firewall-cmd --permanent --zone=trusted --add-service=ssh
 firewall-cmd --reload
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
 &lt;p&gt;Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
 инженеров предпочитаю работать с логинами и паролями.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PasswordAuthentication&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; no
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PasswordAuthentication no
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После этого потребуется создать ключ для пользователя:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-keygen
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;ssh-keygen
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;А затем скопировать его на удалённый сервер:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;ssh-copy-id user@server
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;ssh-copy-id user@server
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
 &lt;p&gt;Проверяем что настройки корректные:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sshd -t
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sshd -t
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если приложение не сообщило об ошибках, значит всё хорошо.&lt;&#x2F;p&gt;
 &lt;p&gt;Перезапускаем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl restart sshd
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;systemctl restart sshd
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
 	</entry>
 	<entry xml:lang="en">
 		<title>Запуск Syncthing в виде службы Windows</title>
@@ -407,11 +451,11 @@ firewall-cmd --reload
 &lt;h3 id=&quot;sozdanie-sluzhby-windows&quot;&gt;Создание службы Windows&lt;&#x2F;h3&gt;
 &lt;p&gt;Допустим полный путь до исполняемого файла Syncthing - &lt;code&gt;c:\apps\syncthing\syncthing.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Запускаем командную строку Windows с правами локального администратора и создаём службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+&lt;pre&gt;&lt;code&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
 c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
 c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
 &lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
@@ -446,27 +490,25 @@ c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
 &lt;p&gt;При первом запуске мультиплексор создаёт отдельную сессию, которая не привязана к вашему соединению. Например, 
 вы можете отключиться от SSH, но сессия будет активна на сервере. Затем вы можете вернуться на сервер и вернуться
 в сессию с помощью команды:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;tmux attach
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;или с указанием имени сессии:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux attach -t name
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;ustanovka-tmux&quot;&gt;Установка tmux&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;tmux attach -t name
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;ustanovka-tmux&quot;&gt;Установка tmux&lt;&#x2F;h2&gt;
 &lt;h3 id=&quot;centos-fedora-rhel-oracle-linux&quot;&gt;CentOS, Fedora, RHEL, Oracle Linux&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo yum install -y tmux
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ubuntu-debian&quot;&gt;Ubuntu, Debian&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo apt install tmux
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;archlinux&quot;&gt;ArchLinux&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sudo pacman -S tmux
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sudo yum install -y tmux
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;ubuntu-debian&quot;&gt;Ubuntu, Debian&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sudo apt install tmux
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;archlinux&quot;&gt;ArchLinux&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sudo pacman -S tmux
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h3&gt;
 &lt;h4 id=&quot;sozdanie-sessii&quot;&gt;Создание сессии&lt;&#x2F;h4&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux new -s name
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;tmux new -s name
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;tmux отобразит пустой терминал на подобие такого:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;tmux&#x2F;tmux-start.png&quot; alt=&quot;Стартовое окно tmux&quot; title=&quot;Стартовое окно tmux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h4 id=&quot;prefiks-dlia-komand&quot;&gt;Префикс для команд&lt;&#x2F;h4&gt;
@@ -500,32 +542,32 @@ c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
 &lt;p&gt;Согласно &lt;code&gt;man tmux&lt;&#x2F;code&gt;, tmux загружает настройки из &lt;code&gt;&#x2F;etc&#x2F;tmux.conf&lt;&#x2F;code&gt;, а затем смотрит файл в домашней 
 директории текущего пользователя &lt;code&gt;~&#x2F;.tmux.conf&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;После изменений в файлах конфигурации необходимо перечитать настройки:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;tmux source-file &#x2F;etc&#x2F;tmux.conf
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-prefiksa&quot;&gt;Как поменять комбинацию префикса&lt;&#x2F;h3&gt;
+&lt;pre&gt;&lt;code&gt;tmux source-file &#x2F;etc&#x2F;tmux.conf
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-prefiksa&quot;&gt;Как поменять комбинацию префикса&lt;&#x2F;h3&gt;
 &lt;p&gt;Кому-то может быть неудобной комбинация &lt;code&gt;Ctrl + b&lt;&#x2F;code&gt;, поэтому её можно поменять. Например, на &lt;code&gt;Ctrl + a&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;unbind C-b
+&lt;pre&gt;&lt;code&gt;unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana&quot;&gt;Как поменять комбинацию для разделения экрана&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kak-pomeniat-kombinatsiiu-dlia-razdeleniia-ekrana&quot;&gt;Как поменять комбинацию для разделения экрана&lt;&#x2F;h3&gt;
 &lt;p&gt;По умолчанию, разделение экрана по горизонтали &lt;code&gt;prefix, &amp;quot;&lt;&#x2F;code&gt;, по вертикали - &lt;code&gt;prefix, %&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Это не совсем интуитивные клавиши, проще использовать клавиши: &lt;code&gt;-&lt;&#x2F;code&gt; и &lt;code&gt;|&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Как поменять комбинации:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind | split-window -h
+&lt;pre&gt;&lt;code&gt;bind | split-window -h
 bind - split-window -v
-unbind &amp;#39;&amp;quot;&amp;#39;
+unbind &#x27;&quot;&#x27;
 unbind %
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;perekliuchat-sia-mezhdu-paneliami-bez-prefiksa&quot;&gt;Переключаться между панелями без префикса&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;perekliuchat-sia-mezhdu-paneliami-bez-prefiksa&quot;&gt;Переключаться между панелями без префикса&lt;&#x2F;h3&gt;
 &lt;p&gt;Переключение между панелями одна из самых частых операций в tmux. Переключаться с использованием префикса неудобно.
 Удобней использовать &lt;code&gt;Alt + стрелка&lt;&#x2F;code&gt;. Как это настроить:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;bind -n M-Left select-pane -L
+&lt;pre&gt;&lt;code&gt;bind -n M-Left select-pane -L
 bind -n M-Right select-pane -R
 bind -n M-Up select-pane -U
 bind -n M-Down select-pane -D
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</content>
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
 	</entry>
 	<entry xml:lang="en">
 		<title>Как настроить chroot для sftp в CentOS 7</title>
@@ -541,8 +583,7 @@ bind -n M-Down select-pane -D
 &lt;p&gt;В качестве корневого каталога будет путь &lt;code&gt;&#x2F;sftp&#x2F;bob&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;nastraivaem-sluzhbu-sshd&quot;&gt;Настраиваем службу sshd&lt;&#x2F;h3&gt;
 &lt;p&gt;Добавляем в конец конфигурационного файла sshd &lt;code&gt;&#x2F;etc&#x2F;ssh&#x2F;sshd_config&lt;&#x2F;code&gt; следующий текст (комментарии можно не добавлять):&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Match User bob
+&lt;pre&gt;&lt;code&gt;Match User bob
  # Запрещаем 
  X11Forwarding no
  # Запрещаем проксирование tcp-трафика
@@ -551,15 +592,14 @@ bind -n M-Down select-pane -D
  ForceCommand internal-sftp
  # Корневой каталог для пользователя
  ChrootDirectory &#x2F;sftp&#x2F;bob
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Проверяем что конфигурация без ошибок:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;sshd -t
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;sshd -t
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl restart sshd
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
+&lt;pre&gt;&lt;code&gt;systemctl restart sshd
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
 &lt;p&gt;У механизма chroot есть требование для владельцев по пути к корневому каталогу:&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;ChrootDirectory&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
@@ -569,20 +609,18 @@ changes the working directory to the user&#x27;s home directory.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Владельцем на пути до корневого каталога (включительно) должен быть &lt;code&gt;root&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Поэтому делаем так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chown -R root: &#x2F;vfs
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;chown -R root: &#x2F;vfs
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если с правами что-то не так то в файле &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt; будет ошибка &lt;code&gt;fatal: bad ownership or modes for chroot directory&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;testiruem&quot;&gt;Тестируем&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sftp bob@your-server
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ sftp bob@your-server
 
 Connected to your-server.
-sftp&amp;gt; ls
+sftp&gt; ls
 lost+found  test
-sftp&amp;gt; pwd
+sftp&gt; pwd
 Remote working directory: &#x2F;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Всё работает.&lt;&#x2F;p&gt;
 </content>
 	</entry>
@@ -608,9 +646,9 @@ Remote working directory: &#x2F;
 &lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Клонируем с тэгом 2.0.0:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone --depth 1 --branch v2.0.0 https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab.git
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;git clone --depth 1 --branch v2.0.0 https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab.git
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;p&gt;В Idea может потребоваться реиндексация, чтобы она обновила свои кэши по зависимостям: &lt;code&gt;File &amp;gt; Invalidate caches&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Готово.&lt;&#x2F;p&gt;
@@ -640,20 +678,18 @@ Remote working directory: &#x2F;
 &lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
 &lt;p&gt;Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.&lt;&#x2F;p&gt;
 &lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитарии:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum -y install epel-release
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum -y install epel-release
 yum -y install borgbackup
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
 &lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;cronbox.ru&quot;&gt;cronbox.ru&lt;&#x2F;a&gt;.
 Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Смотрим информацию по репозиторию:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Encrypted: No
@@ -665,24 +701,20 @@ All archives:                    0 B                  0 B                  0 B
 
                        Unique chunks         Total chunks
 Chunk index:                       0                    0
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что пока пусто. Сделаем первую резервную копию:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — &lt;code&gt;site&lt;&#x2F;code&gt;. Для отдельного архивирования uploads можно было указать вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После создания копия смотрим изменения в репозитории:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
 site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Encrypted: No
@@ -694,14 +726,13 @@ All archives:              644.93 kB            277.42 kB            277.42 kB
 
                        Unique chunks         Total chunks
 Chunk index:                     133                  133
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Как мы видим, общий объём данных (Original size) — 644КБ, хранится на диске (Deduplicated size) — 277КБ.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;arkhivirovanie-po-raspisaniiu&quot;&gt;Архивирование по расписанию&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server]# crontab -e
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server]# crontab -e
 
 0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить &lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;мониторинг&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;
@@ -723,16 +754,14 @@ Chunk index:                     133                  133
 &lt;h2 id=&quot;ogranicheniia-iadra-linux&quot;&gt;Ограничения ядра Linux&lt;&#x2F;h2&gt;
 &lt;p&gt;Прежде всего ограничение на количество открытых файлов устанавливает ядро операционной системы. Посмотреть его можно
 вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@dracula ~]# sysctl fs.file-max
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@dracula ~]# sysctl fs.file-max
 fs.file-max = 3000000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
 прочитать файл &lt;code&gt;&#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
 1154    133     3000000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;1154&lt;&#x2F;code&gt; — текущее значение открытых файлов.&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;code&gt;133&lt;&#x2F;code&gt; — сколько из открытых файлов не используются.&lt;&#x2F;li&gt;
@@ -748,10 +777,9 @@ fs.file-max = 3000000
 &lt;li&gt;&lt;code&gt;&#x2F;etc&#x2F;pam.d&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Формат записи такой:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;nginx           soft   nofile 50000
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;nginx           soft   nofile 50000
 nginx           hard   nofile 50000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Существует два вида ограничений: &lt;code&gt;soft&lt;&#x2F;code&gt; (мягкий) и &lt;code&gt;hard&lt;&#x2F;code&gt; (жесткий). Soft-ограничения носят рекомендательный характер, 
 в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (&lt;code&gt;nofile&lt;&#x2F;code&gt;) по hard-ограничению
 не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.&lt;&#x2F;p&gt;
@@ -765,27 +793,23 @@ nginx           hard   nofile 50000
 &lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки 
 в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; и упомянутых выше файлах.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим сколько пользователю &lt;code&gt;nginx&lt;&#x2F;code&gt; разрешено:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sudo -u nginx bash -c &amp;#39;ulimit -n&amp;#39;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ sudo -u nginx bash -c &#x27;ulimit -n&#x27;
 
 1024
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видимо что всего лишь &lt;code&gt;1024&lt;&#x2F;code&gt;, для нагруженного сервера это может быть недостаточным. Добавляем в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; строчки:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;nginx           soft   nofile 10000
+&lt;pre&gt;&lt;code&gt;nginx           soft   nofile 10000
 nginx           hard   nofile 10000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Тем самым разрешая лимит до 10000 файлов.&lt;&#x2F;p&gt;
 &lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов, 
 то необходимо добавить в &lt;code&gt;&#x2F;etc&#x2F;sysctl.conf&lt;&#x2F;code&gt; значение с запасом:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;fs.file-max = 100000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre&gt;&lt;code&gt;fs.file-max = 100000
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
 применить его «на лету», делаем вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;$ sysctl -w fs.file-max=100000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;$ sysctl -w fs.file-max=100000
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В отличие от первого способа, эта настройка будет актуальна до первой перезагрузки операционной системы.&lt;&#x2F;p&gt;
 &lt;p&gt;После изменения настроек в конфигурации ядра и PAM необходимо перезапустить процесс &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
@@ -802,56 +826,50 @@ nginx           hard   nofile 10000
 		<link href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
 		<id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
 		<content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; su - zero
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cannot open session: Permission denied
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# su - zero
+Last login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
+su: cannot open session: Permission denied
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;При этом если попытаться запустить какую-нибудь команду &lt;code&gt;id&lt;&#x2F;code&gt; через &lt;code&gt;sudo&lt;&#x2F;code&gt; от имени &lt;code&gt;zero&lt;&#x2F;code&gt; получаем уже другую ошибку:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -u&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero id
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; pam_open_session: Permission denied
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; policy plugin failed session initialization
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# sudo -u zero id
+sudo: pam_open_session: Permission denied
+sudo: policy plugin failed session initialization
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Проверяем не заблокирован ли пользователь:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; passwd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;zero&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; PS 2019-09-12 0 99999 7&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; (Password set, SHA512 crypt.)
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# passwd -S zero
+zero PS 2019-09-12 0 99999 7 -1 (Password set, SHA512 crypt.)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Все окей. Проверяем не истёк ли пароль:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; -l&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; zero
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; password change                                    : Sep 12, 2019
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; expires                                        : never
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Password&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; inactive                                       : never
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Account&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; expires                                         : never
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Minimum&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; number of days between password change          : 0
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Maximum&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; number of days between password change          : 99999
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Number&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; of days of warning before password expires       : 7
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# chage -l zero
+Last password change                                    : Sep 12, 2019
+Password expires                                        : never
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 99999
+Number of days of warning before password expires       : 7
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Здесь тоже все в порядке, пароль не истёк. Смотрим лог аутентификации &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; tail &#x2F;var&#x2F;log&#x2F;secure
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: root : TTY=pts&#x2F;0 ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: pam_limits(sudo:session)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; Could not set limit for &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nofile&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;: Operation not permitted
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;TTY&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pts&#x2F;0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules]# tail &#x2F;var&#x2F;log&#x2F;secure
+May 21 15:22:46 hercules sudo: root : TTY=pts&#x2F;0 ; PWD=&#x2F;root ; USER=zero ; COMMAND=&#x2F;bin&#x2F;id
+May 21 15:22:46 hercules sudo: pam_limits(sudo:session): Could not set limit for &#x27;nofile&#x27;: Operation not permitted
+May 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; TTY=pts&#x2F;0 ; PWD=&#x2F;root ; USER=zero ; COMMAND=&#x2F;bin&#x2F;id
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим конфиг &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
+&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;...
 zero         soft   nofile 1500000
 zero         hard   nofile 1500000
 ...
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон 
 значений для &lt;code&gt;nofile&lt;&#x2F;code&gt;: &lt;code&gt;1-1048576&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и &lt;code&gt;su&lt;&#x2F;code&gt; начинает работать.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]# su - zero
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[zero@hercules ~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]$
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;sh&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;[root@hercules ~]# su - zero
+Last login: Thu May 21 15:29:14 MSK 2020 on pts&#x2F;0
+[zero@hercules ~]$
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
@@ -896,9 +914,8 @@ zero         hard   nofile 1500000
 К счастью, для Zabbix это просто, т. к. архивировать нужно только базу и файлы интерфейса.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Резервная копия базы&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Снимаем дамп базы:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mysqldump zabbix_server | gzip &amp;gt; zabbix_server.sql.gz
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;mysqldump zabbix_server | gzip &gt; zabbix_server.sql.gz
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;&lt;strong&gt;Резервная копия Zabbix Frontend&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;На текущем сервере frontend расположен в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, поэтому копируем эту папку куда-нибудь.&lt;&#x2F;p&gt;
 &lt;h4 id=&quot;2-obnovliaem-php-s-5-6-do-7-2&quot;&gt;2. Обновляем PHP с 5.6 до 7.2&lt;&#x2F;h4&gt;
@@ -910,18 +927,16 @@ zero         hard   nofile 1500000
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;webtatic.com&#x2F;projects&#x2F;yum-repository&#x2F;&quot;&gt;Webtatic&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Так как на моем сервере крутится только Zabbix, то список пакетов для обновления можно подсмотреть из установленных: &lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum list installed | grep php
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum list installed | grep php
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В моем случае был уже подключен репозиторий Webtatic, поэтому ориентируемся на его наименование пакетов. 
 Все пакеты с PHP 7.2 начинаются с префикса &lt;code&gt;php72w&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Берем список тех пакетов которые у нас установлены и копируем в текстовый редактор, затем меняем префикс на &lt;code&gt;php72w&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \
 php72w-devel.x86_64 php72w-embedded.x86_64 php72w-fpm.x86_64 php72w-gd.x86_64 php72w-ldap.x86_64 \ 
 php72w-mbstring.x86_64 php72w-mcrypt.x86_64 php72w-mysqlnd.x86_64 php72w-opcache.x86_64 php72w-pdo.x86_64 \
 php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_64
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Часть пакетов yum не найдет, но это можно игнорировать. В качестве средства для запуска php 
 мы будем использовать &lt;code&gt;php-fpm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Настраиваем php-fpm&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
@@ -929,24 +944,23 @@ php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_
 &lt;ul&gt;
 &lt;li&gt;Меняем пользователя с &lt;code&gt;apache&lt;&#x2F;code&gt; на &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
 &lt;li&gt;Меняем тип подключения на файл:&lt;br &#x2F;&gt;
-Было:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = 127.0.0.1:9000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;Стало:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = &#x2F;var&#x2F;run&#x2F;php5-fpm.sock
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+Было:&lt;pre&gt;&lt;code&gt;listen = 127.0.0.1:9000
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+Стало:&lt;pre&gt;&lt;code&gt;listen = &#x2F;var&#x2F;run&#x2F;php5-fpm.sock
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Включаем автозапуск сервиса и стартуем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl enable php-fpm &amp;amp;&amp;amp; systemctl start php-fpm
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h4 id=&quot;3-obnovliaem-zabbix-server&quot;&gt;3. Обновляем Zabbix сервер&lt;&#x2F;h4&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;service zabbix-server stop
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;systemctl enable php-fpm &amp;&amp; systemctl start php-fpm
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;3-obnovliaem-zabbix-server&quot;&gt;3. Обновляем Zabbix сервер&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;service zabbix-server stop
 
 yum localinstall http:&#x2F;&#x2F;repo.zabbix.com&#x2F;zabbix&#x2F;5.0&#x2F;rhel&#x2F;7&#x2F;x86_64&#x2F;zabbix-release-5.0-1.el7.noarch.rpm
 yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent
 
 chown -R zabbix: &#x2F;etc&#x2F;zabbix
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Очищаем содержимое &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, затем копируем самый свежий 
 frontend из &lt;code&gt;&#x2F;usr&#x2F;share&#x2F;zabbix&lt;&#x2F;code&gt; в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим лог сервера, там побегут строчки &lt;code&gt;database upgrade...&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
@@ -970,36 +984,32 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;p&gt;Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)&lt;&#x2F;p&gt;
 &lt;p&gt;Для начала посмотрим список виртуальных машин:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; VBoxManage list vms
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ VBoxManage list vms
 
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;prometheus_default_1562491030033_47028&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;bamboo-agent-centos7_default_1568705322865_68355&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
-&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&quot;prometheus_default_1562491030033_47028&quot; {b8c2eec3-e3e2-4d7b-9ee4-9f09d7691a71}
+&quot;bamboo-agent-centos7_default_1568705322865_68355&quot; {fcc600be-859a-430e-8da2-f3ff8dfa2d9f}
+&quot;&lt;inaccessible&gt;&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
+&quot;supervisor-jolokia_default_1572425247238_89749&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Запоминаем уникальный ID проблемной виртуальной машины - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;VBoxManage unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;И снова регистрируем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;VBoxManage registervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Теперь можно поднять машину как и планировали первоначально:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;vagrant&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; up
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin&quot;&gt;Что делать если у меня несколько проблемных машин?&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;vagrant up
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;chto-delat-esli-u-menia-neskol-ko-problemnykh-mashin&quot;&gt;Что делать если у меня несколько проблемных машин?&lt;&#x2F;h3&gt;
 &lt;p&gt;Бывают ситуации когда машин со статусом &lt;code&gt;inaccessible&lt;&#x2F;code&gt; может быть более чем одна. Можно перерегистрировать все, либо
 найти UUID для проблемной машины.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Решение для Vagrant:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в каталог с Vagrantfile и читаем UUID:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;$ cat .vagrant&#x2F;machines&#x2F;default&#x2F;virtualbox&#x2F;id
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На этом все.&lt;&#x2F;p&gt;
 </content>
 	</entry>
@@ -1014,14 +1024,14 @@ HTTP запросов в Web-сокеты используется
 механизм &lt;a href=&quot;https:&#x2F;&#x2F;tools.ietf.org&#x2F;html&#x2F;rfc2616#section-14.42&quot;&gt;смены протокола&lt;&#x2F;a&gt; доступный в HTTP&#x2F;1.1. 
 Передаются два заголовка: Connection и Upgrade.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, ваше приложение слушает tcp-порт &lt;code&gt;12345&lt;&#x2F;code&gt; и поддерживает Web-сокеты, вот как это настраивается:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {
+&lt;pre&gt;&lt;code&gt;location &#x2F; {
     proxy_pass http:&#x2F;&#x2F;localhost:12345;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
+    proxy_set_header Connection &quot;upgrade&quot;;
 }
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
 &lt;p&gt;Как-то раз на production сервере мы поймали проблему - Web-сокеты обрывались каждые 2 минуты. 
 По умолчанию nginx закрывает проксируемые соединения после 60 секунд неактивности. Эта величина регулируется параметром
 &lt;a href=&quot;https:&#x2F;&#x2F;nginx.org&#x2F;ru&#x2F;docs&#x2F;http&#x2F;ngx_http_proxy_module.html#proxy_read_timeout&quot;&gt;proxy_read_timeout&lt;&#x2F;a&gt;. На нашем сервере
@@ -1048,79 +1058,76 @@ HTTP запросов в Web-сокеты используется
 часовой пояс сервера, сделал это классическим &lt;code&gt;echo&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Перед сборкой скопировал файлы приложения в подкаталог &lt;code&gt;app&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Файл сценария сборки - &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;FROM&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; php:5.6-apache
+&lt;pre data-lang=&quot;dockerfile&quot; class=&quot;language-dockerfile &quot;&gt;&lt;code class=&quot;language-dockerfile&quot; data-lang=&quot;dockerfile&quot;&gt;FROM php:5.6-apache
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+RUN apt-get update &amp;&amp; apt-get install -y \
                       libmagickwand-dev --no-install-recommends \
-                   &amp;amp;&amp;amp; pecl install imagick \
-        &amp;amp;&amp;amp; docker-php-ext-enable imagick
+                   &amp;&amp; pecl install imagick \
+        &amp;&amp; docker-php-ext-enable imagick
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;apt-get update &amp;amp;&amp;amp; apt-get install -y \
+RUN apt-get update &amp;&amp; apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-    &amp;amp;&amp;amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) gd \
-    &amp;amp;&amp;amp; docker-php-ext-install -j$(nproc) zip
+    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+    &amp;&amp; docker-php-ext-install -j$(nproc) gd \
+    &amp;&amp; docker-php-ext-install -j$(nproc) zip
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;echo &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;date.timezone = Europe&#x2F;Moscow&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot; &amp;gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
+RUN echo &quot;date.timezone = Europe&#x2F;Moscow&quot; &gt; &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F;timezone.ini
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;a2enmod rewrite
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;service apache2 restart
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;COPY&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; app&#x2F; &#x2F;var&#x2F;www&#x2F;html
+RUN a2enmod rewrite
+RUN service apache2 restart
+COPY app&#x2F; &#x2F;var&#x2F;www&#x2F;html
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;usermod -u 1001 www-data &amp;amp;&amp;amp; groupmod -g 1001 www-data
+RUN usermod -u 1001 www-data &amp;&amp; groupmod -g 1001 www-data
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chown -R www-data.www-data &#x2F;var&#x2F;www
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chmod -R ug=rwx &#x2F;var&#x2F;www
+RUN chown -R www-data.www-data &#x2F;var&#x2F;www
+RUN chmod -R ug=rwx &#x2F;var&#x2F;www
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mkdir &#x2F;tmp&#x2F;webmodule
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;RUN &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;chmod a=rwx &#x2F;tmp&#x2F;webmodule
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EXPOSE &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;80
+RUN mkdir &#x2F;tmp&#x2F;webmodule
+RUN chmod a=rwx &#x2F;tmp&#x2F;webmodule
+EXPOSE 80
 
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Собираем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-dobavliat-rasshireniia-dlia-php&quot;&gt;Как добавлять расширения для php&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;docker build -t my-repo&#x2F;my-app:1.0.0 .
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kak-dobavliat-rasshireniia-dlia-php&quot;&gt;Как добавлять расширения для php&lt;&#x2F;h2&gt;
 &lt;p&gt;Авторы PHP любезно предоставили скрипт &lt;code&gt;docker-php-ext-install&lt;&#x2F;code&gt; внутри базового контейнера. В примере выше видно как это
 использовать.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-ispol-zovat-svoi-php-ini&quot;&gt;Как использовать свой php.ini&lt;&#x2F;h2&gt;
 &lt;p&gt;Добавляем в &lt;code&gt;Dockerfile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-reshit-problemu-s-pravami-dostupa&quot;&gt;Как решить проблему с правами доступа&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;COPY php.ini &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kak-reshit-problemu-s-pravami-dostupa&quot;&gt;Как решить проблему с правами доступа&lt;&#x2F;h2&gt;
 &lt;p&gt;В &lt;code&gt;Dockerfile&lt;&#x2F;code&gt; есть пара команд, которые дают полные права для пользователя &lt;code&gt;www-data&lt;&#x2F;code&gt;, 
 а также задают ID пользователя и группы для него равные &lt;code&gt;1001&lt;&#x2F;code&gt;.
 На хосте где крутится докер я создал юзера с таким же uid\gid и сделал его полноправным владельцем папки 
 которую использую как volume:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;...
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;...
+volumes:
+      - .&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+...
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kak-ispol-zovat&quot;&gt;Как использовать&lt;&#x2F;h2&gt;
 &lt;p&gt;С помощью docker compose можно завести вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;
+&lt;pre data-lang=&quot;yaml&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;version: &#x27;2&#x27;
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;phpfpm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-repo&#x2F;my-app:1.0.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;.&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
-    ports&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;9123:80&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;:
-      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_USER=#1001
-      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;APACHE_RUN_GROUP=#1001
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+services:
+  phpfpm:
+    image: &quot;my-repo&#x2F;my-app:1.0.0&quot;
+    volumes:
+      - .&#x2F;storage:&#x2F;var&#x2F;www&#x2F;html&#x2F;data
+    ports:
+      - &quot;9123:80&quot;
+    environment:
+      - APACHE_RUN_USER=#1001
+      - APACHE_RUN_GROUP=#1001
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Чтобы данные которые загружают юзеры сохранялись делаем volume.&lt;&#x2F;p&gt;
 &lt;p&gt;Стартуем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;docker-compose up -d
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;docker-compose up -d
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Приложение будет доступно на порту &lt;code&gt;9123&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 </content>
 	</entry>
@@ -1351,9 +1358,8 @@ Microsoft выбрали верное направление. Десятки л�
 &lt;p&gt;Gradle build cache - это механизм кэширования который нацелен на экономию времени, переиспользуя вывод от предыдущих сборок приложения.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
 &lt;p&gt;Эта фича включается через файл конфигурации &lt;code&gt;gradle.properties&lt;&#x2F;code&gt;, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-properties&quot; data-lang=&quot;properties&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;org.gradle.caching=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;true
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;properties&quot; class=&quot;language-properties &quot;&gt;&lt;code class=&quot;language-properties&quot; data-lang=&quot;properties&quot;&gt;org.gradle.caching=true
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На словах звучит круто и на деле сборки становятся быстрей, но проверка актуальности кэша (инвалидация) происходит далеко не всегда.
 Чаще всего проблема проявляется после запуска анализа покрытия кода (coverage). Gradle создает каталог &lt;code&gt;out&lt;&#x2F;code&gt; и перестает
 видеть изменения в тестах.&lt;&#x2F;p&gt;
@@ -1368,15 +1374,14 @@ Microsoft выбрали верное направление. Десятки л�
 		<link href="https://b.tinyops.ru/zola-issues/" type="text/html"/>
 		<id>https://b.tinyops.ru/zola-issues/</id>
 		<content type="html">&lt;p&gt;Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;Change detected @ 2020-01-11 18:37:14
--&amp;gt; Content changed C:\pro\tinyops-blog\content&#x2F;zola-issues.md
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;Change detected @ 2020-01-11 18:37:14
+-&gt; Content changed C:\pro\tinyops-blog\content&#x2F;zola-issues.md
 Failed to build the site
-Error: Failed to render page &amp;#39;d:\tinyops-blog\content&#x2F;zola-issues.md&amp;#39;
-Reason: Failed to render &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;
-Reason: Variable `page.taxonomies[&amp;#39;tags&amp;#39;]` not found in context while rendering &amp;#39;tinyblog&#x2F;templates&#x2F;page.html&amp;#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
+Error: Failed to render page &#x27;d:\tinyops-blog\content&#x2F;zola-issues.md&#x27;
+Reason: Failed to render &#x27;tinyblog&#x2F;templates&#x2F;page.html&#x27;
+Reason: Variable `page.taxonomies[&#x27;tags&#x27;]` not found in context while rendering &#x27;tinyblog&#x2F;templates&#x2F;page.html&#x27;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
 Done in 31ms.
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В контексте ошибки выше:&lt;&#x2F;p&gt;
 &lt;ol&gt;
 &lt;li&gt;Ошибка связана с содержимым файла &lt;code&gt;zola-issues.md&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
@@ -1384,24 +1389,22 @@ Done in 31ms.
 &lt;li&gt;Переменная &lt;code&gt;page.taxonomies[&#x27;tags&#x27;]&lt;&#x2F;code&gt; не найдена&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;p&gt;Смотрим начало &lt;code&gt;content&#x2F;zola-issues.md&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;background-color:#bf616a;color:#2b303b;&quot;&gt;+++&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Как решать проблемы с Zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;date &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2020-01-10
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;+++
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;+++
+title = &quot;Как решать проблемы с Zola&quot;
+date = 2020-01-10
++++
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;и видим что секция &lt;code&gt;[taxonomies]&lt;&#x2F;code&gt; отсутствует. Если взялся использовать тэги и категории, то будь
 добр их определить. Исправляем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;categories &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tutorial&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;oshibka-the-requested-port-is-not-available&quot;&gt;Ошибка - The requested port is not available&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;[taxonomies]
+tags = [&quot;zola&quot;]
+categories = [&quot;tutorial&quot;]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;oshibka-the-requested-port-is-not-available&quot;&gt;Ошибка - The requested port is not available&lt;&#x2F;h2&gt;
 &lt;p&gt;Как это выглядит в консоли:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;d:\tinyops-blog&amp;gt;zola serve
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;d:\tinyops-blog&gt;zola serve
 The requested port is not available
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Ошибка сообщает что Zola не может стартануть с выбранным tcp-портом (по умолчанию &lt;code&gt;1111&lt;&#x2F;code&gt;). &lt;&#x2F;p&gt;
 &lt;p&gt;Решения для Windows:&lt;&#x2F;p&gt;
 &lt;ol&gt;
@@ -1411,9 +1414,9 @@ The requested port is not available
 &lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Указать другой порт при запуске:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve --port 12345
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;zola serve --port 12345
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;
@@ -1446,11 +1449,11 @@ The requested port is not available
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;В файле-конфигурации темы &lt;code&gt;theme.toml&lt;&#x2F;code&gt; нужно подключить taxonomies:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;name &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rss &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;]
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;taxonomies = [
+    {name = &quot;tags&quot;, rss = true}
+]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;В шаблоне &lt;code&gt;page.html&lt;&#x2F;code&gt; добавить HTML-код&lt;br &#x2F;&gt;
 Каждая страница имеет глобальную переменную &lt;code&gt;page&lt;&#x2F;code&gt;, которая содержит словарь &lt;code&gt;taxonomies&lt;&#x2F;code&gt;. 
@@ -1458,18 +1461,18 @@ The requested port is not available
 Результат будет содержать массив тэгов.
 Затем использовать цикл for чтобы пробежаться по списку.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-jinja2&quot; data-lang=&quot;jinja2&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;page&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;taxonomies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tags&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;#39;] %}
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;    &amp;lt;a class=&amp;quot;btn btn-tiny btn-light&amp;quot; href=&amp;quot;&#x2F;tags&#x2F;{{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}}&#x2F;&amp;quot;&amp;gt;{{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tagName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;}}&amp;lt;&#x2F;a&amp;gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;{% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;endfor &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;%}
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;jinja2&quot; class=&quot;language-jinja2 &quot;&gt;&lt;code class=&quot;language-jinja2&quot; data-lang=&quot;jinja2&quot;&gt;{% for tagName in page.taxonomies[&#x27;tags&#x27;] %}
+    &lt;a class=&quot;btn btn-tiny btn-light&quot; href=&quot;&#x2F;tags&#x2F;{{tagName}}&#x2F;&quot;&gt;{{tagName}}&lt;&#x2F;a&gt;
+{% endfor %}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Настроить тэги для поста&lt;br &#x2F;&gt;
 Во frontmatter-части файла с постом нужно добавить описание тэгов. Например, вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[taxonomies]
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tags &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zola&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;]
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;[taxonomies]
+tags = [&quot;zola&quot;]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
 &lt;p&gt;Пример отображения тэгов вы можете увидеть сразу под заголовком данной статьи.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
@@ -1499,30 +1502,29 @@ The requested port is not available
 &lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Создадим подкаталог в котором будут хранится файлы темы которую выбрали:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mkdir themes\tinyblog
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;mkdir themes\tinyblog
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Добавим модуль тему как git модуль:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme themes&#x2F;tinyblog
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;git submodule add https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme themes&#x2F;tinyblog
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Подкачаем актуальную версию темы:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git submodule update --init --recursive 
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;git submodule update --init --recursive 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;либо заходим в каталог тем и делаем pull:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;cd themes
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;git clone https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme tinyblog
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;cd themes
+git clone https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;tinyblog-zola-theme tinyblog
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Настраиваем файл конфигурации сайта&lt;&#x2F;p&gt;
 &lt;p&gt;В файле конфигурации &lt;code&gt;config.toml&lt;&#x2F;code&gt; указываем тему:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;theme &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tinyblog&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;background-color:#bf616a;color:#2b303b;&quot;&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;theme = &quot;tinyblog&quot; 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;li&gt;
 &lt;p&gt;Открываем сайт в браузере и видим что тема применилась.&lt;&#x2F;p&gt;
 &lt;&#x2F;li&gt;
@@ -1541,14 +1543,13 @@ The requested port is not available
 		<link href="https://b.tinyops.ru/zola-structure/" type="text/html"/>
 		<id>https://b.tinyops.ru/zola-structure/</id>
 		<content type="html">&lt;p&gt;После создания нового проекта в каталоге появится следующая структура:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;├── config.toml
+&lt;pre&gt;&lt;code&gt;├── config.toml
 ├── content
 ├── sass
 ├── static
 ├── templates
 └── themes
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Далее - подробнее о каждом из объектов.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;fail-konfiguratsii&quot;&gt;Файл конфигурации&lt;&#x2F;h3&gt;
 &lt;p&gt;Главный файл конфигурации проекта &lt;code&gt;config.toml&lt;&#x2F;code&gt; хранится в корневом каталоге.&lt;&#x2F;p&gt;
@@ -1623,32 +1624,28 @@ Zola решает множество популярных проблем, тем
 Мне не нужно поднимать окружение разработчика Rust чтобы собрать исполняемый файл под мою ОС. 
 Поддерживаются самые популярные ОС (Windows, MacOS), различные редакции Linux и даже FreeBSD.&lt;&#x2F;p&gt;
 &lt;p&gt;Для Windows предпочитаю &lt;a href=&quot;http:&#x2F;&#x2F;scoop.sh&#x2F;&quot;&gt;Scoop&lt;&#x2F;a&gt;, то и ставил через него:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;scoop install zola
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;scoop install zola
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Вот и все :)&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-sozdat-novyi-proekt&quot;&gt;Как создать новый проект&lt;&#x2F;h2&gt;
 &lt;p&gt;Достаточно запустить zola с командой &lt;code&gt;init&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;zola init
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Zola спросит пару вопросов в интерактивном режиме и скелет проекта сайта будет готов.
 Чтобы задать имя каталога, то его можно указать последним аргументом:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola init awesome-blog
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;kak-zapustit-zola-v-rezhime-razrabotki&quot;&gt;Как запустить Zola в режиме разработки&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;zola init awesome-blog
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kak-zapustit-zola-v-rezhime-razrabotki&quot;&gt;Как запустить Zola в режиме разработки&lt;&#x2F;h2&gt;
 &lt;p&gt;Режим разработки позволяет смотреть на итоговый результат в режиме реального времени. Любые изменения в каталоге проекта
 будут мгновенно отображаться в браузере.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola serve
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;zola serve
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;По умолчанию приложение будет доступно в браузере по адресу &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:1111&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:1111&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-sobrat-production-ready-sborku&quot;&gt;Как собрать production-ready сборку&lt;&#x2F;h2&gt;
 &lt;p&gt;Production-ready сборка это сборка которая скомпонована генератором с учетом всех возможных оптимизаций. Она готова
 для того чтобы загрузить на ваш сайт.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;zola build --base-url $DEPLOY_URL
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;zola build --base-url $DEPLOY_URL
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Где &lt;code&gt;$DEPLOY_URL&lt;&#x2F;code&gt; - адрес по которому будет крутиться сайт.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-pro-zola&quot;&gt;Другие статьи про Zola&lt;&#x2F;h2&gt;
 &lt;p&gt;По тэгу &lt;a href=&quot;&#x2F;tags&#x2F;zola&quot;&gt;zola&lt;&#x2F;a&gt; вы можете найти другие статьи из этого цикла.&lt;&#x2F;p&gt;

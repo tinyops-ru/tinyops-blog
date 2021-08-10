@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -145,49 +145,42 @@
 <code>Dotfiles</code> должны быть написаны под вас, чужие — могут служить источником знаний или вдохновения.</p>
 <h2 id="s-chego-nachat">С чего начать</h2>
 <p>Создадим каталог и репозиторий:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">mkdir ~</span><span style="color:#c0c5ce;">/.dotfiles &amp;&amp; </span><span style="color:#96b5b4;">cd </span><span style="color:#bf616a;">~</span><span style="color:#c0c5ce;">/.dotfiles
-</span><span style="color:#bf616a;">git</span><span style="color:#c0c5ce;"> init
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">mkdir ~/.dotfiles && cd ~/.dotfiles
+git init
+</code></pre>
 <p>Создадим на Github отдельный репозиторий <code>dotfiles</code>. Копируем ссылку и добавляем к локальному:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span style="color:#c0c5ce;"> remote add origin git@github.com:your-user/dotfiles.git
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">git remote add origin git@github.com:your-user/dotfiles.git
+</code></pre>
 <p>Для примера добавим конфигурацию vim в наши dotfiles.</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">mkdir -p ~</span><span style="color:#c0c5ce;">/.dotfiles/vim/plugins
-</span><span style="color:#bf616a;">cp ~</span><span style="color:#c0c5ce;">/.vimrc </span><span style="color:#bf616a;">~</span><span style="color:#c0c5ce;">/.dotfiles/vim
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">mkdir -p ~/.dotfiles/vim/plugins
+cp ~/.vimrc ~/.dotfiles/vim
+</code></pre>
 <p>Добавим в git и запушим изменения на GitHub:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">git checkout main
+<pre><code>git checkout main
 git add *
-git commit -a -m &quot;[+] add .vimrc&quot;
+git commit -a -m "[+] add .vimrc"
 git push
-</span></code></pre>
+</code></pre>
 <p>Здесь стоит отметить, что я использую ветку <code>main</code> вместо <code>master</code>, т. к. так заведено на GitHub.</p>
 <h2 id="ustanovka-dotfiles">Установка dotfiles</h2>
 <p>Продолжаем пример с <code>.vimrc</code>-файлом. Удалим текущий и создадим ссылку на тот что хранится в dotfiles:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">rm -f ~</span><span style="color:#c0c5ce;">/.vimrc
-</span><span style="color:#bf616a;">ln -s ~</span><span style="color:#c0c5ce;">/.dotfiles/vim/.vimrc </span><span style="color:#bf616a;">~</span><span style="color:#c0c5ce;">/.vimrc
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">rm -f ~/.vimrc
+ln -s ~/.dotfiles/vim/.vimrc ~/.vimrc
+</code></pre>
 <p>Когда ваш репозиторий будет наполнен файлами, имеет смысл написать скрипт, который будет создавать правильные ссылки в домашнем каталоге.</p>
 <h2 id="zavisimosti-i-plaginy">Зависимости и плагины</h2>
 <p>Помимо файлов конфигурации для приложений в <code>dotfiles</code> можно хранить удобные скрипты и плагины. Нет смысла добавлять плагины в виде файлов в наш репозиторий, но имеет смысл добавить их в виде суб-модулей.</p>
 <p>Я использую плагин <a href="https://github.com/preservim/nerdtree">NERDTree</a> для vim. Добавим репозиторий проекта в виде суб-модуля:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span style="color:#c0c5ce;"> submodule add https://github.com/preservim/nerdtree vim/plugins/nerdtree
-</span></code></pre><h2 id="ustanovka-zavisimostei-i-plaginov">Установка зависимостей и плагинов</h2>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">git submodule add https://github.com/preservim/nerdtree vim/plugins/nerdtree
+</code></pre>
+<h2 id="ustanovka-zavisimostei-i-plaginov">Установка зависимостей и плагинов</h2>
 <p>Установка и обновление до последних версий:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span style="color:#c0c5ce;"> submodule update</span><span style="color:#bf616a;"> --init --recursive
-git</span><span style="color:#c0c5ce;"> submodule update</span><span style="color:#bf616a;"> --init --remote
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">git submodule update --init --recursive
+git submodule update --init --remote
+</code></pre>
 <p>Создаём ссылку (symlink) на каталог с плагинами:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">ln -s ~</span><span style="color:#c0c5ce;">/.dotfiles/vim/plugins </span><span style="color:#bf616a;">~</span><span style="color:#c0c5ce;">/.vim/plugged
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">ln -s ~/.dotfiles/vim/plugins ~/.vim/plugged
+</code></pre>
 <p>Каталог <code>~/vim/plugged</code> может отличаться от вашего, я использую рекомендованный от <a href="https://github.com/junegunn/vim-plug">vim-plug</a>.</p>
 <h2 id="spetsifichnye-lokal-nye-nastroiki">Специфичные локальные настройки</h2>
 <p>При использовании <code>dotfiles</code> на множестве машин большая часть конфигурации будет одна и та же. Но возможны небольшие различия.</p>
@@ -197,28 +190,26 @@ git</span><span style="color:#c0c5ce;"> submodule update</span><span style="colo
 <p>В репозитории <code>dotfiles_local</code> каждая ветвь именуется именем машины. Например, <code>home-pc</code>, <code>work-pc</code>.</p>
 <h3 id="kak-podgruzhat-spetsifichnye-nastroiki">Как подгружать специфичные настройки</h3>
 <p>Для bash добавляем в <code>~/.bashrc</code>:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#b48ead;">if </span><span style="color:#96b5b4;">[ </span><span style="color:#bf616a;">-f ~</span><span style="color:#c0c5ce;">/.bashrc_local </span><span style="color:#96b5b4;">]</span><span style="color:#c0c5ce;">; </span><span style="color:#b48ead;">then
-    </span><span style="color:#96b5b4;">source </span><span style="color:#bf616a;">~</span><span style="color:#c0c5ce;">/.bashrc_local
-</span><span style="color:#b48ead;">fi
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">if [ -f ~/.bashrc_local ]; then
+    source ~/.bashrc_local
+fi
+</code></pre>
 <p>Для git добавляем в <code>~/.gitconfig</code>:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">[include]
+<pre><code>[include]
 	path = ~/.gitconfig_local
-</span></code></pre>
+</code></pre>
 <p>Для Vim, добавляем в файл <code>.vimrc</code>:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-vim" data-lang="vim"><span style="color:#96b5b4;">let</span><span style="color:#c0c5ce;"> $LOCALFILE=</span><span style="color:#8fa1b3;">expand</span><span style="color:#c0c5ce;">(</span><span style="color:#a3be8c;">&quot;~/.vimrc_local&quot;</span><span style="color:#c0c5ce;">)
-</span><span style="color:#b48ead;">if </span><span style="color:#8fa1b3;">filereadable</span><span style="color:#c0c5ce;">($LOCALFILE)
+<pre data-lang="vim" class="language-vim "><code class="language-vim" data-lang="vim">let $LOCALFILE=expand("~/.vimrc_local")
+if filereadable($LOCALFILE)
     source $LOCALFILE
-</span><span style="color:#b48ead;">endif
-</span></code></pre><h2 id="spetsial-nye-skripty">Специальные скрипты</h2>
+endif
+</code></pre>
+<h2 id="spetsial-nye-skripty">Специальные скрипты</h2>
 <p>Если у вас есть какие-то скрипты, которые вы используете в своей работе, их тоже можно добавить в dotfiles. Например, в каталог <code>.dotfiles/bin</code>.</p>
 <p>Затем в <code>.bashrc</code> добавляем их в переменную <code>PATH</code>:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#b48ead;">export </span><span style="color:#bf616a;">PATH</span><span style="color:#c0c5ce;">=</span><span style="color:#bf616a;">~</span><span style="color:#a3be8c;">/.dotfiles/bin:</span><span style="color:#c0c5ce;">$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">PATH</span><span style="color:#a3be8c;">}
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">export PATH=~/.dotfiles/bin:${PATH}
+</code></pre>
+
   
 </section>
 

@@ -46,9 +46,8 @@
 К счастью, для Zabbix это просто, т. к. архивировать нужно только базу и файлы интерфейса.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Резервная копия базы&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Снимаем дамп базы:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;mysqldump zabbix_server | gzip &amp;gt; zabbix_server.sql.gz
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;mysqldump zabbix_server | gzip &gt; zabbix_server.sql.gz
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;&lt;strong&gt;Резервная копия Zabbix Frontend&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;На текущем сервере frontend расположен в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, поэтому копируем эту папку куда-нибудь.&lt;&#x2F;p&gt;
 &lt;h4 id=&quot;2-obnovliaem-php-s-5-6-do-7-2&quot;&gt;2. Обновляем PHP с 5.6 до 7.2&lt;&#x2F;h4&gt;
@@ -60,18 +59,16 @@
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;webtatic.com&#x2F;projects&#x2F;yum-repository&#x2F;&quot;&gt;Webtatic&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Так как на моем сервере крутится только Zabbix, то список пакетов для обновления можно подсмотреть из установленных: &lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum list installed | grep php
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum list installed | grep php
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В моем случае был уже подключен репозиторий Webtatic, поэтому ориентируемся на его наименование пакетов. 
 Все пакеты с PHP 7.2 начинаются с префикса &lt;code&gt;php72w&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
 &lt;p&gt;Берем список тех пакетов которые у нас установлены и копируем в текстовый редактор, затем меняем префикс на &lt;code&gt;php72w&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum install --enablerepo=webtatic php72w.x86_64 php72w-bcmath.x86_64 php72w-cli.x86_64 php72w-common.x86_64 \
 php72w-devel.x86_64 php72w-embedded.x86_64 php72w-fpm.x86_64 php72w-gd.x86_64 php72w-ldap.x86_64 \ 
 php72w-mbstring.x86_64 php72w-mcrypt.x86_64 php72w-mysqlnd.x86_64 php72w-opcache.x86_64 php72w-pdo.x86_64 \
 php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_64
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Часть пакетов yum не найдет, но это можно игнорировать. В качестве средства для запуска php 
 мы будем использовать &lt;code&gt;php-fpm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;strong&gt;Настраиваем php-fpm&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
@@ -79,24 +76,23 @@ php72w-pear.noarch php72w-pecl-apcu.x86_64 php72w-process.x86_64 php72w-xml.x86_
 &lt;ul&gt;
 &lt;li&gt;Меняем пользователя с &lt;code&gt;apache&lt;&#x2F;code&gt; на &lt;code&gt;nginx&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
 &lt;li&gt;Меняем тип подключения на файл:&lt;br &#x2F;&gt;
-Было:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = 127.0.0.1:9000
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;Стало:&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;listen = &#x2F;var&#x2F;run&#x2F;php5-fpm.sock
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;&#x2F;li&gt;
+Было:&lt;pre&gt;&lt;code&gt;listen = 127.0.0.1:9000
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+Стало:&lt;pre&gt;&lt;code&gt;listen = &#x2F;var&#x2F;run&#x2F;php5-fpm.sock
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;Включаем автозапуск сервиса и стартуем:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;systemctl enable php-fpm &amp;amp;&amp;amp; systemctl start php-fpm
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h4 id=&quot;3-obnovliaem-zabbix-server&quot;&gt;3. Обновляем Zabbix сервер&lt;&#x2F;h4&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;service zabbix-server stop
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;systemctl enable php-fpm &amp;&amp; systemctl start php-fpm
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;3-obnovliaem-zabbix-server&quot;&gt;3. Обновляем Zabbix сервер&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;service zabbix-server stop
 
 yum localinstall http:&#x2F;&#x2F;repo.zabbix.com&#x2F;zabbix&#x2F;5.0&#x2F;rhel&#x2F;7&#x2F;x86_64&#x2F;zabbix-release-5.0-1.el7.noarch.rpm
 yum upgrade zabbix-server-mysql zabbix-web-mysql zabbix-agent
 
 chown -R zabbix: &#x2F;etc&#x2F;zabbix
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Очищаем содержимое &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;, затем копируем самый свежий 
 frontend из &lt;code&gt;&#x2F;usr&#x2F;share&#x2F;zabbix&lt;&#x2F;code&gt; в &lt;code&gt;&#x2F;var&#x2F;www&#x2F;zabbix&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим лог сервера, там побегут строчки &lt;code&gt;database upgrade...&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;

@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -113,22 +113,20 @@
 <p>Скачиваем свежую версию с GitHub <a href="https://github.com/syncthing/syncthing/releases/latest">https://github.com/syncthing/syncthing/releases/latest</a></p>
 <p>Файл будет выглядеть подобным образом <code>syncthing-linux-arm64-v1.16.1.tar.gz</code>.</p>
 <h3 id="2-raspakovyvaem">2. Распаковываем</h3>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">tar</span><span style="color:#c0c5ce;"> xvzf syncthing-linux-arm64-v1.16.1.tar.gz
-</span><span style="color:#96b5b4;">cd</span><span style="color:#c0c5ce;"> syncthing-linux-arm64-v1.16.1
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">tar xvzf syncthing-linux-arm64-v1.16.1.tar.gz
+cd syncthing-linux-arm64-v1.16.1
+</code></pre>
 <p>Будет примерно такое содержимое (лишнее убрал):</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">├──</span><span style="color:#c0c5ce;"> etc
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   ├── linux-systemd
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │   ├── README.md
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │   ├── system
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │   │   ├── syncthing-resume.service
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │   │   └── syncthing@.service  // скрипт для установки от имени пользователя
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │   └── user
-</span><span style="color:#bf616a;">│</span><span style="color:#c0c5ce;">   │       └── syncthing.service // скрипт для установки от имени системы
-</span><span style="color:#bf616a;">└──</span><span style="color:#c0c5ce;"> syncthing
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">├── etc
+│   ├── linux-systemd
+│   │   ├── README.md
+│   │   ├── system
+│   │   │   ├── syncthing-resume.service
+│   │   │   └── syncthing@.service  // скрипт для установки от имени пользователя
+│   │   └── user
+│   │       └── syncthing.service // скрипт для установки от имени системы
+└── syncthing
+</code></pre>
 <p>В архиве присутствует два вида конфигурации:</p>
 <ul>
 <li>Системная служба</li>
@@ -140,20 +138,19 @@
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.</p>
 <p>В первом варианте данные будут синхронизированы быстрей.</p>
 <h3 id="3-ustanavlivaem-ispolniaemyi-fail">3. Устанавливаем исполняемый файл</h3>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">sudo</span><span style="color:#c0c5ce;"> cp syncthing /usr/local/bin/syncthing
-</span><span style="color:#bf616a;">sudo</span><span style="color:#c0c5ce;"> chmod +x /usr/local/bin/syncthing
-</span></code></pre><h3 id="4-ustanavlivaem-sluzhbu">4. Устанавливаем службу</h3>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">sudo cp syncthing /usr/local/bin/syncthing
+sudo chmod +x /usr/local/bin/syncthing
+</code></pre>
+<h3 id="4-ustanavlivaem-sluzhbu">4. Устанавливаем службу</h3>
 <p>На примере пользователя <code>eugene</code>.</p>
 <p>Копируем файлы службы из дистрибутива:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">cp</span><span style="color:#c0c5ce;"> etc/linux-systemd/system/*.service /etc/systemd/system/
-</span></code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cp etc/linux-systemd/system/*.service /etc/systemd/system/
+</code></pre>
 <p>Разрешаем автозапуск при загрузке ОС и запускаем службу:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-bash" data-lang="bash"><span style="color:#bf616a;">systemctl</span><span style="color:#c0c5ce;"> enable syncthing@myuser.service
-</span><span style="color:#bf616a;">systemctl</span><span style="color:#c0c5ce;"> start syncthing@myuser.service
-</span></code></pre><h3 id="5-proveriaem-rabotu-syncthing">5. Проверяем работу Syncthing</h3>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">systemctl enable syncthing@myuser.service
+systemctl start syncthing@myuser.service
+</code></pre>
+<h3 id="5-proveriaem-rabotu-syncthing">5. Проверяем работу Syncthing</h3>
 <p>Заходим в Web-интерфейс <code>http://имя-сервера:8384/</code>.</p>
 <h2 id="drugie-stat-i-na-temu">Другие статьи на тему</h2>
 <ul>

@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -127,11 +127,11 @@
 <h3 id="sozdanie-sluzhby-windows">Создание службы Windows</h3>
 <p>Допустим полный путь до исполняемого файла Syncthing - <code>c:\apps\syncthing\syncthing.exe</code>.</p>
 <p>Запускаем командную строку Windows с правами локального администратора и создаём службу:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+<pre><code>c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
 c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
 c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
-</span></code></pre><h3 id="nastraivaem-pol-zovatelia">Настраиваем пользователя</h3>
+</code></pre>
+<h3 id="nastraivaem-pol-zovatelia">Настраиваем пользователя</h3>
 <p>В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. </p>
 <p>Заходим в оснастку служб Windows, переходим в свойств службы <code>Syncthing</code>.</p>
 <p><img src="/images/awesomeware/syncthing/service-properties.png" alt="Свойства службы Syncthing" title="Свойства службы Syncthing" /></p>

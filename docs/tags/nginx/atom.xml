@@ -18,14 +18,14 @@ HTTP запросов в Web-сокеты используется
 механизм &lt;a href=&quot;https:&#x2F;&#x2F;tools.ietf.org&#x2F;html&#x2F;rfc2616#section-14.42&quot;&gt;смены протокола&lt;&#x2F;a&gt; доступный в HTTP&#x2F;1.1. 
 Передаются два заголовка: Connection и Upgrade.&lt;&#x2F;p&gt;
 &lt;p&gt;Например, ваше приложение слушает tcp-порт &lt;code&gt;12345&lt;&#x2F;code&gt; и поддерживает Web-сокеты, вот как это настраивается:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;location &#x2F; {
+&lt;pre&gt;&lt;code&gt;location &#x2F; {
     proxy_pass http:&#x2F;&#x2F;localhost:12345;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection &amp;quot;upgrade&amp;quot;;
+    proxy_set_header Connection &quot;upgrade&quot;;
 }
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kogda-obryvaet-web-sokety&quot;&gt;Когда обрывает Web-сокеты&lt;&#x2F;h3&gt;
 &lt;p&gt;Как-то раз на production сервере мы поймали проблему - Web-сокеты обрывались каждые 2 минуты. 
 По умолчанию nginx закрывает проксируемые соединения после 60 секунд неактивности. Эта величина регулируется параметром
 &lt;a href=&quot;https:&#x2F;&#x2F;nginx.org&#x2F;ru&#x2F;docs&#x2F;http&#x2F;ngx_http_proxy_module.html#proxy_read_timeout&quot;&gt;proxy_read_timeout&lt;&#x2F;a&gt;. На нашем сервере

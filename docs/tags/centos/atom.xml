@@ -20,22 +20,20 @@
 &lt;p&gt;Скачиваем свежую версию с GitHub &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;syncthing&#x2F;syncthing&#x2F;releases&#x2F;latest&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Файл будет выглядеть подобным образом &lt;code&gt;syncthing-linux-arm64-v1.16.1.tar.gz&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;2-raspakovyvaem&quot;&gt;2. Распаковываем&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;tar&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; xvzf syncthing-linux-arm64-v1.16.1.tar.gz
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing-linux-arm64-v1.16.1
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;tar xvzf syncthing-linux-arm64-v1.16.1.tar.gz
+cd syncthing-linux-arm64-v1.16.1
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Будет примерно такое содержимое (лишнее убрал):&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;├──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   ├── linux-systemd
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── README.md
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   ├── system
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   ├── syncthing-resume.service
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │   └── user
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;│&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;└──&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; syncthing
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;├── etc
+│   ├── linux-systemd
+│   │   ├── README.md
+│   │   ├── system
+│   │   │   ├── syncthing-resume.service
+│   │   │   └── syncthing@.service  &#x2F;&#x2F; скрипт для установки от имени пользователя
+│   │   └── user
+│   │       └── syncthing.service &#x2F;&#x2F; скрипт для установки от имени системы
+└── syncthing
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;В архиве присутствует два вида конфигурации:&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;Системная служба&lt;&#x2F;li&gt;
@@ -47,20 +45,19 @@
 в графический интерфейс (Gnome, KDE и т. д.) и запустился Syncthing.&lt;&#x2F;p&gt;
 &lt;p&gt;В первом варианте данные будут синхронизированы быстрей.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;3-ustanavlivaem-ispolniaemyi-fail&quot;&gt;3. Устанавливаем исполняемый файл&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo cp syncthing &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+sudo chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;syncthing
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;4-ustanavlivaem-sluzhbu&quot;&gt;4. Устанавливаем службу&lt;&#x2F;h3&gt;
 &lt;p&gt;На примере пользователя &lt;code&gt;eugene&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Копируем файлы службы из дистрибутива:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cp etc&#x2F;linux-systemd&#x2F;system&#x2F;*.service &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Разрешаем автозапуск при загрузке ОС и запускаем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; enable syncthing@myuser.service
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;systemctl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt; start syncthing@myuser.service
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;systemctl enable syncthing@myuser.service
+systemctl start syncthing@myuser.service
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;5-proveriaem-rabotu-syncthing&quot;&gt;5. Проверяем работу Syncthing&lt;&#x2F;h3&gt;
 &lt;p&gt;Заходим в Web-интерфейс &lt;code&gt;http:&#x2F;&#x2F;имя-сервера:8384&#x2F;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
 &lt;ul&gt;
@@ -93,20 +90,18 @@
 &lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
 &lt;p&gt;Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.&lt;&#x2F;p&gt;
 &lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитарии:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;yum -y install epel-release
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;yum -y install epel-release
 yum -y install borgbackup
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
 &lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;cronbox.ru&quot;&gt;cronbox.ru&lt;&#x2F;a&gt;.
 Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Смотрим информацию по репозиторию:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Encrypted: No
@@ -118,24 +113,20 @@ All archives:                    0 B                  0 B                  0 B
 
                        Unique chunks         Total chunks
 Chunk index:                       0                    0
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что пока пусто. Сделаем первую резервную копию:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — &lt;code&gt;site&lt;&#x2F;code&gt;. Для отдельного архивирования uploads можно было указать вот так:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После создания копия смотрим изменения в репозитории:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
 site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
 Encrypted: No
@@ -147,14 +138,13 @@ All archives:              644.93 kB            277.42 kB            277.42 kB
 
                        Unique chunks         Total chunks
 Chunk index:                     133                  133
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Как мы видим, общий объём данных (Original size) — 644КБ, хранится на диске (Deduplicated size) — 277КБ.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;arkhivirovanie-po-raspisaniiu&quot;&gt;Архивирование по расписанию&lt;&#x2F;h3&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;[root@server]# crontab -e
+&lt;pre data-lang=&quot;shell script&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;[root@server]# crontab -e
 
 0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить &lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;мониторинг&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;

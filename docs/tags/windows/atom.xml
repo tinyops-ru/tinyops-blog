@@ -32,11 +32,11 @@
 &lt;h3 id=&quot;sozdanie-sluzhby-windows&quot;&gt;Создание службы Windows&lt;&#x2F;h3&gt;
 &lt;p&gt;Допустим полный путь до исполняемого файла Syncthing - &lt;code&gt;c:\apps\syncthing\syncthing.exe&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Запускаем командную строку Windows с правами локального администратора и создаём службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;&quot;&gt;
-&lt;code&gt;&lt;span style=&quot;color:#c0c5ce;&quot;&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
+&lt;pre&gt;&lt;code&gt;c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
 c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
 c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
 &lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;

@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -103,15 +103,14 @@
   </div>
 
   <p>Основные ошибки при генерации Zola выдает прямо в консоль. Например, вот так:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">Change detected @ 2020-01-11 18:37:14
--&gt; Content changed C:\pro\tinyops-blog\content/zola-issues.md
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">Change detected @ 2020-01-11 18:37:14
+-> Content changed C:\pro\tinyops-blog\content/zola-issues.md
 Failed to build the site
-Error: Failed to render page &#39;d:\tinyops-blog\content/zola-issues.md&#39;
-Reason: Failed to render &#39;tinyblog/templates/page.html&#39;
-Reason: Variable `page.taxonomies[&#39;tags&#39;]` not found in context while rendering &#39;tinyblog/templates/page.html&#39;: the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
+Error: Failed to render page 'd:\tinyops-blog\content/zola-issues.md'
+Reason: Failed to render 'tinyblog/templates/page.html'
+Reason: Variable `page.taxonomies['tags']` not found in context while rendering 'tinyblog/templates/page.html': the evaluated version was `page.taxonomies.tags`. Maybe the index is out of bounds?
 Done in 31ms.
-</span></code></pre>
+</code></pre>
 <p>В контексте ошибки выше:</p>
 <ol>
 <li>Ошибка связана с содержимым файла <code>zola-issues.md</code></li>
@@ -119,24 +118,22 @@ Done in 31ms.
 <li>Переменная <code>page.taxonomies['tags']</code> не найдена</li>
 </ol>
 <p>Смотрим начало <code>content/zola-issues.md</code>:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-toml" data-lang="toml"><span style="background-color:#bf616a;color:#2b303b;">+++</span><span style="color:#c0c5ce;">
-</span><span style="color:#bf616a;">title </span><span style="color:#c0c5ce;">= &quot;</span><span style="color:#a3be8c;">Как решать проблемы с Zola</span><span style="color:#c0c5ce;">&quot;
-</span><span style="color:#bf616a;">date </span><span style="color:#c0c5ce;">= </span><span style="color:#d08770;">2020-01-10
-</span><span style="color:#c0c5ce;">+++
-</span></code></pre>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">+++
+title = "Как решать проблемы с Zola"
+date = 2020-01-10
++++
+</code></pre>
 <p>и видим что секция <code>[taxonomies]</code> отсутствует. Если взялся использовать тэги и категории, то будь
 добр их определить. Исправляем:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-toml" data-lang="toml"><span style="color:#c0c5ce;">[taxonomies]
-</span><span style="color:#bf616a;">tags </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">zola</span><span style="color:#c0c5ce;">&quot;]
-</span><span style="color:#bf616a;">categories </span><span style="color:#c0c5ce;">= [&quot;</span><span style="color:#a3be8c;">tutorial</span><span style="color:#c0c5ce;">&quot;]
-</span></code></pre><h2 id="oshibka-the-requested-port-is-not-available">Ошибка - The requested port is not available</h2>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">[taxonomies]
+tags = ["zola"]
+categories = ["tutorial"]
+</code></pre>
+<h2 id="oshibka-the-requested-port-is-not-available">Ошибка - The requested port is not available</h2>
 <p>Как это выглядит в консоли:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">d:\tinyops-blog&gt;zola serve
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">d:\tinyops-blog>zola serve
 The requested port is not available
-</span></code></pre>
+</code></pre>
 <p>Ошибка сообщает что Zola не может стартануть с выбранным tcp-портом (по умолчанию <code>1111</code>). </p>
 <p>Решения для Windows:</p>
 <ol>
@@ -146,9 +143,9 @@ The requested port is not available
 </li>
 <li>
 <p>Указать другой порт при запуске:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">zola serve --port 12345
-</span></code></pre></li>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">zola serve --port 12345
+</code></pre>
+</li>
 </ol>
 <h2 id="drugie-stat-i-pro-zola">Другие статьи про Zola</h2>
 <p>По тэгу <a href="/tags/zola">zola</a> вы можете найти другие статьи из этого цикла.</p>

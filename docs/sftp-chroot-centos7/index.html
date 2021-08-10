@@ -60,7 +60,7 @@
   <link rel="stylesheet" href="https:&#x2F;&#x2F;b.tinyops.ru/tinyblog.css">
 
   
-  <link rel="alternate" type="application/atom+xml" title="Atom" href="https:&#x2F;&#x2F;b.tinyops.ru&#x2F;atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Atom" href="https://b.tinyops.ru/atom.xml">
   
 
   
@@ -116,8 +116,7 @@
 <p>В качестве корневого каталога будет путь <code>/sftp/bob</code>.</p>
 <h3 id="nastraivaem-sluzhbu-sshd">Настраиваем службу sshd</h3>
 <p>Добавляем в конец конфигурационного файла sshd <code>/etc/ssh/sshd_config</code> следующий текст (комментарии можно не добавлять):</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">Match User bob
+<pre><code>Match User bob
  # Запрещаем 
  X11Forwarding no
  # Запрещаем проксирование tcp-трафика
@@ -126,15 +125,14 @@
  ForceCommand internal-sftp
  # Корневой каталог для пользователя
  ChrootDirectory /sftp/bob
-</span></code></pre>
+</code></pre>
 <p>Проверяем что конфигурация без ошибок:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">sshd -t
-</span></code></pre>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">sshd -t
+</code></pre>
 <p>Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:</p>
-<pre style="background-color:#2b303b;">
-<code><span style="color:#c0c5ce;">systemctl restart sshd
-</span></code></pre><h3 id="ustanavlivaem-korrektnye-prava">Устанавливаем корректные права</h3>
+<pre><code>systemctl restart sshd
+</code></pre>
+<h3 id="ustanavlivaem-korrektnye-prava">Устанавливаем корректные права</h3>
 <p>У механизма chroot есть требование для владельцев по пути к корневому каталогу:</p>
 <blockquote>
 <p><strong>ChrootDirectory</strong><br />
@@ -144,20 +142,18 @@ changes the working directory to the user's home directory.</p>
 </blockquote>
 <p>Владельцем на пути до корневого каталога (включительно) должен быть <code>root</code>.</p>
 <p>Поэтому делаем так:</p>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">chown -R root: /vfs
-</span></code></pre>
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">chown -R root: /vfs
+</code></pre>
 <p>Если с правами что-то не так то в файле <code>/var/log/secure</code> будет ошибка <code>fatal: bad ownership or modes for chroot directory</code>.</p>
 <h3 id="testiruem">Тестируем</h3>
-<pre style="background-color:#2b303b;">
-<code class="language-shell script" data-lang="shell script"><span style="color:#c0c5ce;">$ sftp bob@your-server
+<pre data-lang="shell script" class="language-shell script "><code class="language-shell script" data-lang="shell script">$ sftp bob@your-server
 
 Connected to your-server.
-sftp&gt; ls
+sftp> ls
 lost+found  test
-sftp&gt; pwd
+sftp> pwd
 Remote working directory: /
-</span></code></pre>
+</code></pre>
 <p>Всё работает.</p>
 
   
