@@ -4,10 +4,6 @@ base_url = "https://b.tinyops.ru"
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = true
-
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
@@ -24,6 +20,9 @@ taxonomies = [
  {name = "categories", paginate_by = 10, feed = true},  # 5 items per page for a term
  {name = "authors"} # Basic definition: no RSS or pagination
 ]
+
+[markdown]
+highlight_code = true
 
 [extra]
 enable_about_blog_page = false
