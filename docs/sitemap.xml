@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-08-10</lastmod>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -75,9 +75,11 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/syncthing/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/syncthing/page/1/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
@@ -154,6 +156,10 @@
     <url>
         <loc>https://b.tinyops.ru/nginx-websocket-proxy/</loc>
         <lastmod>2020-04-09</lastmod>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/page/1/</loc>
