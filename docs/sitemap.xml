@@ -27,9 +27,11 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/</loc>
@@ -51,6 +53,7 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/</loc>
+        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
