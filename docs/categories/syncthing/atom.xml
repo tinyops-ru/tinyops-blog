@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - syncthing</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/categories/syncthing/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-08-17T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/categories/syncthing/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Автоматическое обновление Syncthing в CentOS 7</title>
-		<published>2021-08-17T00:00:00+00:00</published>
-		<updated>2021-08-17T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/obnovlenie-syncthing-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</id>
-		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+    <title>Блог TinyOps - syncthing</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/categories/syncthing/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/categories/syncthing/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Автоматическое обновление Syncthing в CentOS 7</title>
+        <published>2021-08-17T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/obnovlenie-syncthing-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</id>
+        
+        <content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Проект &lt;a href=&quot;https:&#x2F;&#x2F;syncthing.net&#x2F;&quot;&gt;Syncthing&lt;&#x2F;a&gt; обновляется как минимум раз в месяц и в целях безопасности
 рекомендуется устанавливать новые версии.&lt;&#x2F;p&gt;
 &lt;p&gt;Для дистрибутивов, в которых приложение устанавливается пакетным менеджером (Arch, Ubuntu, Debian и т.д.),
@@ -102,14 +106,19 @@
 &lt;li&gt;&lt;a href=&quot;&#x2F;tags&#x2F;syncthing&#x2F;&quot;&gt;Все статьи с тэгом syncthing&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Установка Syncthing для CentOS 7</title>
-		<published>2021-05-14T00:00:00+00:00</published>
-		<updated>2021-07-14T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
-		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Установка Syncthing для CentOS 7</title>
+        <published>2021-05-14T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/install-syncthing-centos7/</id>
+        
+        <content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Syncthing — это приложение для синхронизации файлов между устройствами. Авторы предпочитают дистрибутивы аля Debian\Ubuntu, 
 поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
@@ -158,8 +167,8 @@
 &lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;&#x2F;syncthing-as-windows-service&#x2F;&quot;&gt;Запуск Syncthing в виде службы Windows&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

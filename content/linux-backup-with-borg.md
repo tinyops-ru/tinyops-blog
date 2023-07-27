@@ -2,7 +2,7 @@
 title = "Как настроить резервное копирование файлов в Linux с помощью Borg Backup"
 description = "Настройка полного и инкрементного резервного копирования файлов в Linux. На примере CentOS 7."
 date = 2020-06-16
-updated = 2021-03-29
+updated = 2023-07-27
 
 [taxonomies]
 tags = ["borg", "linux", "backup", "centos"]
@@ -29,9 +29,9 @@ categories = ["linux", "backup", "centos"]
 
 ### Установка
 
-Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.
+Borg доступен под все популярные Linux\Unix дистрибутивы.
 
-Для CentOS 7 приложение доступно в [EPEL](https://fedoraproject.org/wiki/EPEL) репозитарии:
+Для CentOS 7 приложение доступно в [EPEL](https://fedoraproject.org/wiki/EPEL) репозитории:
 
 ```shell script
 yum -y install epel-release
@@ -40,22 +40,22 @@ yum -y install borgbackup
 
 ### Настройка архивирования
 
-В качестве примера настроим резервное копирование для сайта [cronbox.ru](https://cronbox.ru).
-Файлы сайта расположены в каталоге `/var/www/cronbox.ru/html`.
+В качестве примера настроим резервное копирование для сайта [tinyops.ru](https://tinyops.ru).
+Файлы сайта расположены в каталоге `/var/www/tinyops.ru/html`.
 
 Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:
 
 ```shell script
-borg init --encryption=none  /mnt/backups/cronbox.ru
+borg init --encryption=none  /mnt/backups/tinyops.ru
 ```
 
 Смотрим информацию по репозиторию:
 
 ```shell script
-[root@server ~]# borg info /mnt/backups/cronbox.ru
+[root@server ~]# borg info /mnt/backups/tinyops.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Location: /mnt/backups/cronbox.ru
+Location: /mnt/backups/tinyops.ru
 Encrypted: No
 Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
@@ -70,29 +70,29 @@ Chunk index:                       0                    0
 Видим что пока пусто. Сделаем первую резервную копию:
 
 ```shell script
-borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html
+borg create /mnt/backups/tinyops.ru::site /var/www/tinyops.ru/html
 ```
 
-Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
+Внутри каждого репозитория может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — `site`. Для отдельного архивирования uploads можно было указать вот так:
 
  ```shell script
-borg create /mnt/backups/cronbox.ru::uploads /var/www/cronbox.ru/html/uploads
+borg create /mnt/backups/tinyops.ru::uploads /var/www/tinyops.ru/html/uploads
  ```
 
 После создания копия смотрим изменения в репозитории:
 
 ```shell script
-borg list /mnt/backups/cronbox.ru/site
+borg list /mnt/backups/tinyops.ru/site
 site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
 ```
 
 Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:
 
 ```shell script
-[root@server backups-sites]# borg info /mnt/backups/cronbox.ru
+[root@server backups-sites]# borg info /mnt/backups/tinyops.ru
 Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-Location: /mnt/backups/cronbox.ru
+Location: /mnt/backups/tinyops.ru
 Encrypted: No
 Cache: /root/.cache/borg/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 Security dir: /root/.config/borg/security/df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
@@ -111,13 +111,12 @@ Chunk index:                     133                  133
 ```shell script
 [root@server]# crontab -e
 
-0 1 * * * borg create /mnt/backups/cronbox.ru::site /var/www/cronbox.ru/html
+0 1 * * * borg create /mnt/backups/tinyops.ru::site /var/www/tinyops.ru/html
 ```
 
-Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить [мониторинг](https://blog.cronbox.ru/kak-monitorit-borg-backup/).
+Архив будет создаваться каждый день в час ночи.
 
 ### Полезные ссылки
 
 - [Официальный сайт](https://www.borgbackup.org)
 - [Документация](https://borgbackup.readthedocs.io/en/stable/)
-- [Как настроить мониторинг для borg](https://blog.cronbox.ru/kak-monitorit-borg-backup/)

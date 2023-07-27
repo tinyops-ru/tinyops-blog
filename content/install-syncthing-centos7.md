@@ -2,7 +2,7 @@
 title = "Установка Syncthing для CentOS 7"
 description = "Рассказ про очень быструю утилиту для поиска файлов в Windows. Альтернатива стандартному механизму поиска."
 date = 2021-05-14
-updated = 2021-07-14
+updated = 2023-07-27
 
 [taxonomies]
 tags = ["syncthing", "centos", "awesomeware"]
@@ -82,4 +82,3 @@ systemctl start syncthing@myuser.service
 ## Другие статьи на тему
 
 - [Запуск Syncthing в виде службы Windows](/syncthing-as-windows-service/)
-- Статьи про другие приложения с тэгом [#awesomeware](/tags/awesomeware/)

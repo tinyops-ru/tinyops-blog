@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - vagrant</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/tags/vagrant/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-05-10T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/tags/vagrant/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
-		<published>2020-05-10T00:00:00+00:00</published>
-		<updated>2020-05-10T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/" type="text/html"/>
-		<id>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</id>
-		<content type="html">&lt;p&gt;Я поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
+    <title>Блог TinyOps - vagrant</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/tags/vagrant/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/tags/vagrant/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
+        <published>2020-05-10T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/" type="text/html"/>
+        <id>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</id>
+        
+        <content type="html">&lt;p&gt;Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Your VM has become &amp;quot;inaccessible&amp;quot;. Unfortunately, this is a critical error with VirtualBox that Vagrant 
 can not cleanly recover from. Please open VirtualBox and clear out your 
@@ -52,5 +56,6 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На этом все.&lt;&#x2F;p&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

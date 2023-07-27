@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - troubleshooting</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/categories/troubleshooting/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-06-02T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/categories/troubleshooting/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Ошибка «Too many open files» в Linux</title>
-		<published>2020-06-02T00:00:00+00:00</published>
-		<updated>2020-06-02T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/too-many-open-files/" type="text/html"/>
-		<id>https://b.tinyops.ru/too-many-open-files/</id>
-		<content type="html">&lt;p&gt;Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
+    <title>Блог TinyOps - troubleshooting</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/categories/troubleshooting/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/categories/troubleshooting/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Ошибка «Too many open files» в Linux</title>
+        <published>2020-06-02T00:00:00+00:00</published>
+        <updated>2020-06-02T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/too-many-open-files/" type="text/html"/>
+        <id>https://b.tinyops.ru/too-many-open-files/</id>
+        
+        <content type="html">&lt;p&gt;Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
 открытых файлов. Простыми словами — процессу было разрешено открыть максимум 100 файлов, а он попытался открыть 101-й.&lt;&#x2F;p&gt;
 &lt;p&gt;Далее — разберёмся как работает это ограничение в операционных системах Linux. Все пути будут указаны для CentOS\RHEL-образных систем.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;ogranicheniia-iadra-linux&quot;&gt;Ограничения ядра Linux&lt;&#x2F;h2&gt;
@@ -83,14 +87,19 @@
 &lt;li&gt;&lt;a href=&quot;&#x2F;how-to-fix-su-cannot-open-session&#x2F;&quot;&gt;Статья про то как исправить ошибку «su: cannot open session: Permission denied»&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7</title>
-		<published>2020-05-22T00:00:00+00:00</published>
-		<updated>2020-05-22T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
-		<id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
-		<content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7</title>
+        <published>2020-05-22T00:00:00+00:00</published>
+        <updated>2020-05-22T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
+        <id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
+        
+        <content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; su - zero
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span&gt; cannot open session: Permission denied
@@ -139,14 +148,19 @@
 &lt;li&gt;&lt;a href=&quot;&#x2F;too-many-open-files&#x2F;&quot;&gt;Подробная статья про ошибку «Too many open files» в Linux&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
-		<published>2020-05-10T00:00:00+00:00</published>
-		<updated>2020-05-10T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/" type="text/html"/>
-		<id>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</id>
-		<content type="html">&lt;p&gt;Я поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
+        <published>2020-05-10T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/" type="text/html"/>
+        <id>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</id>
+        
+        <content type="html">&lt;p&gt;Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Your VM has become &amp;quot;inaccessible&amp;quot;. Unfortunately, this is a critical error with VirtualBox that Vagrant 
 can not cleanly recover from. Please open VirtualBox and clear out your 
@@ -185,15 +199,20 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;На этом все.&lt;&#x2F;p&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Как исправить ошибку - No tests found matching Method в IntelliJ IDEA</title>
-		<published>2020-01-15T00:00:00+00:00</published>
-		<updated>2020-01-15T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/" type="text/html"/>
-		<id>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</id>
-		<content type="html">&lt;p&gt;Даже на момент написания статьи в связке JetBrains IDEA + Gradle хватает проблем с окривевшими кэшами. 
-Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те кто давно работает 
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Как исправить ошибку - No tests found matching Method в IntelliJ IDEA</title>
+        <published>2020-01-15T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/" type="text/html"/>
+        <id>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</id>
+        
+        <content type="html">&lt;p&gt;Даже на момент написания статьи в связке JetBrains IDEA + Gradle хватает проблем с окривевшими кэшами. 
+Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те, кто давно работает 
 со всея-IDE от JetBrains знают что скорей всего пришел момент проверки актуальности кэшей (инвалидации) Gradle, либо их очистки.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;oshibka-no-tests-found-matching-method&quot;&gt;Ошибка - No tests found matching Method&lt;&#x2F;h3&gt;
 &lt;p&gt;Это исключение можно словить при запуске unit-тестов. Вы запускали тесты и вдруг стало писать эту ошибку.
@@ -210,5 +229,6 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;reshenie&quot;&gt;Решение&lt;&#x2F;h2&gt;
 &lt;p&gt;Удалить каталоги &lt;code&gt;build&lt;&#x2F;code&gt; и &lt;code&gt;out&lt;&#x2F;code&gt; в корне проекта.&lt;&#x2F;p&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

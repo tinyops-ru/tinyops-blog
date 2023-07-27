@@ -3,6 +3,7 @@ title = "Генератор статических сайтов Zola"
 description = "Вводный пост про генератор статических сайтов Zola."
 date = 2020-01-01
 updated = 2020-01-01
+draft = true
 
 [taxonomies]
 tags = ["zola"]

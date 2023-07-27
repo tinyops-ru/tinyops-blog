@@ -1,105 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - security</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/categories/security/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-11-15T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/categories/security/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Настройка безопасности для SSH-сервера</title>
-		<published>2020-11-15T00:00:00+00:00</published>
-		<updated>2020-11-15T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/ssh-server-security-fundamentals/" type="text/html"/>
-		<id>https://b.tinyops.ru/ssh-server-security-fundamentals/</id>
-		<content type="html">&lt;p&gt;SSH (Secure Shell) - это протокол прикладного уровня с шифрованием трафика, а также самый распространённый протокол 
-удалённого доступа к Linux\Unix-серверам. Самая популярная реализация серверной части называется OpenSSH.&lt;&#x2F;p&gt;
-&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;ssh&#x2F;ssh-security.png&quot; alt=&quot;Терминал Linux&quot; title=&quot;Терминал Linux&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
-&lt;p&gt;Тем не менее, даже самую безопасную систему на свете можно сделать уязвимой благодаря настройке. Во многих дистрибутивах
-служба SSH имеет уязвимую конфигурацию.&lt;&#x2F;p&gt;
-&lt;p&gt;Две самых распространённых уязвимости:&lt;&#x2F;p&gt;
-&lt;ol&gt;
-&lt;li&gt;Разрешён удалённый доступ пользователю &lt;code&gt;root&lt;&#x2F;code&gt;;&lt;&#x2F;li&gt;
-&lt;li&gt;Не указан список пользователей, которым разрешён доступ.&lt;&#x2F;li&gt;
-&lt;&#x2F;ol&gt;
-&lt;p&gt;В некоторых дистрибутивах разрешён вход для пользователей с пустыми паролями. 
-Проблема безопасности усугубляется ещё и тем что по умолчанию команда &lt;code&gt;useradd&lt;&#x2F;code&gt; создаёт пользователя с пустым паролем.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;perebor-loginov-i-parolei&quot;&gt;Перебор логинов и паролей&lt;&#x2F;h2&gt;
-&lt;p&gt;Несмотря на то что существуют различные векторы атак на службу SSH, самая популярная атака это перебор логинов и паролей.
-Перебор ведут по самым распространённым именам пользователей и паролей: root, admin, user, test и т. д.&lt;&#x2F;p&gt;
-&lt;p&gt;В наши дни перебор паролей ведут чаще автоматизированными средствами нежели вручную. Поэтому при входе на удалённый сервер неудивительно
-увидеть такую картину: &lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[user@pc] # ssh server
-&lt;&#x2F;span&gt;&lt;span&gt;Last failed login: Sun Nov 15 16:12:10 MSK 2020 from 112.85.42.174 on ssh:notty
-&lt;&#x2F;span&gt;&lt;span&gt;There were 13925 failed login attempts since the last successful login.
-&lt;&#x2F;span&gt;&lt;span&gt;Last login: Fri Nov 13 17:08:30 2020 from 123.33.12.100
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Далее мы настроим сервер так чтобы существенно усложнить жизнь злоумышленникам.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;nastroika-minimal-no-rekomenduemoi-konfiguratsii&quot;&gt;Настройка минимально рекомендуемой конфигурации&lt;&#x2F;h2&gt;
-&lt;p&gt;Несмотря на то что это минимально-рекомендуемая конфигурация, она отразит более 99% атак на SSH-сервер.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователю root через удалённый доступ
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitRootLogin&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Разрешаем подключение только для указанных пользователей
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowUsers&lt;&#x2F;span&gt;&lt;span&gt; user1 user2 user3
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Меняем порт на нестандартный
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Port&lt;&#x2F;span&gt;&lt;span&gt; 14819
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Запрещаем вход пользователям с пустыми паролями
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitEmptyPasswords&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем неиспользуемые способы аутентификации
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;KerberosAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;GSSAPIAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможность доступа к графическим приложениям
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;X11Forwarding&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Отключаем возможности туннелирования, использовать сервер в качестве промежуточного узла
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowAgentForwarding&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;AllowTcpForwarding&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PermitTunnel&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h2 id=&quot;nastroika-usilennoi-bezopasnosti&quot;&gt;Настройка усиленной безопасности&lt;&#x2F;h2&gt;
-&lt;p&gt;Помимо минимально рекомендуемых настроек, можно запретить доступ к порту сервиса и отключить вход по логину и паролю. &lt;&#x2F;p&gt;
-&lt;h3 id=&quot;blokiruem-dostup-k-portu-ssh-dlia-vsekh-krome-doverennykh-ip&quot;&gt;Блокируем доступ к порту SSH для всех кроме доверенных IP&lt;&#x2F;h3&gt;
-&lt;p&gt;Например, с помощью firewalld:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;firewall-cmd --permanent --zone=public --remove-service=ssh
-&lt;&#x2F;span&gt;&lt;span&gt;firewall-cmd --permanent --zone=trusted --add-service=ssh
-&lt;&#x2F;span&gt;&lt;span&gt;firewall-cmd --reload
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h3 id=&quot;otkliuchaem-dostup-po-loginu-i-paroliu&quot;&gt;Отключаем доступ по логину и паролю&lt;&#x2F;h3&gt;
-&lt;p&gt;Несмотря на то что аутентификация по ключам это более безопасный и удобный способ работы с удалёнными серверами, большинство 
-инженеров предпочитаю работать с логинами и паролями.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PasswordAuthentication&lt;&#x2F;span&gt;&lt;span&gt; no
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;После этого потребуется создать ключ для пользователя:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;ssh-keygen
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;А затем скопировать его на удалённый сервер:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;ssh-copy-id user@server
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h2 id=&quot;proverka-i-primenenie-nastroek&quot;&gt;Проверка и применение настроек&lt;&#x2F;h2&gt;
-&lt;p&gt;Проверяем что настройки корректные:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;sshd -t
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Если приложение не сообщило об ошибках, значит всё хорошо.&lt;&#x2F;p&gt;
-&lt;p&gt;Перезапускаем службу:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;systemctl restart sshd
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-</content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Как настроить chroot для sftp в CentOS 7</title>
-		<published>2020-10-12T00:00:00+00:00</published>
-		<updated>2020-10-12T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
-		<content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP. 
-Для этого достаточно создать пользователя и запустить службу &lt;code&gt;sshd&lt;&#x2F;code&gt;. По умолчанию пользователь сможет перемещаться 
-по всем каталогам операционной системы к которым имеет доступ на чтение. Это очень плохо с точки зрения безопасности.&lt;&#x2F;p&gt;
+    <title>Блог TinyOps - security</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/categories/security/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/categories/security/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Как настроить chroot для sftp в CentOS 7</title>
+        <published>2020-10-12T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
+        
+        <content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP.
+Для этого достаточно создать пользователя. По умолчанию пользователь сможет перемещаться 
+по всем каталогам файловых систем к которым имеет доступ на чтение.&lt;&#x2F;p&gt;
 &lt;p&gt;К счастью, &lt;code&gt;sshd&lt;&#x2F;code&gt; позволяет указать корневой каталог для пользователя (механизм chroot).&lt;&#x2F;p&gt;
 &lt;p&gt;Дальнейшая настройка будет актуальна для CentOS 7 и OpenSSH 7.4, но скорей всего сработает и для других версий.&lt;&#x2F;p&gt;
 &lt;p&gt;В качестве корневого каталога будет путь &lt;code&gt;&#x2F;sftp&#x2F;bob&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
@@ -116,10 +36,10 @@
 &lt;&#x2F;span&gt;&lt;span&gt; ChrootDirectory &#x2F;sftp&#x2F;bob
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Проверяем что конфигурация без ошибок:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;sshd -t
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;sshd -t
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;systemctl restart sshd
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;systemctl restart sshd
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
 &lt;p&gt;У механизма chroot есть требование для владельцев по пути к корневому каталогу:&lt;&#x2F;p&gt;
@@ -145,5 +65,6 @@ changes the working directory to the user&#x27;s home directory.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Всё работает.&lt;&#x2F;p&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

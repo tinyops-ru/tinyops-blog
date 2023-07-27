@@ -2,14 +2,14 @@
 title = "Как починить ошибку Inaccessible VM в VirtualBox и Vagrant"
 description = "Как вывести виртуальную машину Vagrant из состояния ошибки 'inaccessible vm'."
 date = 2020-05-10
-updated = 2020-05-10
+updated = 2023-07-27
 
 [taxonomies]
 tags = ["virtualbox", "vagrant"]
 categories = ["troubleshooting"]
 +++
 
-Я поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:
+Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:
 
 > Your VM has become "inaccessible". Unfortunately, this is a critical error with VirtualBox that Vagrant 
 > can not cleanly recover from. Please open VirtualBox and clear out your 

@@ -3,6 +3,7 @@ title = "Как добавить самоподписной SSL-сертифик
 description = "Решение проблемы javax.net.ssl.SSLHandshakeException: PKIX path building failed"
 date = 2021-08-10
 updated = 2021-08-10
+draft = true
 
 [taxonomies]
 tags = ["linux", "docker", "ssl", "java"]

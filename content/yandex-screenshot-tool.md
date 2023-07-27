@@ -3,6 +3,7 @@ title = "Утилита для скриншотов от Яндекс"
 description = "Рассказ про очень удобную утилиту которая идет в комплекте с Яндекс.Диском."
 date = 2020-02-09
 updated = 2020-02-09
+draft = true
 
 [taxonomies]
 tags = ["software", "awesomeware"]

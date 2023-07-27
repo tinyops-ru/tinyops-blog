@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - chroot</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/tags/chroot/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-10-12T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/tags/chroot/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Как настроить chroot для sftp в CentOS 7</title>
-		<published>2020-10-12T00:00:00+00:00</published>
-		<updated>2020-10-12T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
-		<content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP. 
-Для этого достаточно создать пользователя и запустить службу &lt;code&gt;sshd&lt;&#x2F;code&gt;. По умолчанию пользователь сможет перемещаться 
-по всем каталогам операционной системы к которым имеет доступ на чтение. Это очень плохо с точки зрения безопасности.&lt;&#x2F;p&gt;
+    <title>Блог TinyOps - chroot</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/tags/chroot/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/tags/chroot/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Как настроить chroot для sftp в CentOS 7</title>
+        <published>2020-10-12T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
+        
+        <content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP.
+Для этого достаточно создать пользователя. По умолчанию пользователь сможет перемещаться 
+по всем каталогам файловых систем к которым имеет доступ на чтение.&lt;&#x2F;p&gt;
 &lt;p&gt;К счастью, &lt;code&gt;sshd&lt;&#x2F;code&gt; позволяет указать корневой каталог для пользователя (механизм chroot).&lt;&#x2F;p&gt;
 &lt;p&gt;Дальнейшая настройка будет актуальна для CentOS 7 и OpenSSH 7.4, но скорей всего сработает и для других версий.&lt;&#x2F;p&gt;
 &lt;p&gt;В качестве корневого каталога будет путь &lt;code&gt;&#x2F;sftp&#x2F;bob&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
@@ -32,10 +36,10 @@
 &lt;&#x2F;span&gt;&lt;span&gt; ChrootDirectory &#x2F;sftp&#x2F;bob
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Проверяем что конфигурация без ошибок:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;sshd -t
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;sshd -t
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;systemctl restart sshd
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;systemctl restart sshd
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
 &lt;p&gt;У механизма chroot есть требование для владельцев по пути к корневому каталогу:&lt;&#x2F;p&gt;
@@ -61,5 +65,6 @@ changes the working directory to the user&#x27;s home directory.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Всё работает.&lt;&#x2F;p&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

@@ -3,6 +3,7 @@ title = "Как управлять dotfiles"
 description = "Что такое dotfiles и как правильно организовать работу с ними."
 date = 2021-04-03
 updated = 2021-07-14
+draft = true
 
 [taxonomies]
 tags = ["linux", "dotfiles"]

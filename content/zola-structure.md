@@ -3,6 +3,7 @@ title = "Структура каталогов в Zola"
 description = "Как устроена структура каталогов в генераторе статических сайтов Zola."
 date = 2020-01-02
 updated = 2020-01-02
+draft = true
 
 [taxonomies]
 tags = ["zola"]

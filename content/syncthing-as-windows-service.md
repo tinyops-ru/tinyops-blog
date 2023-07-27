@@ -2,7 +2,7 @@
 title = "Запуск Syncthing в виде службы Windows"
 description = "Как настроить запуск Syncthing в качестве службы Windows."
 date = 2020-11-11
-updated = 2021-05-14
+updated = 2023-07-27
 
 [taxonomies]
 tags = ["software", "awesomeware", "syncthing", "windows"]
@@ -37,7 +37,7 @@ Syncthing - это приложение для синхронизации кат
 
 Запускаем командную строку Windows с правами локального администратора и создаём службу:
 
-```
+```shell
 c:\apps\nssm\nssm.exe install Syncthing c:\apps\syncthing\syncthing.exe
 c:\apps\nssm\nssm.exe set Syncthing AppDirectory c:\apps\syncthing
 c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
@@ -57,7 +57,7 @@ c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
 
 Жмём "ОК" и перезапускаем службу.
 
-Через некоторое время приложение будет доступно по ссылке [http://127.0.0.1:8384](http://127.0.0.1:8384).
+Приложение станет доступно по ссылке [http://127.0.0.1:8384](http://127.0.0.1:8384).
 
 ## Другие статьи
 

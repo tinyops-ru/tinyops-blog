@@ -2,7 +2,7 @@
 title = "Автоматическое обновление Syncthing в CentOS 7"
 description = "Рассказ про то, как настроить автоматическое обновление Syncthing в CentOS 7."
 date = 2021-08-17
-updated = 2021-08-17
+updated = 2023-07-27
 
 [taxonomies]
 tags = ["syncthing", "centos", "awesomeware"]

@@ -3,6 +3,7 @@ title = "Настройка безопасности для SSH-сервера"
 description = "Как настроить SSH-сервер чтобы он был безопасным."
 date = 2020-11-15
 updated = 2020-11-15
+draft = true
 
 [taxonomies]
 tags = ["software", "security", "ssh"]

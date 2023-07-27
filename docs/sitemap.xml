@@ -2,7 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2021-08-17</lastmod>
+        <lastmod>2023-07-27</lastmod>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/authors/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -27,23 +30,15 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/</loc>
-        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
-        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/docker/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/docker/page/1/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/golang/</loc>
@@ -53,16 +48,9 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/</loc>
-        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/ops/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/ops/page/1/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/security/</loc>
@@ -78,23 +66,15 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/syncthing/</loc>
-        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/syncthing/page/1/</loc>
-        <lastmod>2021-08-17</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/tutorial/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/tutorial/page/1/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/windows/</loc>
@@ -110,78 +90,46 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/ddv-theme-for-zola/</loc>
-        <lastmod>2021-04-04</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/everything/</loc>
-        <lastmod>2020-03-24</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/fix-console-glitches-windows-10/</loc>
-        <lastmod>2020-02-07</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</loc>
-        <lastmod>2020-09-30</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</loc>
-        <lastmod>2020-05-10</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</loc>
-        <lastmod>2020-01-15</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
         <lastmod>2020-05-22</lastmod>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/how-to-install-self-signed-ssl-cert-in-docker/</loc>
-        <lastmod>2021-08-10</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/how-to-upgrade-from-zabbix-4-to-zabbix-5/</loc>
-        <lastmod>2020-05-18</lastmod>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/install-syncthing-centos7/</loc>
-        <lastmod>2021-07-14</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/kak-upravlyat-dotfiles/</loc>
-        <lastmod>2021-07-14</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>
-        <lastmod>2021-03-29</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/nginx-websocket-proxy/</loc>
-        <lastmod>2020-04-09</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</loc>
-        <lastmod>2021-08-17</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/page/1/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/run-php-in-docker/</loc>
-        <lastmod>2020-04-04</lastmod>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/sftp-chroot-centos7/</loc>
-        <lastmod>2020-10-12</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/ssh-server-security-fundamentals/</loc>
-        <lastmod>2020-11-15</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
-        <lastmod>2021-05-14</lastmod>
+        <lastmod>2023-07-27</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/</loc>
@@ -211,19 +159,10 @@
         <loc>https://b.tinyops.ru/tags/devops/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/tags/docker/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/dotfiles/</loc>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/tags/golang/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/idea/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/java/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/jetbrains/</loc>
@@ -235,19 +174,7 @@
         <loc>https://b.tinyops.ru/tags/linux/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/tags/nginx/</loc>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/tags/pam/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/reshenie-problem/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/rhel/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/search/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/security/</loc>
@@ -259,25 +186,10 @@
         <loc>https://b.tinyops.ru/tags/software/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/tags/ssh/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/ssl/</loc>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/tags/syncthing/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/theme/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/tmux/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/troubleshooting/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/upgrade/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/vagrant/</loc>
@@ -286,51 +198,13 @@
         <loc>https://b.tinyops.ru/tags/virtualbox/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/tags/web-sockets/</loc>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/tags/windows/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/zabbix/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/zola/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/tmux/</loc>
-        <lastmod>2020-11-02</lastmod>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/too-many-open-files/</loc>
         <lastmod>2020-06-02</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/transfer-data-with-croc/</loc>
-        <lastmod>2021-03-06</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/yandex-screenshot-tool/</loc>
-        <lastmod>2020-02-09</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/zola-intro/</loc>
-        <lastmod>2020-01-01</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/zola-issues/</loc>
-        <lastmod>2020-01-10</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/zola-set-theme/</loc>
-        <lastmod>2020-01-03</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/zola-structure/</loc>
-        <lastmod>2020-01-02</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/zola-tags/</loc>
-        <lastmod>2020-01-10</lastmod>
     </url>
 </urlset>

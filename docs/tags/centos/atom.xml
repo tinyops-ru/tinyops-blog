@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - centos</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/tags/centos/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2021-08-17T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/tags/centos/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Автоматическое обновление Syncthing в CentOS 7</title>
-		<published>2021-08-17T00:00:00+00:00</published>
-		<updated>2021-08-17T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/obnovlenie-syncthing-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</id>
-		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+    <title>Блог TinyOps - centos</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/tags/centos/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/tags/centos/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Автоматическое обновление Syncthing в CentOS 7</title>
+        <published>2021-08-17T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/obnovlenie-syncthing-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</id>
+        
+        <content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Проект &lt;a href=&quot;https:&#x2F;&#x2F;syncthing.net&#x2F;&quot;&gt;Syncthing&lt;&#x2F;a&gt; обновляется как минимум раз в месяц и в целях безопасности
 рекомендуется устанавливать новые версии.&lt;&#x2F;p&gt;
 &lt;p&gt;Для дистрибутивов, в которых приложение устанавливается пакетным менеджером (Arch, Ubuntu, Debian и т.д.),
@@ -102,14 +106,19 @@
 &lt;li&gt;&lt;a href=&quot;&#x2F;tags&#x2F;syncthing&#x2F;&quot;&gt;Все статьи с тэгом syncthing&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Установка Syncthing для CentOS 7</title>
-		<published>2021-05-14T00:00:00+00:00</published>
-		<updated>2021-07-14T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
-		<id>https://b.tinyops.ru/install-syncthing-centos7/</id>
-		<content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Установка Syncthing для CentOS 7</title>
+        <published>2021-05-14T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/install-syncthing-centos7/" type="text/html"/>
+        <id>https://b.tinyops.ru/install-syncthing-centos7/</id>
+        
+        <content type="html">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;syncthing-logo.png&quot; alt=&quot;Логотип приложения Syncthing&quot; title=&quot;Логотип приложения Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Syncthing — это приложение для синхронизации файлов между устройствами. Авторы предпочитают дистрибутивы аля Debian\Ubuntu, 
 поэтому для большинства остальных ОС требуется ручная установка.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;1-skachivaem-distributiv&quot;&gt;1. Скачиваем дистрибутив&lt;&#x2F;h3&gt;
@@ -158,17 +167,21 @@
 &lt;h2 id=&quot;drugie-stat-i-na-temu&quot;&gt;Другие статьи на тему&lt;&#x2F;h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;&#x2F;syncthing-as-windows-service&#x2F;&quot;&gt;Запуск Syncthing в виде службы Windows&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;Статьи про другие приложения с тэгом &lt;a href=&quot;&#x2F;tags&#x2F;awesomeware&#x2F;&quot;&gt;#awesomeware&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
-	<entry xml:lang="en">
-		<title>Как настроить резервное копирование файлов в Linux с помощью Borg Backup</title>
-		<published>2020-06-16T00:00:00+00:00</published>
-		<updated>2021-03-29T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/linux-backup-with-borg/" type="text/html"/>
-		<id>https://b.tinyops.ru/linux-backup-with-borg/</id>
-		<content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&#x2F;&quot;&gt;BorgBackup&lt;&#x2F;a&gt; — это приложение для резервного копирования файлов 
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Как настроить резервное копирование файлов в Linux с помощью Borg Backup</title>
+        <published>2020-06-16T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/linux-backup-with-borg/" type="text/html"/>
+        <id>https://b.tinyops.ru/linux-backup-with-borg/</id>
+        
+        <content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&#x2F;&quot;&gt;BorgBackup&lt;&#x2F;a&gt; — это приложение для резервного копирования файлов 
 с поддержкой &lt;a href=&quot;https:&#x2F;&#x2F;ru.wikipedia.org&#x2F;wiki&#x2F;%D0%94%D0%B5%D0%B4%D1%83%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F&quot;&gt;дедупликации&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;osnovnye-vozmozhnosti&quot;&gt;Основные возможности&lt;&#x2F;h3&gt;
 &lt;ol&gt;
@@ -184,22 +197,22 @@
 &lt;&#x2F;ol&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;borg&#x2F;borg-site.png&quot; alt=&quot;alt text&quot; title=&quot;Документация к Borg&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
-&lt;p&gt;Авторы Borg позаботились о своих пользователях, поэтому он доступен под все популярные Linux\Unix платформы.&lt;&#x2F;p&gt;
-&lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитарии:&lt;&#x2F;p&gt;
+&lt;p&gt;Borg доступен под все популярные Linux\Unix дистрибутивы.&lt;&#x2F;p&gt;
+&lt;p&gt;Для CentOS 7 приложение доступно в &lt;a href=&quot;https:&#x2F;&#x2F;fedoraproject.org&#x2F;wiki&#x2F;EPEL&quot;&gt;EPEL&lt;&#x2F;a&gt; репозитории:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;yum -y install epel-release
 &lt;&#x2F;span&gt;&lt;span&gt;yum -y install borgbackup
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
-&lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;cronbox.ru&quot;&gt;cronbox.ru&lt;&#x2F;a&gt;.
-Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;tinyops.ru&quot;&gt;tinyops.ru&lt;&#x2F;a&gt;.
+Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;tinyops.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
 без шифрования данных:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Смотрим информацию по репозиторию:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server ~]# borg info &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;span&gt;Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;span&gt;Encrypted: No
 &lt;&#x2F;span&gt;&lt;span&gt;Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 &lt;&#x2F;span&gt;&lt;span&gt;Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
@@ -211,20 +224,20 @@
 &lt;&#x2F;span&gt;&lt;span&gt;Chunk index:                       0                    0
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что пока пусто. Сделаем первую резервную копию:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru::site &#x2F;var&#x2F;www&#x2F;tinyops.ru&#x2F;html
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Внутри каждого репозитария может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
+&lt;p&gt;Внутри каждого репозитория может храниться множество архивов. Например, мы можем отдельно архивировать папку uploads для сайта.
 Поэтому в команде мы указали имя архива — &lt;code&gt;site&lt;&#x2F;code&gt;. Для отдельного архивирования uploads можно было указать вот так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::uploads &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html&#x2F;uploads
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg create &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru::uploads &#x2F;var&#x2F;www&#x2F;tinyops.ru&#x2F;html&#x2F;uploads
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;После создания копия смотрим изменения в репозитории:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru&#x2F;site
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg list &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru&#x2F;site
 &lt;&#x2F;span&gt;&lt;span&gt;site-2020-06-16T03:25:02 Tue, 2020-06-16 03:25:03 [f0ebe8acf744ea65b2f340657fe6c251d86620284aad008b55afc7dd2a65a7c3]
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Видим что появилась резервная копия. Теперь можем посмотреть общую информацию о репозитории:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server backups-sites]# borg info &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;span&gt;Repository ID: df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
-&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru
+&lt;&#x2F;span&gt;&lt;span&gt;Location: &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;span&gt;Encrypted: No
 &lt;&#x2F;span&gt;&lt;span&gt;Cache: &#x2F;root&#x2F;.cache&#x2F;borg&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
 &lt;&#x2F;span&gt;&lt;span&gt;Security dir: &#x2F;root&#x2F;.config&#x2F;borg&#x2F;security&#x2F;df114c32702740844c3f05b38e0192d68af0670e4a1a381214394186fd1537eb
@@ -239,15 +252,15 @@
 &lt;h3 id=&quot;arkhivirovanie-po-raspisaniiu&quot;&gt;Архивирование по расписанию&lt;&#x2F;h3&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@server]# crontab -e
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;cronbox.ru::site &#x2F;var&#x2F;www&#x2F;cronbox.ru&#x2F;html
+&lt;&#x2F;span&gt;&lt;span&gt;0 1 * * * borg create &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru::site &#x2F;var&#x2F;www&#x2F;tinyops.ru&#x2F;html
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Архив будет создаваться каждый день в час ночи. Для надёжности рекомендуется настроить &lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;мониторинг&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Архив будет создаваться каждый день в час ночи.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&quot;&gt;Официальный сайт&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;borgbackup.readthedocs.io&#x2F;en&#x2F;stable&#x2F;&quot;&gt;Документация&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;blog.cronbox.ru&#x2F;kak-monitorit-borg-backup&#x2F;&quot;&gt;Как настроить мониторинг для borg&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

@@ -3,6 +3,7 @@ title = "Улучшаем работу в консоли с помощью tmux"
 description = "Улучшаем работу в консоли с помощью tmux."
 date = 2020-11-02
 updated = 2020-11-02
+draft = true
 
 [taxonomies]
 tags = ["software", "awesomeware", "tmux"]

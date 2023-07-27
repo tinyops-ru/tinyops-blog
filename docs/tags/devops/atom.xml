@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-	<title>Блог TinyOps - devops</title>
-	<subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-	<link href="https://b.tinyops.ru/tags/devops/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="https://b.tinyops.ru"/>
-	<generator uri="https://www.getzola.org/">Zola</generator>
-	<updated>2020-09-30T00:00:00+00:00</updated>
-	<id>https://b.tinyops.ru/tags/devops/atom.xml</id>
-	<entry xml:lang="en">
-		<title>Как собрать старый Golang-проект с определённой версией зависимости</title>
-		<published>2020-09-30T00:00:00+00:00</published>
-		<updated>2020-09-30T00:00:00+00:00</updated>
-		<link href="https://b.tinyops.ru/how-to-build-golang-with-dep-version/" type="text/html"/>
-		<id>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</id>
-		<content type="html">&lt;p&gt;Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то что она должна была
+    <title>Блог TinyOps - devops</title>
+    <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
+    <link href="https://b.tinyops.ru/tags/devops/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://b.tinyops.ru"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-07-27T00:00:00+00:00</updated>
+    <id>https://b.tinyops.ru/tags/devops/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Как собрать старый Golang-проект с определённой версией зависимости</title>
+        <published>2020-09-30T00:00:00+00:00</published>
+        <updated>2023-07-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://b.tinyops.ru/how-to-build-golang-with-dep-version/" type="text/html"/>
+        <id>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</id>
+        
+        <content type="html">&lt;p&gt;Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то, что она должна была
 работать под Windows Server 2008 (без R2). К сожалению, более новые версии Go, в том числе те, в которые завезли модули,
 использовать было нельзя. В отличие от Rust в Go старых версий с зависимостями всё было сделано плохо.&lt;&#x2F;p&gt;
 &lt;p&gt;Нельзя было как в Rust просто указать какую версию зависимости ты хочешь. Поэтому в этой статье опишу как максимально 
@@ -33,8 +37,9 @@
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;&#x2F;li&gt;
 &lt;&#x2F;ol&gt;
-&lt;p&gt;В Idea может потребоваться реиндексация, чтобы она обновила свои кэши по зависимостям: &lt;code&gt;File &amp;gt; Invalidate caches&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;В Idea может потребоваться переиндексация, чтобы она обновила свои кэши по зависимостям: &lt;code&gt;File &amp;gt; Invalidate caches&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Готово.&lt;&#x2F;p&gt;
 </content>
-	</entry>
+        
+    </entry>
 </feed>

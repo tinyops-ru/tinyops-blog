@@ -3,6 +3,7 @@ title = "Передача файлов и текста с помощью croc"
 description = "Консольная утилита croc для безопасной и удобной передачи файлов и текста между двумя устройствами"
 date = 2021-03-06
 updated = 2021-03-06
+draft = true
 
 [taxonomies]
 tags = ["awesomeware"]

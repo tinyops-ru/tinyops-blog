@@ -3,6 +3,7 @@ title = "Настройка Nginx для проксирования Web-соке
 description = "Как настроить проксирование Web-сокетов с помощью Nginx."
 date = 2020-04-09
 updated = 2020-04-09
+draft = true
 
 [taxonomies]
 tags = ["nginx", "web-sockets"]
