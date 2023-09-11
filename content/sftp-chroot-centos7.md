@@ -3,6 +3,7 @@ title = "Как настроить chroot для sftp в CentOS 7"
 description = "Ограничить доступ через SFTP домашним каталогом пользователя"
 date = 2020-10-12
 updated = 2023-07-27
+draft = true
 
 [taxonomies]
 tags = ["linux", "security", "chroot", "sftp"]

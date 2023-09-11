@@ -5,65 +5,78 @@
     <link href="https://b.tinyops.ru/categories/security/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-07-27T00:00:00+00:00</updated>
+    <updated>2023-09-11T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/categories/security/atom.xml</id>
     <entry xml:lang="en">
-        <title>Как настроить chroot для sftp в CentOS 7</title>
-        <published>2020-10-12T00:00:00+00:00</published>
-        <updated>2023-07-27T00:00:00+00:00</updated>
+        <title>Как безопасно обмениваться логинами и паролями</title>
+        <published>2023-09-11T00:00:00+00:00</published>
+        <updated>2023-09-11T00:00:00+00:00</updated>
         <author>
           <name>Unknown</name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/sftp-chroot-centos7/" type="text/html"/>
-        <id>https://b.tinyops.ru/sftp-chroot-centos7/</id>
+        <link rel="alternate" href="https://b.tinyops.ru/bezopasniy-obmen-loginami-i-parolyami/" type="text/html"/>
+        <id>https://b.tinyops.ru/bezopasniy-obmen-loginami-i-parolyami/</id>
         
-        <content type="html">&lt;p&gt;В современных дистрибутивах Linux очень легко дать доступ пользователю через SFTP.
-Для этого достаточно создать пользователя. По умолчанию пользователь сможет перемещаться 
-по всем каталогам файловых систем к которым имеет доступ на чтение.&lt;&#x2F;p&gt;
-&lt;p&gt;К счастью, &lt;code&gt;sshd&lt;&#x2F;code&gt; позволяет указать корневой каталог для пользователя (механизм chroot).&lt;&#x2F;p&gt;
-&lt;p&gt;Дальнейшая настройка будет актуальна для CentOS 7 и OpenSSH 7.4, но скорей всего сработает и для других версий.&lt;&#x2F;p&gt;
-&lt;p&gt;В качестве корневого каталога будет путь &lt;code&gt;&#x2F;sftp&#x2F;bob&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;nastraivaem-sluzhbu-sshd&quot;&gt;Настраиваем службу sshd&lt;&#x2F;h3&gt;
-&lt;p&gt;Добавляем в конец конфигурационного файла sshd &lt;code&gt;&#x2F;etc&#x2F;ssh&#x2F;sshd_config&lt;&#x2F;code&gt; следующий текст (комментарии можно не добавлять):&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;Match User bob
-&lt;&#x2F;span&gt;&lt;span&gt; # Запрещаем 
-&lt;&#x2F;span&gt;&lt;span&gt; X11Forwarding no
-&lt;&#x2F;span&gt;&lt;span&gt; # Запрещаем проксирование tcp-трафика
-&lt;&#x2F;span&gt;&lt;span&gt; AllowTcpForwarding no
-&lt;&#x2F;span&gt;&lt;span&gt; # Мы будем использовать только подсистему sftp
-&lt;&#x2F;span&gt;&lt;span&gt; ForceCommand internal-sftp
-&lt;&#x2F;span&gt;&lt;span&gt; # Корневой каталог для пользователя
-&lt;&#x2F;span&gt;&lt;span&gt; ChrootDirectory &#x2F;sftp&#x2F;bob
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Проверяем что конфигурация без ошибок:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;sshd -t
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Если ошибок нет, то ответа от команды не последует. Затем рестартуем службу:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;systemctl restart sshd
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h3 id=&quot;ustanavlivaem-korrektnye-prava&quot;&gt;Устанавливаем корректные права&lt;&#x2F;h3&gt;
-&lt;p&gt;У механизма chroot есть требование для владельцев по пути к корневому каталогу:&lt;&#x2F;p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;ChrootDirectory&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
-Specifies the pathname of a directory to chroot(2) to after authentication. All components of the pathname must 
-be root-owned directories that are not writable by any other user or group. After the chroot, sshd(8) 
-changes the working directory to the user&#x27;s home directory.&lt;&#x2F;p&gt;
-&lt;&#x2F;blockquote&gt;
-&lt;p&gt;Владельцем на пути до корневого каталога (включительно) должен быть &lt;code&gt;root&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;p&gt;Поэтому делаем так:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;chown -R root: &#x2F;vfs
-&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Если с правами что-то не так то в файле &lt;code&gt;&#x2F;var&#x2F;log&#x2F;secure&lt;&#x2F;code&gt; будет ошибка &lt;code&gt;fatal: bad ownership or modes for chroot directory&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;h3 id=&quot;testiruem&quot;&gt;Тестируем&lt;&#x2F;h3&gt;
-&lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ sftp bob@your-server
+        <content type="html">&lt;p&gt;Всем знакома ситуация в рабочей почте и чатах появляются логины, пароли, сертификаты и прочие чувствительные данные.
+Это вполне закономерное явление, которое &amp;quot;исторически сложилось&amp;quot;. Безопасники негодуют, что пользователи не заботятся о безопасности, но сами не предлагают ничего взамен.
+Что делать сотруднику компании? Ставить себе софт аля PGP? Никто не будет с этим заморачиваться, у всех хватает собственных забот по работе.&lt;&#x2F;p&gt;
+&lt;p&gt;К счастью, есть сервисы, которые реализуют возможность безопасного обмена чувствительными данными (далее - секретами).
+С одной стороны - безопасники спокойны, с другой - пользователи получают простой и быстрый инструмент для обмена секретами.&lt;&#x2F;p&gt;
+&lt;p&gt;Само собой такие сервисы не гарантируют 100% безопасности, но уменьшают риск утечки данных. 
+Ссылки, которые окажутся в чате или в почте будут иметь ограниченный срок жизни и довольно быстро станут неактуальными.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Основные особенности:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Шифрование на клиенте (в браузере)&lt;&#x2F;li&gt;
+&lt;li&gt;Ключ хранится внутри ссылки&lt;&#x2F;li&gt;
+&lt;li&gt;Сервер хранит только зашифрованные данные&lt;&#x2F;li&gt;
+&lt;li&gt;Данные хранятся в оперативной памяти и не попадают на диск&lt;&#x2F;li&gt;
+&lt;li&gt;Ограниченный период времени жизни секретов (по времени и количеству открытий ссылки)&lt;&#x2F;li&gt;
+&lt;li&gt;Открытый исходный код, возможность аудита&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Один из таких сервисов - &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;pw&quot;&gt;PW&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pw&quot;&gt;PW&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;security&#x2F;pw.png&quot; alt=&quot;Интерфейс приложения PW&quot; title=&quot;Интерфейс приложения PW&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Интерфейс предельно простой и пояснений не требует.&lt;&#x2F;p&gt;
+&lt;p&gt;Помимо вышеназванных особенностей PW:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Шифрует в AES 256, с ключом размером 32-символа&lt;&#x2F;li&gt;
+&lt;li&gt;Написан на Rust, что ликвидирует ряд классических уязвимостей связанных с оперативной памятью и &lt;del&gt;blazing fast&lt;&#x2F;del&gt; даёт высокую производительность&lt;&#x2F;li&gt;
+&lt;li&gt;Использует Redis в качестве in-memory хранилища секретов&lt;&#x2F;li&gt;
+&lt;li&gt;Потребляет минимальное количество ресурсов. Образ весит 25 МБ, потребляет 21 МБ ОЗУ (включая redis)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;ustanovka&quot;&gt;Установка&lt;&#x2F;h3&gt;
+&lt;p&gt;Проще всего &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;pw&#x2F;blob&#x2F;main&#x2F;docs&#x2F;install&#x2F;DOCKER.md&quot;&gt;установить docker&#x27;ом&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;3.3&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
 &lt;&#x2F;span&gt;&lt;span&gt;
-&lt;&#x2F;span&gt;&lt;span&gt;Connected to your-server.
-&lt;&#x2F;span&gt;&lt;span&gt;sftp&amp;gt; ls
-&lt;&#x2F;span&gt;&lt;span&gt;lost+found  test
-&lt;&#x2F;span&gt;&lt;span&gt;sftp&amp;gt; pwd
-&lt;&#x2F;span&gt;&lt;span&gt;Remote working directory: &#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;app&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;container_name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pw
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;tinyops&#x2F;pw:1.1.0
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;restart&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;always
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# - .&#x2F;pw.yml:&#x2F;app&#x2F;app.yml
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#- .&#x2F;locale.d:&#x2F;app&#x2F;locale.d
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;8080:8080&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cache&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;container_name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pw-cache
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;redis:7.2.1-alpine3.18
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;restart&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;always
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;command&lt;&#x2F;span&gt;&lt;span&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;redis-server --save &amp;quot;&amp;quot; --appendonly no --maxmemory 128mb&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Всё работает.&lt;&#x2F;p&gt;
+&lt;p&gt;Если конфигурация по умолчанию не подходит, то можно подложить свой конфиг на базе &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;pw&#x2F;blob&#x2F;main&#x2F;backend&#x2F;pw.yml-dist&quot;&gt;примера&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;lokalizatsiia&quot;&gt;Локализация&lt;&#x2F;h4&gt;
+&lt;p&gt;По умолчанию включен английский язык, чтобы поменять на русский, достаточно подправить опцию в конфиге:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;locale-id&lt;&#x2F;span&gt;&lt;span&gt;: &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ru&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;И перезапустить приложение.&lt;&#x2F;p&gt;
+&lt;p&gt;Перевод не прибит гвоздями к коду, поэтому можно изменить перевод, файлы локализации хранятся в каталоге &lt;code&gt;locale.d&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;poleznye-ssylki&quot;&gt;Полезные ссылки&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;pw&#x2F;blob&#x2F;main&#x2F;docs&#x2F;faq&#x2F;FAQ.ru.md&quot;&gt;Вопросы и ответы про безопасность PW&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;lebe-dev&#x2F;pw&#x2F;blob&#x2F;main&#x2F;docs&#x2F;install&#x2F;INSTALL.md&quot;&gt;Официальная документация&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
 </content>
         
     </entry>

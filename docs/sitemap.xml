@@ -2,10 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2023-07-27</lastmod>
+        <lastmod>2023-09-11</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/authors/</loc>
+    </url>
+    <url>
+        <loc>https://b.tinyops.ru/bezopasniy-obmen-loginami-i-parolyami/</loc>
+        <lastmod>2023-09-11</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/</loc>
@@ -57,6 +61,7 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/security/page/1/</loc>
+        <lastmod>2023-09-11</lastmod>
     </url>
     <url>
         <loc>https://b.tinyops.ru/categories/software/</loc>
@@ -124,10 +129,6 @@
         <loc>https://b.tinyops.ru/page/1/</loc>
     </url>
     <url>
-        <loc>https://b.tinyops.ru/sftp-chroot-centos7/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
         <loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
         <lastmod>2023-07-27</lastmod>
     </url>
@@ -141,6 +142,10 @@
         <loc>https://b.tinyops.ru/tags/backup/</loc>
     </url>
     <url>
+        <loc>https://b.tinyops.ru/tags/bezopasnost/</loc>
+        <lastmod>2023-09-11</lastmod>
+    </url>
+    <url>
         <loc>https://b.tinyops.ru/tags/borg/</loc>
     </url>
     <url>
@@ -148,9 +153,6 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/centos7/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/chroot/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/development/</loc>
@@ -178,9 +180,6 @@
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/security/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/sftp/</loc>
     </url>
     <url>
         <loc>https://b.tinyops.ru/tags/software/</loc>
