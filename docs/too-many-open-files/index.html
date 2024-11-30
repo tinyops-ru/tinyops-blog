@@ -114,7 +114,7 @@
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>[root@dracula ~]# sysctl fs.file-max
 </span><span>fs.file-max = 3000000
 </span></code></pre>
-<p>Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
+<p>Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно
 прочитать файл <code>/proc/sys/fs/file-nr</code>:</p>
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>$ cat /proc/sys/fs/file-nr
 </span><span>1154    133     3000000
@@ -125,7 +125,7 @@
 <li><code>3000000</code> — сколько разрешено открывать файлов.</li>
 </ul>
 <h2 id="pam">PAM</h2>
-<p><a href="http://www.linux-pam.org/Linux-PAM-html/sag-introduction.html">PAM</a> (Pluggable Authentication Modules for Linux) — 
+<p><a href="http://www.linux-pam.org/Linux-PAM-html/sag-introduction.html">PAM</a> (Pluggable Authentication Modules for Linux) —
 это набор динамически-подключаемых библиотек для аутентификации пользователей.</p>
 <p>Конфигурация для PAM хранится в следующих каталогах и файлах:</p>
 <ul>
@@ -137,17 +137,17 @@
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>nginx           soft   nofile 50000
 </span><span>nginx           hard   nofile 50000
 </span></code></pre>
-<p>Существует два вида ограничений: <code>soft</code> (мягкий) и <code>hard</code> (жесткий). Soft-ограничения носят рекомендательный характер, 
+<p>Существует два вида ограничений: <code>soft</code> (мягкий) и <code>hard</code> (жесткий). Soft-ограничения носят рекомендательный характер,
 в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (<code>nofile</code>) по hard-ограничению
 не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.</p>
 <h2 id="protsess-iadro-i-pam">Процесс, ядро и PAM</h2>
 <p>Все что описано выше показано на схеме:</p>
 <p><img src="/images/linux/too-many-open-files.png" alt="alt text" title="Ядро, PAM и процесс" /></p>
-<p>Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
+<p>Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит.
 Далее — если процесс поддерживает PAM, делается вызов через библиотеку, не исчерпались ли лимиты.</p>
 <p>Если процесс не поддерживает PAM, какие бы лимиты ему не установили в конфигурационных файлах, он будет их игнорировать.</p>
 <h2 id="oshibka-too-many-open-files">Ошибка «Too many open files»</h2>
-<p>Например, мы получили такую ошибку для <code>nginx</code>. Nginx поддерживает PAM, поэтому на него влияют настройки 
+<p>Например, мы получили такую ошибку для <code>nginx</code>. Nginx поддерживает PAM, поэтому на него влияют настройки
 в <code>/etc/security/limits.conf</code> и упомянутых выше файлах.</p>
 <p>Смотрим сколько пользователю <code>nginx</code> разрешено:</p>
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>$ sudo -u nginx bash -c &#39;ulimit -n&#39;
@@ -159,11 +159,11 @@
 </span><span>nginx           hard   nofile 10000
 </span></code></pre>
 <p>Тем самым разрешая лимит до 10000 файлов.</p>
-<p>В старых ядрах Linux значение <code>fs.file-max</code> может быть равно 10000. Если требуется дать <code>nginx</code> больше 10000 файлов, 
+<p>В старых ядрах Linux значение <code>fs.file-max</code> может быть равно 10000. Если требуется дать <code>nginx</code> больше 10000 файлов,
 то необходимо добавить в <code>/etc/sysctl.conf</code> значение с запасом:</p>
 <pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>fs.file-max = 100000
 </span></code></pre>
-<p>Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
+<p>Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и
 применить его «на лету», делаем вот так:</p>
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>$ sysctl -w fs.file-max=100000
 </span></code></pre>

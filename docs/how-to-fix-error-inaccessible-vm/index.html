@@ -91,7 +91,7 @@
         <time class="article_time" datetime="2020-05-10">10.05.2020</time>.
     </div>
 
-    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
+    <div class="d-inline-block article_time"> Время чтения &mdash; 1 мин.</div>
 </div>
 
 
@@ -105,13 +105,13 @@
 
   <p>Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:</p>
 <blockquote>
-<p>Your VM has become &quot;inaccessible&quot;. Unfortunately, this is a critical error with VirtualBox that Vagrant 
-can not cleanly recover from. Please open VirtualBox and clear out your 
+<p>Your VM has become "inaccessible". Unfortunately, this is a critical error with VirtualBox that Vagrant
+can not cleanly recover from. Please open VirtualBox and clear out your
 inaccessible virtual machines or find a way to fix them.</p>
 </blockquote>
-<p>Virtual Box маркирует виртуальную машину как <code>inaccessible</code> если не может её запустить и 
+<p>Virtual Box маркирует виртуальную машину как <code>inaccessible</code> если не может её запустить и
 не может сформулировать пользователю в чем же дело.</p>
-<p>Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
+<p>Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft.
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)</p>
 <p>Для начала посмотрим список виртуальных машин:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> VBoxManage list vms
@@ -121,7 +121,7 @@ inaccessible virtual machines or find a way to fix them.</p>
 </span><span>&quot;</span><span style="color:#a3be8c;">&lt;inaccessible&gt;</span><span>&quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
 </span><span>&quot;</span><span style="color:#a3be8c;">supervisor-jolokia_default_1572425247238_89749</span><span>&quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
 </span></code></pre>
-<p>Запоминаем уникальный ID проблемной виртуальной машины - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>. </p>
+<p>Запоминаем уникальный ID проблемной виртуальной машины - <code>4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8</code>.</p>
 <p>Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:</p>
 <pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">VBoxManage</span><span> unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 </span></code></pre>

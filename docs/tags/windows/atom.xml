@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - windows</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/windows/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/windows/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-07-27T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/windows/atom.xml</id>
@@ -11,13 +11,19 @@
         <title>Запуск Syncthing в виде службы Windows</title>
         <published>2020-11-11T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/syncthing-as-windows-service/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/syncthing-as-windows-service/"/>
         <id>https://b.tinyops.ru/syncthing-as-windows-service/</id>
         
-        <content type="html">&lt;p&gt;Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
+        <content type="html" xml:base="https://b.tinyops.ru/syncthing-as-windows-service/">&lt;p&gt;Syncthing - это приложение для синхронизации каталогов между сетевыми устройствами. В качестве сетевых устройств могут
 выступать настольные системы, ноутбуки и мобильные устройства. Syncthing можно запустить во всех популярных операционных системах.&lt;&#x2F;p&gt;
 &lt;p&gt;Если на мобильных устройствах приложение стартует самостоятельно как служба, то на настольных системах необходима настройка.
 Вы можете запустить приложение в сеансе текущего пользователя, но запускать при каждом запуске компьютера неудобно.&lt;&#x2F;p&gt;
@@ -28,7 +34,7 @@
 &lt;&#x2F;ol&gt;
 &lt;p&gt;Первый способ костыльный и перестанет работать если пользователь поменяет пароль, поэтому лучше настроить службу Windows.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;ustanovka-nssm&quot;&gt;Установка NSSM&lt;&#x2F;h3&gt;
-&lt;p&gt;Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы. 
+&lt;p&gt;Для настройки необходимо использовать утилиту которая умеет запускать Windows-приложения как службы.
 Подобных утилит достаточно много, но мы возьмём одну из самых удобных - NSSM (The Non-Sucking Service Manager).
 Скачиваем с официального сайта дистрибутив &lt;a href=&quot;https:&#x2F;&#x2F;nssm.cc&#x2F;download&quot;&gt;https:&#x2F;&#x2F;nssm.cc&#x2F;download&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Распаковываем куда-нибудь, например, в &lt;code&gt;c:\apps\nssm&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
@@ -41,12 +47,12 @@
 &lt;&#x2F;span&gt;&lt;span&gt;c:\apps\nssm\nssm.exe set Syncthing start SERVICE_DELAYED_AUTO_START
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;nastraivaem-pol-zovatelia&quot;&gt;Настраиваем пользователя&lt;&#x2F;h3&gt;
-&lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора. &lt;&#x2F;p&gt;
+&lt;p&gt;В целях безопасности рекомендуется запускать Syncthing от имени пользователя без привилегий администратора.&lt;&#x2F;p&gt;
 &lt;p&gt;Заходим в оснастку служб Windows, переходим в свойств службы &lt;code&gt;Syncthing&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-properties.png&quot; alt=&quot;Свойства службы Syncthing&quot; title=&quot;Свойства службы Syncthing&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Выбираем существующего пользователя и указываем пароль.&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;awesomeware&#x2F;syncthing&#x2F;service-run-as.png&quot; alt=&quot;Выбор пользователя для запуска службы&quot; title=&quot;Выбор пользователя для запуска службы&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
-&lt;p&gt;Жмём &amp;quot;ОК&amp;quot; и перезапускаем службу.&lt;&#x2F;p&gt;
+&lt;p&gt;Жмём &quot;ОК&quot; и перезапускаем службу.&lt;&#x2F;p&gt;
 &lt;p&gt;Приложение станет доступно по ссылке &lt;a href=&quot;http:&#x2F;&#x2F;127.0.0.1:8384&quot;&gt;http:&#x2F;&#x2F;127.0.0.1:8384&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;drugie-stat-i&quot;&gt;Другие статьи&lt;&#x2F;h2&gt;
 &lt;ul&gt;

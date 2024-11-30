@@ -2,30 +2,184 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - devops</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/devops/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/devops/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2023-07-27T00:00:00+00:00</updated>
+    <updated>2024-11-30T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/devops/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Сборка Rust для Windows 10 через GitLab Runner</title>
+        <published>2024-11-30T00:00:00+00:00</published>
+        <updated>2024-11-30T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/sborka-rust-windows10-gitlab-runner/"/>
+        <id>https://b.tinyops.ru/sborka-rust-windows10-gitlab-runner/</id>
+        
+        <content type="html" xml:base="https://b.tinyops.ru/sborka-rust-windows10-gitlab-runner/">&lt;p&gt;На днях собирал новый GitLab Runner на базе Windows 10 и наловил проблем. Событие редкое, многое забывается, поэтому пусть будет.
+Далее - описан опыт как починить те проблемы с которыми столкнулся.&lt;&#x2F;p&gt;
+&lt;p&gt;У проекта который собирал были вот такой &lt;code&gt;Cargo.toml&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span&gt;[package]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;name &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;redacted&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1.3.1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;edition &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2021&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;[profile.release]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;opt-level &lt;&#x2F;span&gt;&lt;span&gt;= &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;z&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;lto &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;codegen-units &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;panic &lt;&#x2F;span&gt;&lt;span&gt;= &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;abort&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;[dependencies]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;anyhow &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;clap &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2.33.4&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;reqwest &lt;&#x2F;span&gt;&lt;span&gt;= { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.11.12&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;default-features &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;features &lt;&#x2F;span&gt;&lt;span&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;blocking&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;json&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;rustls-tls&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;] }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;base64 &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.12&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;regex &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;serde &lt;&#x2F;span&gt;&lt;span&gt;= { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1.0&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;features &lt;&#x2F;span&gt;&lt;span&gt;= [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;] }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;serde_derive &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1.0&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;serde_json &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1.0&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;chrono &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.4&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;log &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.4&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;log4rs &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;1.2.0&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В качестве ОС - Windows 10 22H2 с обновлениями на ноябрь 2024.&lt;&#x2F;p&gt;
+&lt;p&gt;Релизную сборку запускаем по классике:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;cargo build --release
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Дальше начинаются проблемы.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-1-gitlab-runner-ne-nakhodit-komandu-pwsh&quot;&gt;Проблема №1: GitLab Runner не находит команду pwsh&lt;&#x2F;h3&gt;
+&lt;p&gt;Ошибка:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;ERROR: Job failed (system failure): prepare environment: failed to start process: exec: “pwsh”: executable file not found in %PATH%.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Правим &lt;code&gt;c:\gitlab-runner\config.toml&lt;&#x2F;code&gt;, меняем &lt;code&gt;pwsh&lt;&#x2F;code&gt; на &lt;code&gt;powershell&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Рестартуем службу &lt;code&gt;gitlab-runner&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-2-ustanovka-rust-po-umolchaniiu-soderzhit-probely-v-puti&quot;&gt;Проблема №2: Установка Rust по умолчанию содержит пробелы в пути&lt;&#x2F;h3&gt;
+&lt;p&gt;Многие инсталляторы любят ставить приложения в &lt;code&gt;c:\Program Files\blablabla&lt;&#x2F;code&gt; и в большинстве случаев это работает.
+В случае с софтом для разработки часто это приводит к неявным проблемам. Основная проблема - пробелы в пути.
+Олдскульный софт будет писать ошибки, ругаться про пути и не находить то что там формально присутствует.&lt;&#x2F;p&gt;
+&lt;p&gt;Я ставлю в &lt;code&gt;c:\rust&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-3-skrytye-zavisimosti-gitlab-runner&quot;&gt;Проблема №3: Скрытые зависимости Gitlab Runner&lt;&#x2F;h3&gt;
+&lt;p&gt;Ставим &lt;a href=&quot;https:&#x2F;&#x2F;git-scm.com&#x2F;downloads&#x2F;win&quot;&gt;git для Windows&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-4-propisyvat-puti-v-sistemnye-peremennye&quot;&gt;Проблема №4: Прописывать пути в системные переменные&lt;&#x2F;h3&gt;
+&lt;p&gt;Важно прописывать в системные переменные пути к софту который мы ставим:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;rust&#x2F;rust-gcc-windows.png&quot; alt=&quot;Системные переменные окружения&quot; title=&quot;Системные переменные окружения&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;После правок рестартуем службу &lt;code&gt;gitlab-runner&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-5-khochu-sobirat-proekty-na-drugom-diske&quot;&gt;Проблема №5: Хочу собирать проекты на другом диске&lt;&#x2F;h3&gt;
+&lt;p&gt;Допустим мы поставили &lt;code&gt;gitlab-runner&lt;&#x2F;code&gt; в &lt;code&gt;c:\gitlab-runner&lt;&#x2F;code&gt;, но на нём не так много места. Rust-проект может сожрать легко пару гигов, а если проектов много, то вообще беда.
+Например, у нас есть диск &lt;code&gt;D:\&lt;&#x2F;code&gt; с достаточным объёмом.&lt;&#x2F;p&gt;
+&lt;p&gt;В &lt;code&gt;c:\gitlab-runner\config.toml&lt;&#x2F;code&gt; следует указать путь для &lt;code&gt;builds_dir&lt;&#x2F;code&gt; (без пробелов):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;concurrent &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;check_interval &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;shutdown_timeout &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;[session_server]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;session_timeout &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1800
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;[[runners]]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;name &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my-sweet-windows-runner&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;url &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;https:&#x2F;&#x2F;gitlab.com&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;id &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;43796767
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;token &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;glrt-REDACTED&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;token_obtained_at &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2024-11-30T10:07:06Z
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;token_expires_at &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0001-01-01T00:00:00Z
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;executor &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;shell&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;shell &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;powershell&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;builds_dir &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;E:&#x2F;builds&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# &amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; СЮДА
+&lt;&#x2F;span&gt;&lt;span&gt;  [runners.custom_build_dir]
+&lt;&#x2F;span&gt;&lt;span&gt;  [runners.cache]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;MaxUploadedArchiveSize &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span&gt;    [runners.cache.s3]
+&lt;&#x2F;span&gt;&lt;span&gt;    [runners.cache.gcs]
+&lt;&#x2F;span&gt;&lt;span&gt;    [runners.cache.azure]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;И перезапустить службу &lt;code&gt;gitlab runner&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;problema-6-gcc-program-not-found&quot;&gt;Проблема №6: gcc program not found&lt;&#x2F;h3&gt;
+&lt;p&gt;Ругается, что не найден сишный компилятор &lt;code&gt;gcc&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span&gt;error: failed to run custom build command for `ring v0.16.20`
+&lt;&#x2F;span&gt;&lt;span&gt;Caused by:
+&lt;&#x2F;span&gt;&lt;span&gt;  process didn&amp;#39;t exit successfully: `E:\builds\t3_sbSPS6\0\projects\redacted\target\debug\build\ring-1c55f4d67b4150d6\build-script-build` (exit code: 101)
+&lt;&#x2F;span&gt;&lt;span&gt;  --- stdout
+&lt;&#x2F;span&gt;&lt;span&gt;  OPT_LEVEL = Some(&amp;quot;0&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;  TARGET = Some(&amp;quot;x86_64-pc-windows-gnu&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;  HOST = Some(&amp;quot;x86_64-pc-windows-gnu&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CC_x86_64-pc-windows-gnu
+&lt;&#x2F;span&gt;&lt;span&gt;  CC_x86_64-pc-windows-gnu = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CC_x86_64_pc_windows_gnu
+&lt;&#x2F;span&gt;&lt;span&gt;  CC_x86_64_pc_windows_gnu = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=HOST_CC
+&lt;&#x2F;span&gt;&lt;span&gt;  HOST_CC = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CC
+&lt;&#x2F;span&gt;&lt;span&gt;  CC = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CFLAGS_x86_64-pc-windows-gnu
+&lt;&#x2F;span&gt;&lt;span&gt;  CFLAGS_x86_64-pc-windows-gnu = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CFLAGS_x86_64_pc_windows_gnu
+&lt;&#x2F;span&gt;&lt;span&gt;  CFLAGS_x86_64_pc_windows_gnu = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=HOST_CFLAGS
+&lt;&#x2F;span&gt;&lt;span&gt;  HOST_CFLAGS = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CFLAGS
+&lt;&#x2F;span&gt;&lt;span&gt;  CFLAGS = None
+&lt;&#x2F;span&gt;&lt;span&gt;  cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+&lt;&#x2F;span&gt;&lt;span&gt;  CRATE_CC_NO_DEFAULTS = None
+&lt;&#x2F;span&gt;&lt;span&gt;  DEBUG = Some(&amp;quot;true&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;  CARGO_CFG_TARGET_FEATURE = Some(&amp;quot;cmpxchg16b,fxsr,sse,sse2,sse3&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;  --- stderr
+&lt;&#x2F;span&gt;&lt;span&gt;  running &amp;quot;gcc.exe&amp;quot; &amp;quot;-O0&amp;quot; &amp;quot;-ffunction-sections&amp;quot; &amp;quot;-fdata-sections&amp;quot; &amp;quot;-gdwarf-2&amp;quot; &amp;quot;-fno-omit-frame-pointer&amp;quot; &amp;quot;-m64&amp;quot; &amp;quot;-I&amp;quot; &amp;quot;include&amp;quot; &amp;quot;-Wall&amp;quot; &amp;quot;-Wextra&amp;quot; &amp;quot;-std=c1x&amp;quot; &amp;quot;-Wbad-function-cast&amp;quot; &amp;quot;-Wnested-externs&amp;quot; &amp;quot;-Wstrict-prototypes&amp;quot; &amp;quot;-pedantic&amp;quot; &amp;quot;-pedantic-errors&amp;quot; &amp;quot;-Wall&amp;quot; &amp;quot;-Wextra&amp;quot; &amp;quot;-Wcast-align&amp;quot; &amp;quot;-Wcast-qual&amp;quot; &amp;quot;-Wconversion&amp;quot; &amp;quot;-Wenum-compare&amp;quot; &amp;quot;-Wfloat-equal&amp;quot; &amp;quot;-Wformat=2&amp;quot; &amp;quot;-Winline&amp;quot; &amp;quot;-Winvalid-pch&amp;quot; &amp;quot;-Wmissing-field-initializers&amp;quot; &amp;quot;-Wmissing-include-dirs&amp;quot; &amp;quot;-Wredundant-decls&amp;quot; &amp;quot;-Wshadow&amp;quot; &amp;quot;-Wsign-compare&amp;quot; &amp;quot;-Wsign-conversion&amp;quot; &amp;quot;-Wundef&amp;quot; &amp;quot;-Wuninitialized&amp;quot; &amp;quot;-Wwrite-strings&amp;quot; &amp;quot;-fno-strict-aliasing&amp;quot; &amp;quot;-fvisibility=hidden&amp;quot; &amp;quot;-g3&amp;quot; &amp;quot;-DNDEBUG&amp;quot; &amp;quot;-c&amp;quot; &amp;quot;-oE:\\builds\\t3_sbSPS6\\0\\kamis-ops\\kam4z\\target\\debug\\build\\ring-80888969515fa4ed\\out\\aes_nohw.o&amp;quot; &amp;quot;crypto&#x2F;fipsmodule&#x2F;aes&#x2F;aes_nohw.c&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  thread &amp;#39;main&amp;#39; panicked at C:\Windows\system32\config\systemprofile\.cargo\registry\src\index.crates.io-6f17d22bba15001f\ring-0.16.20\build.rs:653:9:
+&lt;&#x2F;span&gt;&lt;span&gt;  failed to execute [&amp;quot;gcc.exe&amp;quot; &amp;quot;-O0&amp;quot; &amp;quot;-ffunction-sections&amp;quot; &amp;quot;-fdata-sections&amp;quot; &amp;quot;-gdwarf-2&amp;quot; &amp;quot;-fno-omit-frame-pointer&amp;quot; &amp;quot;-m64&amp;quot; &amp;quot;-I&amp;quot; &amp;quot;include&amp;quot; &amp;quot;-Wall&amp;quot; &amp;quot;-Wextra&amp;quot; &amp;quot;-std=c1x&amp;quot; &amp;quot;-Wbad-function-cast&amp;quot; &amp;quot;-Wnested-externs&amp;quot; &amp;quot;-Wstrict-prototypes&amp;quot; &amp;quot;-pedantic&amp;quot; &amp;quot;-pedantic-errors&amp;quot; &amp;quot;-Wall&amp;quot; &amp;quot;-Wextra&amp;quot; &amp;quot;-Wcast-align&amp;quot; &amp;quot;-Wcast-qual&amp;quot; &amp;quot;-Wconversion&amp;quot; &amp;quot;-Wenum-compare&amp;quot; &amp;quot;-Wfloat-equal&amp;quot; &amp;quot;-Wformat=2&amp;quot; &amp;quot;-Winline&amp;quot; &amp;quot;-Winvalid-pch&amp;quot; &amp;quot;-Wmissing-field-initializers&amp;quot; &amp;quot;-Wmissing-include-dirs&amp;quot; &amp;quot;-Wredundant-decls&amp;quot; &amp;quot;-Wshadow&amp;quot; &amp;quot;-Wsign-compare&amp;quot; &amp;quot;-Wsign-conversion&amp;quot; &amp;quot;-Wundef&amp;quot; &amp;quot;-Wuninitialized&amp;quot; &amp;quot;-Wwrite-strings&amp;quot; &amp;quot;-fno-strict-aliasing&amp;quot; &amp;quot;-fvisibility=hidden&amp;quot; &amp;quot;-g3&amp;quot; &amp;quot;-DNDEBUG&amp;quot; &amp;quot;-c&amp;quot; &amp;quot;-oE:\\builds\\t3_sbSPS6\\0\\kamis-ops\\kam4z\\target\\debug\\build\\ring-80888969515fa4ed\\out\\aes_nohw.o&amp;quot; &amp;quot;crypto&#x2F;fipsmodule&#x2F;aes&#x2F;aes_nohw.c&amp;quot;]: program not found
+&lt;&#x2F;span&gt;&lt;span&gt;  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;Решение:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Качаем и ставим &lt;a href=&quot;https:&#x2F;&#x2F;www.msys2.org&#x2F;#installation&quot;&gt;msys2&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Ставим по пути &lt;code&gt;c:\msys2&lt;&#x2F;code&gt; (это важно).&lt;&#x2F;li&gt;
+&lt;li&gt;Добавляем в системные переменные окружения &lt;code&gt;c:\msys64\mingw64\bin&lt;&#x2F;code&gt;:
+&lt;img src=&quot;&#x2F;images&#x2F;rust&#x2F;rust-gcc-windows.png&quot; alt=&quot;gcc в системных переменных окружения&quot; title=&quot;gcc в системных переменных окружения&quot; &#x2F;&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;В ПУСК ищем &lt;code&gt;ming&lt;&#x2F;code&gt; и запускаем &lt;code&gt;MSYS2 MINGW64&lt;&#x2F;code&gt;, откроется терминал, где доставляем &lt;code&gt;gcc&lt;&#x2F;code&gt; командой: &lt;code&gt;pacman --sync mingw-w64-x86_64-gcc&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Рестартуем службу &lt;code&gt;gitlab-runner&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+</content>
+        
+    </entry>
     <entry xml:lang="en">
         <title>Как собрать старый Golang-проект с определённой версией зависимости</title>
         <published>2020-09-30T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/how-to-build-golang-with-dep-version/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/how-to-build-golang-with-dep-version/"/>
         <id>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</id>
         
-        <content type="html">&lt;p&gt;Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то, что она должна была
+        <content type="html" xml:base="https://b.tinyops.ru/how-to-build-golang-with-dep-version/">&lt;p&gt;Возникла задача дописать фичу для утилиты написанной на Go 1.7. Одно из требований к утилите было то, что она должна была
 работать под Windows Server 2008 (без R2). К сожалению, более новые версии Go, в том числе те, в которые завезли модули,
 использовать было нельзя. В отличие от Rust в Go старых версий с зависимостями всё было сделано плохо.&lt;&#x2F;p&gt;
-&lt;p&gt;Нельзя было как в Rust просто указать какую версию зависимости ты хочешь. Поэтому в этой статье опишу как максимально 
+&lt;p&gt;Нельзя было как в Rust просто указать какую версию зависимости ты хочешь. Поэтому в этой статье опишу как максимально
 просто решить эту проблему.&lt;&#x2F;p&gt;
-&lt;p&gt;Итак, для проекта была нужна библиотека &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab&quot;&gt;grab&lt;&#x2F;a&gt;. 
+&lt;p&gt;Итак, для проекта была нужна библиотека &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cavaliercoder&#x2F;grab&quot;&gt;grab&lt;&#x2F;a&gt;.
 С последнего мартовского коммита в проект &lt;code&gt;master&lt;&#x2F;code&gt; этой библиотеки само собой убежал и попутно поломал совместимость.
 Проект перестал собираться.&lt;&#x2F;p&gt;
-&lt;p&gt;Чтобы подсунуть необходимую версию нужно в &lt;code&gt;%GOPATH%&#x2F;src&#x2F;github.com&#x2F;cavaliercoder&lt;&#x2F;code&gt; 
+&lt;p&gt;Чтобы подсунуть необходимую версию нужно в &lt;code&gt;%GOPATH%&#x2F;src&#x2F;github.com&#x2F;cavaliercoder&lt;&#x2F;code&gt;
 клонировать стабильную версию с нужным тэгом. В данном случае нужен был &lt;code&gt;2.0.0&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;ol&gt;
 &lt;li&gt;

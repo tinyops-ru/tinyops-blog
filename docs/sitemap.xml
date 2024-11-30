@@ -1,209 +1,212 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>https://b.tinyops.ru/</loc>
-        <lastmod>2023-09-11</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/authors/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/bezopasniy-obmen-loginami-i-parolyami/</loc>
-        <lastmod>2023-09-11</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/awesome/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/awesomeware/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/awesomeware/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/backup/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/centos/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/development/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/development/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/golang/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/golang/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/linux/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/security/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/security/page/1/</loc>
-        <lastmod>2023-09-11</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/software/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/software/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/syncthing/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/syncthing/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/windows/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/zola/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/categories/zola/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/ddv-theme-for-zola/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
-        <lastmod>2020-05-22</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/install-syncthing-centos7/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/page/1/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
-        <lastmod>2023-07-27</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/awesomeware/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/backup/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/bezopasnost/</loc>
-        <lastmod>2023-09-11</lastmod>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/borg/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/centos/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/centos7/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/development/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/devops/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/golang/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/idea/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/jetbrains/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/kernel/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/linux/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/pam/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/security/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/software/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/syncthing/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/theme/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/vagrant/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/virtualbox/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/windows/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/tags/zola/</loc>
-    </url>
-    <url>
-        <loc>https://b.tinyops.ru/too-many-open-files/</loc>
-        <lastmod>2020-06-02</lastmod>
-    </url>
+<url>
+<loc>https://b.tinyops.ru/</loc>
+<lastmod>2024-11-30</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/authors/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/sborka-rust-windows10-gitlab-runner/</loc>
+<lastmod>2024-11-30</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/bezopasniy-obmen-loginami-i-parolyami/</loc>
+<lastmod>2023-09-11</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/awesome/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/awesome/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/awesomeware/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/awesomeware/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/backup/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/backup/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/centos/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/centos/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/development/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/development/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/golang/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/golang/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/linux/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/linux/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/security/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/security/page/1/</loc>
+<lastmod>2023-09-11</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/software/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/software/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/syncthing/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/syncthing/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/troubleshooting/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/troubleshooting/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/windows/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/windows/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/zola/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/categories/zola/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/ddv-theme-for-zola/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/how-to-build-golang-with-dep-version/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</loc>
+<lastmod>2020-05-22</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/install-syncthing-centos7/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/linux-backup-with-borg/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/obnovlenie-syncthing-centos7/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/page/1/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/syncthing-as-windows-service/</loc>
+<lastmod>2023-07-27</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/awesomeware/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/backup/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/bezopasnost/</loc>
+<lastmod>2023-09-11</lastmod>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/borg/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/centos/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/centos7/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/development/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/devops/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/golang/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/idea/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/jetbrains/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/kernel/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/linux/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/pam/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/security/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/software/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/syncthing/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/theme/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/vagrant/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/virtualbox/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/windows/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/tags/zola/</loc>
+</url>
+<url>
+<loc>https://b.tinyops.ru/too-many-open-files/</loc>
+<lastmod>2020-06-02</lastmod>
+</url>
 </urlset>

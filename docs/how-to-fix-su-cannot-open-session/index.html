@@ -91,7 +91,7 @@
         <time class="article_time" datetime="2020-05-22">22.05.2020</time>.
     </div>
 
-    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
+    <div class="d-inline-block article_time"> Время чтения &mdash; 1 мин.</div>
 </div>
 
 
@@ -137,14 +137,14 @@
 </span><span style="color:#bf616a;">May</span><span> 21 15:22:46 hercules sudo: pam_limits(sudo:session)</span><span style="color:#96b5b4;">:</span><span> Could not set limit for &#39;</span><span style="color:#a3be8c;">nofile</span><span>&#39;: Operation not permitted
 </span><span style="color:#bf616a;">May</span><span> 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; </span><span style="color:#bf616a;">TTY</span><span>=</span><span style="color:#a3be8c;">pts/0 </span><span>; </span><span style="color:#bf616a;">PWD</span><span>=</span><span style="color:#a3be8c;">/root </span><span>; </span><span style="color:#bf616a;">USER</span><span>=</span><span style="color:#a3be8c;">zero </span><span>; </span><span style="color:#bf616a;">COMMAND</span><span>=</span><span style="color:#a3be8c;">/bin/id
 </span></code></pre>
-<p>Видим что есть проблема с настройкой <code>nofile</code> для модуля <code>pam_limits</code>. </p>
+<p>Видим что есть проблема с настройкой <code>nofile</code> для модуля <code>pam_limits</code>.</p>
 <p>Смотрим конфиг <code>/etc/security/limits.conf</code>:</p>
 <pre data-lang="text" style="background-color:#2b303b;color:#c0c5ce;" class="language-text "><code class="language-text" data-lang="text"><span>...
 </span><span>zero         soft   nofile 1500000
 </span><span>zero         hard   nofile 1500000
 </span><span>...
 </span></code></pre>
-<p>Для пользователя <code>zero</code> установлен лимит на максимально количество открытых файлов — <code>1500000</code>. Допустимый диапазон 
+<p>Для пользователя <code>zero</code> установлен лимит на максимально количество открытых файлов — <code>1500000</code>. Допустимый диапазон
 значений для <code>nofile</code>: <code>1-1048576</code>.</p>
 <p>Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и <code>su</code> начинает работать.</p>
 <pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">[root@hercules ~</span><span>]# su - zero

@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - pam</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/pam/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/pam/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2020-06-02T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/pam/atom.xml</id>
@@ -11,13 +11,19 @@
         <title>Ошибка «Too many open files» в Linux</title>
         <published>2020-06-02T00:00:00+00:00</published>
         <updated>2020-06-02T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/too-many-open-files/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/too-many-open-files/"/>
         <id>https://b.tinyops.ru/too-many-open-files/</id>
         
-        <content type="html">&lt;p&gt;Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
+        <content type="html" xml:base="https://b.tinyops.ru/too-many-open-files/">&lt;p&gt;Ошибка «Too many open files» означает, что процесс исчерпал доступные для него ресурсы по максимальному количеству
 открытых файлов. Простыми словами — процессу было разрешено открыть максимум 100 файлов, а он попытался открыть 101-й.&lt;&#x2F;p&gt;
 &lt;p&gt;Далее — разберёмся как работает это ограничение в операционных системах Linux. Все пути будут указаны для CentOS\RHEL-образных систем.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;ogranicheniia-iadra-linux&quot;&gt;Ограничения ядра Linux&lt;&#x2F;h2&gt;
@@ -26,7 +32,7 @@
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;[root@dracula ~]# sysctl fs.file-max
 &lt;&#x2F;span&gt;&lt;span&gt;fs.file-max = 3000000
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно 
+&lt;p&gt;Это суммарное значение на всю операционную систему. Чтобы посмотреть сколько сейчас открыто файлов достаточно
 прочитать файл &lt;code&gt;&#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ cat &#x2F;proc&#x2F;sys&#x2F;fs&#x2F;file-nr
 &lt;&#x2F;span&gt;&lt;span&gt;1154    133     3000000
@@ -37,7 +43,7 @@
 &lt;li&gt;&lt;code&gt;3000000&lt;&#x2F;code&gt; — сколько разрешено открывать файлов.&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;h2 id=&quot;pam&quot;&gt;PAM&lt;&#x2F;h2&gt;
-&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;www.linux-pam.org&#x2F;Linux-PAM-html&#x2F;sag-introduction.html&quot;&gt;PAM&lt;&#x2F;a&gt; (Pluggable Authentication Modules for Linux) — 
+&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;www.linux-pam.org&#x2F;Linux-PAM-html&#x2F;sag-introduction.html&quot;&gt;PAM&lt;&#x2F;a&gt; (Pluggable Authentication Modules for Linux) —
 это набор динамически-подключаемых библиотек для аутентификации пользователей.&lt;&#x2F;p&gt;
 &lt;p&gt;Конфигурация для PAM хранится в следующих каталогах и файлах:&lt;&#x2F;p&gt;
 &lt;ul&gt;
@@ -49,17 +55,17 @@
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;nginx           soft   nofile 50000
 &lt;&#x2F;span&gt;&lt;span&gt;nginx           hard   nofile 50000
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Существует два вида ограничений: &lt;code&gt;soft&lt;&#x2F;code&gt; (мягкий) и &lt;code&gt;hard&lt;&#x2F;code&gt; (жесткий). Soft-ограничения носят рекомендательный характер, 
+&lt;p&gt;Существует два вида ограничений: &lt;code&gt;soft&lt;&#x2F;code&gt; (мягкий) и &lt;code&gt;hard&lt;&#x2F;code&gt; (жесткий). Soft-ограничения носят рекомендательный характер,
 в отличие от hard-ограничений. Процесс пользователя который превысил допустимое количество открытых файлов (&lt;code&gt;nofile&lt;&#x2F;code&gt;) по hard-ограничению
 не сможет открывать новые файлы, до тех пор пока не закроет как минимум один из ранее открытых.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;protsess-iadro-i-pam&quot;&gt;Процесс, ядро и PAM&lt;&#x2F;h2&gt;
 &lt;p&gt;Все что описано выше показано на схеме:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;linux&#x2F;too-many-open-files.png&quot; alt=&quot;alt text&quot; title=&quot;Ядро, PAM и процесс&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
-&lt;p&gt;Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит. 
+&lt;p&gt;Стартует процесс, при каждой попытке открыть файл ядро операционной системы проверяет не исчерпан ли общий лимит.
 Далее — если процесс поддерживает PAM, делается вызов через библиотеку, не исчерпались ли лимиты.&lt;&#x2F;p&gt;
 &lt;p&gt;Если процесс не поддерживает PAM, какие бы лимиты ему не установили в конфигурационных файлах, он будет их игнорировать.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;oshibka-too-many-open-files&quot;&gt;Ошибка «Too many open files»&lt;&#x2F;h2&gt;
-&lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки 
+&lt;p&gt;Например, мы получили такую ошибку для &lt;code&gt;nginx&lt;&#x2F;code&gt;. Nginx поддерживает PAM, поэтому на него влияют настройки
 в &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt; и упомянутых выше файлах.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим сколько пользователю &lt;code&gt;nginx&lt;&#x2F;code&gt; разрешено:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ sudo -u nginx bash -c &amp;#39;ulimit -n&amp;#39;
@@ -71,11 +77,11 @@
 &lt;&#x2F;span&gt;&lt;span&gt;nginx           hard   nofile 10000
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Тем самым разрешая лимит до 10000 файлов.&lt;&#x2F;p&gt;
-&lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов, 
+&lt;p&gt;В старых ядрах Linux значение &lt;code&gt;fs.file-max&lt;&#x2F;code&gt; может быть равно 10000. Если требуется дать &lt;code&gt;nginx&lt;&#x2F;code&gt; больше 10000 файлов,
 то необходимо добавить в &lt;code&gt;&#x2F;etc&#x2F;sysctl.conf&lt;&#x2F;code&gt; значение с запасом:&lt;&#x2F;p&gt;
 &lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;fs.file-max = 100000
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и 
+&lt;p&gt;Операционная система перечитает пераметр при следующей загрузке. Чтобы не ждать ближайшей перезагрузки и
 применить его «на лету», делаем вот так:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;$ sysctl -w fs.file-max=100000
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
@@ -93,13 +99,19 @@
         <title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7</title>
         <published>2020-05-22T00:00:00+00:00</published>
         <updated>2020-05-22T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/"/>
         <id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
         
-        <content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; su - zero
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span&gt; cannot open session: Permission denied
@@ -129,14 +141,14 @@
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: pam_limits(sudo:session)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; Could not set limit for &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nofile&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;: Operation not permitted
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;TTY&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pts&#x2F;0 &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим конфиг &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;span&gt;zero         soft   nofile 1500000
 &lt;&#x2F;span&gt;&lt;span&gt;zero         hard   nofile 1500000
 &lt;&#x2F;span&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон 
+&lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон
 значений для &lt;code&gt;nofile&lt;&#x2F;code&gt;: &lt;code&gt;1-1048576&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и &lt;code&gt;su&lt;&#x2F;code&gt; начинает работать.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span&gt;]# su - zero

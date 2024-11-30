@@ -91,7 +91,7 @@
         <time class="article_time" datetime="2020-06-16">16.06.2020</time>.
     </div>
 
-    <div class="d-inline-block article_time"> Время чтения &mdash; 3 мин.</div>
+    <div class="d-inline-block article_time"> Время чтения &mdash; 2 мин.</div>
 </div>
 
 
@@ -107,14 +107,14 @@
     
   </div>
 
-  <p><a href="https://www.borgbackup.org/">BorgBackup</a> — это приложение для резервного копирования файлов 
+  <p><a href="https://www.borgbackup.org/">BorgBackup</a> — это приложение для резервного копирования файлов
 с поддержкой <a href="https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%B4%D1%83%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F">дедупликации</a>.</p>
 <h3 id="osnovnye-vozmozhnosti">Основные возможности</h3>
 <ol>
 <li><strong>Эффективное хранение</strong><br />
 Каждый файл разбивается на порции (chunks) и добавляется в репозиторий резервных копий если его там ещё не присутствовало.</li>
 <li><strong>Скорость работы</strong><br />
-Приложение написано на Python, но критические участки реализованы на C/Python. 
+Приложение написано на Python, но критические участки реализованы на C/Python.
 Используется кэширование и индексирование данных.</li>
 <li><strong>Поддержка сжатия</strong><br />
 Поддерживаются четыре вида сжатия данных: lz4, zstd, zlib и lzma.</li>
@@ -131,7 +131,7 @@
 <h3 id="nastroika-arkhivirovaniia">Настройка архивирования</h3>
 <p>В качестве примера настроим резервное копирование для сайта <a href="https://tinyops.ru">tinyops.ru</a>.
 Файлы сайта расположены в каталоге <code>/var/www/tinyops.ru/html</code>.</p>
-<p>Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
+<p>Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий,
 без шифрования данных:</p>
 <pre data-lang="shell script" style="background-color:#2b303b;color:#c0c5ce;" class="language-shell script "><code class="language-shell script" data-lang="shell script"><span>borg init --encryption=none  /mnt/backups/tinyops.ru
 </span></code></pre>

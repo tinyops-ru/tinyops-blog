@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - centos</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/categories/centos/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/categories/centos/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-07-27T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/categories/centos/atom.xml</id>
@@ -11,20 +11,26 @@
         <title>Как настроить резервное копирование файлов в Linux с помощью Borg Backup</title>
         <published>2020-06-16T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/linux-backup-with-borg/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/linux-backup-with-borg/"/>
         <id>https://b.tinyops.ru/linux-backup-with-borg/</id>
         
-        <content type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&#x2F;&quot;&gt;BorgBackup&lt;&#x2F;a&gt; — это приложение для резервного копирования файлов 
+        <content type="html" xml:base="https://b.tinyops.ru/linux-backup-with-borg/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.borgbackup.org&#x2F;&quot;&gt;BorgBackup&lt;&#x2F;a&gt; — это приложение для резервного копирования файлов
 с поддержкой &lt;a href=&quot;https:&#x2F;&#x2F;ru.wikipedia.org&#x2F;wiki&#x2F;%D0%94%D0%B5%D0%B4%D1%83%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F&quot;&gt;дедупликации&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;osnovnye-vozmozhnosti&quot;&gt;Основные возможности&lt;&#x2F;h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Эффективное хранение&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
 Каждый файл разбивается на порции (chunks) и добавляется в репозиторий резервных копий если его там ещё не присутствовало.&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;strong&gt;Скорость работы&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
-Приложение написано на Python, но критические участки реализованы на C&#x2F;Python. 
+Приложение написано на Python, но критические участки реализованы на C&#x2F;Python.
 Используется кэширование и индексирование данных.&lt;&#x2F;li&gt;
 &lt;li&gt;&lt;strong&gt;Поддержка сжатия&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
 Поддерживаются четыре вида сжатия данных: lz4, zstd, zlib и lzma.&lt;&#x2F;li&gt;
@@ -41,7 +47,7 @@
 &lt;h3 id=&quot;nastroika-arkhivirovaniia&quot;&gt;Настройка архивирования&lt;&#x2F;h3&gt;
 &lt;p&gt;В качестве примера настроим резервное копирование для сайта &lt;a href=&quot;https:&#x2F;&#x2F;tinyops.ru&quot;&gt;tinyops.ru&lt;&#x2F;a&gt;.
 Файлы сайта расположены в каталоге &lt;code&gt;&#x2F;var&#x2F;www&#x2F;tinyops.ru&#x2F;html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий, 
+&lt;p&gt;Borg использует понятие репозитория — это хранилище резервных копий. Создадим для нашего сайта отдельный репозиторий,
 без шифрования данных:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;shell script&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-shell script &quot;&gt;&lt;code class=&quot;language-shell script&quot; data-lang=&quot;shell script&quot;&gt;&lt;span&gt;borg init --encryption=none  &#x2F;mnt&#x2F;backups&#x2F;tinyops.ru
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
@@ -103,13 +109,19 @@
         <title>Как исправить ошибку su: cannot open session: Permission denied для CentOS 7</title>
         <published>2020-05-22T00:00:00+00:00</published>
         <updated>2020-05-22T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/"/>
         <id>https://b.tinyops.ru/how-to-fix-su-cannot-open-session/</id>
         
-        <content type="html">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://b.tinyops.ru/how-to-fix-su-cannot-open-session/">&lt;p&gt;При попытке войти из &lt;code&gt;root&lt;&#x2F;code&gt; под пользователем &lt;code&gt;zero&lt;&#x2F;code&gt; получаем ошибку:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules]#&lt;&#x2F;span&gt;&lt;span&gt; su - zero
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Last&lt;&#x2F;span&gt;&lt;span&gt; login: Thu May 21 12:24:16 MSK 2020 on pts&#x2F;0
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;su:&lt;&#x2F;span&gt;&lt;span&gt; cannot open session: Permission denied
@@ -139,14 +151,14 @@
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: pam_limits(sudo:session)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; Could not set limit for &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;nofile&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;: Operation not permitted
 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;May&lt;&#x2F;span&gt;&lt;span&gt; 21 15:22:46 hercules sudo: root : pam_open_session: Permission denied ; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;TTY&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pts&#x2F;0 &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;PWD&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;root &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;USER&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;zero &lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;COMMAND&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;bin&#x2F;id
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Видим что есть проблема с настройкой &lt;code&gt;nofile&lt;&#x2F;code&gt; для модуля &lt;code&gt;pam_limits&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Смотрим конфиг &lt;code&gt;&#x2F;etc&#x2F;security&#x2F;limits.conf&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;text&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;span&gt;zero         soft   nofile 1500000
 &lt;&#x2F;span&gt;&lt;span&gt;zero         hard   nofile 1500000
 &lt;&#x2F;span&gt;&lt;span&gt;...
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон 
+&lt;p&gt;Для пользователя &lt;code&gt;zero&lt;&#x2F;code&gt; установлен лимит на максимально количество открытых файлов — &lt;code&gt;1500000&lt;&#x2F;code&gt;. Допустимый диапазон
 значений для &lt;code&gt;nofile&lt;&#x2F;code&gt;: &lt;code&gt;1-1048576&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Меняем на любое число из разрешенного диапазона, сохраняем изменения в файле и &lt;code&gt;su&lt;&#x2F;code&gt; начинает работать.&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;[root@hercules ~&lt;&#x2F;span&gt;&lt;span&gt;]# su - zero

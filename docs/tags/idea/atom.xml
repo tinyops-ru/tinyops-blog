@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - idea</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/idea/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/idea/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-07-27T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/idea/atom.xml</id>
@@ -11,14 +11,20 @@
         <title>Как исправить ошибку - No tests found matching Method в IntelliJ IDEA</title>
         <published>2020-01-15T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/"/>
         <id>https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/</id>
         
-        <content type="html">&lt;p&gt;Даже на момент написания статьи в связке JetBrains IDEA + Gradle хватает проблем с окривевшими кэшами. 
-Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те, кто давно работает 
+        <content type="html" xml:base="https://b.tinyops.ru/how-to-fix-no-tests-found-matching-method-issue/">&lt;p&gt;Даже на момент написания статьи в связке JetBrains IDEA + Gradle хватает проблем с окривевшими кэшами.
+Причем текст ошибки никак не помогает понять в чем же проблема. Поэтому те, кто давно работает
 со всея-IDE от JetBrains знают что скорей всего пришел момент проверки актуальности кэшей (инвалидации) Gradle, либо их очистки.&lt;&#x2F;p&gt;
 &lt;h3 id=&quot;oshibka-no-tests-found-matching-method&quot;&gt;Ошибка - No tests found matching Method&lt;&#x2F;h3&gt;
 &lt;p&gt;Это исключение можно словить при запуске unit-тестов. Вы запускали тесты и вдруг стало писать эту ошибку.

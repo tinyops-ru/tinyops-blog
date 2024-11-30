@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - theme</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/theme/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/theme/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-07-27T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/theme/atom.xml</id>
@@ -11,21 +11,27 @@
         <title>Тема DDV для Zola</title>
         <published>2021-03-04T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/ddv-theme-for-zola/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/ddv-theme-for-zola/"/>
         <id>https://b.tinyops.ru/ddv-theme-for-zola/</id>
         
-        <content type="html">&lt;p&gt;Как-то раз в рассылке Hackernews наткнулся на &lt;a href=&quot;https:&#x2F;&#x2F;drewdevault.com&#x2F;&quot;&gt;блог Drew DeVault&lt;&#x2F;a&gt;.
+        <content type="html" xml:base="https://b.tinyops.ru/ddv-theme-for-zola/">&lt;p&gt;Как-то раз в рассылке Hackernews наткнулся на &lt;a href=&quot;https:&#x2F;&#x2F;drewdevault.com&#x2F;&quot;&gt;блог Drew DeVault&lt;&#x2F;a&gt;.
 Мне понравилась визуальная чистота и простота блога. Вот как блог выглядел в тот момент:&lt;&#x2F;p&gt;
 &lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;zola&#x2F;ddv-drew-devault-blog.png&quot; alt=&quot;Блог Drew DeVault&quot; title=&quot;Блог Drew DeVault&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;Решил собрать такой же внешний вид, но для &lt;a href=&quot;&#x2F;zola-intro&#x2F;&quot;&gt;Zola&lt;&#x2F;a&gt;. К счастью, Drew не использовал никаких framework&#x27;ов,
 кучи внешних зависимостей и сделал всё сам. Портировать было легко.&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;otlichiia&quot;&gt;Отличия&lt;&#x2F;h2&gt;
-&lt;p&gt;Я не стал портировать тему один в один, т. к. автор сделал правую панель специфичной. 
+&lt;p&gt;Я не стал портировать тему один в один, т. к. автор сделал правую панель специфичной.
 Думаю мало кому нужны ссылки на sourcehut, peertube, pgp и gemini. Поэтому я добавил ссылки на более популярные профили:
-web-сайт, github, twitter и instagram. Дополнительно добавил страницу &amp;quot;О блоге&amp;quot;.&lt;&#x2F;p&gt;
+web-сайт, github, twitter и instagram. Дополнительно добавил страницу &quot;О блоге&quot;.&lt;&#x2F;p&gt;
 &lt;p&gt;Демо: &lt;a href=&quot;https:&#x2F;&#x2F;ddv-theme.tinyops.ru&quot;&gt;https:&#x2F;&#x2F;ddv-theme.tinyops.ru&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;kak-ustanovit-temu&quot;&gt;Как установить тему&lt;&#x2F;h2&gt;
 &lt;ol&gt;

@@ -7,7 +7,7 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
-generate_feed = true
+#generate_feed = true
 feed_limit = 100
 
 theme = "tinyblog"
@@ -16,9 +16,9 @@ title = "Блог TinyOps"
 description = "О технологиях, подходах и решении проблем простым языком"
 
 taxonomies = [
- {name = "tags", feed = true},
- {name = "categories", paginate_by = 10, feed = true},  # 5 items per page for a term
- {name = "authors"} # Basic definition: no RSS or pagination
+    { name = "tags", feed = true },
+    { name = "categories", paginate_by = 10, feed = true }, # 5 items per page for a term
+    { name = "authors" },                                   # Basic definition: no RSS or pagination
 ]
 
 [markdown]
@@ -31,11 +31,11 @@ keywords = "блог про технологии, решение linux проб�
 
 description = ""
 
-website="tinyops.ru"
+website = "tinyops.ru"
 website_button_title = "Сайт"
 website_button_hint = "Перейти на сайт"
 
-twitter=""
+twitter = ""
 twitter_button_title = "Twitter"
 twitter_button_hint = "Перейти в Twitter"
 

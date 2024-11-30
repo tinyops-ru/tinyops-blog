@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Блог TinyOps - virtualbox</title>
     <subtitle>О технологиях, подходах и решении проблем простым языком</subtitle>
-    <link href="https://b.tinyops.ru/tags/virtualbox/atom.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://b.tinyops.ru"/>
+    <link rel="self" type="application/atom+xml" href="https://b.tinyops.ru/tags/virtualbox/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://b.tinyops.ru"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-07-27T00:00:00+00:00</updated>
     <id>https://b.tinyops.ru/tags/virtualbox/atom.xml</id>
@@ -11,21 +11,27 @@
         <title>Как починить ошибку Inaccessible VM в VirtualBox и Vagrant</title>
         <published>2020-05-10T00:00:00+00:00</published>
         <updated>2023-07-27T00:00:00+00:00</updated>
+        
         <author>
-          <name>Unknown</name>
+          <name>
+            
+              Unknown
+            
+          </name>
         </author>
-        <link rel="alternate" href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/" type="text/html"/>
+        
+        <link rel="alternate" type="text/html" href="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/"/>
         <id>https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/</id>
         
-        <content type="html">&lt;p&gt;Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://b.tinyops.ru/how-to-fix-error-inaccessible-vm/">&lt;p&gt;Поймал эту проблему однажды когда поднимал виртуальную машину с помощью Vagrant:&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Your VM has become &amp;quot;inaccessible&amp;quot;. Unfortunately, this is a critical error with VirtualBox that Vagrant 
-can not cleanly recover from. Please open VirtualBox and clear out your 
+&lt;p&gt;Your VM has become &quot;inaccessible&quot;. Unfortunately, this is a critical error with VirtualBox that Vagrant
+can not cleanly recover from. Please open VirtualBox and clear out your
 inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
-&lt;p&gt;Virtual Box маркирует виртуальную машину как &lt;code&gt;inaccessible&lt;&#x2F;code&gt; если не может её запустить и 
+&lt;p&gt;Virtual Box маркирует виртуальную машину как &lt;code&gt;inaccessible&lt;&#x2F;code&gt; если не может её запустить и
 не может сформулировать пользователю в чем же дело.&lt;&#x2F;p&gt;
-&lt;p&gt;Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft. 
+&lt;p&gt;Умники в интернетах конечно же предлагаю пересоздать машину с нуля, наподобие умников на форумах Microsoft.
 Вторые, при малейшем недомогании, обычно рекомендуют переустановить ОС :)&lt;&#x2F;p&gt;
 &lt;p&gt;Для начала посмотрим список виртуальных машин:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; VBoxManage list vms
@@ -35,7 +41,7 @@ inaccessible virtual machines or find a way to fix them.&lt;&#x2F;p&gt;
 &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;lt;inaccessible&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; {4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8}
 &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;supervisor-jolokia_default_1572425247238_89749&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; {ee47977e-11f2-47b4-a2af-756cfff524f2}
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;p&gt;Запоминаем уникальный ID проблемной виртуальной машины - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Запоминаем уникальный ID проблемной виртуальной машины - &lt;code&gt;4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
 &lt;p&gt;Далее удаляем регистрацию виртуальной машины в недрах VirtualBox:&lt;&#x2F;p&gt;
 &lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;VBoxManage&lt;&#x2F;span&gt;&lt;span&gt; unregistervm 4fb4e265-61cb-4ce8-d3c4-de5f2daea7f8
 &lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
